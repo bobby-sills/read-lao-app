@@ -58,17 +58,9 @@ class LearnVowelExerciseState
               flex: 5,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: RichText(
-                  text: TextSpan(
-                    text: '◌',
-                    style: TextStyle(fontSize: 10000),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: widget.letter,
-                        style: laoStyle.copyWith(fontSize: 10000),
-                      ),
-                    ],
-                  ),
+                child: Text(
+                  widget.letter,
+                  style: laoStyle.copyWith(fontSize: 10000),
                 ),
               ),
             ),
