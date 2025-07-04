@@ -92,6 +92,8 @@ const Map<String, String> romanizationToLao = {
   "ho tam": "ຮ",
 };
 
+const String vowelPlaceholder = 'ອ';
+
 const List<String> vowelsIndices = [
   'ອະ',
   'ອາ',

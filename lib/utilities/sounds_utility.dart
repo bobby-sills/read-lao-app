@@ -6,16 +6,26 @@ class SoundsUtility {
   final audioPlayer = AudioPlayer();
 
   Future<void> playLetter(String letter) async {
-    // Convert the lao
     try {
       await audioPlayer.play(
-        AssetSource('letters/${laoToRomanization[letter]}-letter.wav'),
+        AssetSource('letters/sounds/${laoToRomanization[letter]}.wav'),
       );
     } catch (e) {
       if (kDebugMode) {
         print(
-          "Error: file 'assets/letters/${laoToRomanization[letter]}-letter.wav' not found",
+          "Error: file 'assets/letters/sounds/${laoToRomanization[letter]}.wav' not found",
         );
+      }
+    }
+  }
+
+  Future<void> playVowel(int letterIndex) async {
+    // Convert the lao
+    try {
+      await audioPlayer.play(AssetSource('vowels/sounds/$letterIndex.mp3'));
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error: file 'assets/vowels/sounds/$letterIndex.mp3' not found");
       }
     }
   }

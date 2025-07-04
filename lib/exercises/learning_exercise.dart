@@ -61,7 +61,7 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
                   image: AssetImage(
-                    'assets/letters/${laoToRomanization[widget.letter]}-image.png',
+                    'assets/letters/images/${laoToRomanization[widget.letter]}.png',
                   ),
                 ),
               ),
