@@ -20,6 +20,8 @@ class SoundsUtility {
   }
 
   Future<void> playVowel(int letterIndex) async {
+    letterIndex =
+        letterIndex + 1; // Because the file names start at index 1 not 0
     // Convert the lao
     try {
       await audioPlayer.play(AssetSource('vowels/sounds/$letterIndex.mp3'));

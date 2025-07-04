@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
 import 'package:learn_lao_app/utilities/sounds_utility.dart';
@@ -10,8 +8,15 @@ import 'package:provider/provider.dart';
 
 class LearnVowelExercise extends StatefulExercise {
   final String letter;
+  final int letterIndex;
   final String placeholder;
-  LearnVowelExercise({required this.letter, this.placeholder = "", super.key});
+
+  LearnVowelExercise({
+    required this.letter,
+    required this.letterIndex,
+    this.placeholder = "",
+    super.key,
+  });
 
   @override
   LearnVowelExerciseState createState() => LearnVowelExerciseState();
@@ -69,7 +74,7 @@ class LearnVowelExerciseState
               flex: 3,
               child: ElevatedButton(
                 onPressed: () {
-                  _speechPlayer.playLetter(widget.letter);
+                  _speechPlayer.playVowel(widget.letterIndex);
 
                   if (!Provider.of<LessonProvider>(
                     context,
