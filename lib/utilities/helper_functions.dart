@@ -32,6 +32,36 @@ List<String> getExerciseOptions<T>(
   return result;
 }
 
+const List consonants = [
+  'ກ',
+  'ຂ',
+  'ຄ',
+  'ງ',
+  'ຈ',
+  'ສ',
+  'ຊ',
+  'ຍ',
+  'ດ',
+  'ຕ',
+  'ຖ',
+  'ທ',
+  'ນ',
+  'ບ',
+  'ປ',
+  'ຜ',
+  'ຝ',
+  'ພ',
+  'ຟ',
+  'ມ',
+  'ຢ',
+  'ຣ',
+  'ລ',
+  'ວ',
+  'ຫ',
+  'ອ',
+  'ຮ',
+];
+
 const Map<String, String> laoToRomanization = {
   'ກ': 'ko',
   'ຂ': 'kho sung',
