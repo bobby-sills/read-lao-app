@@ -138,6 +138,8 @@ class _LessonWrapperState extends State<LessonWrapper>
                         onPressed: () {
                           Navigator.of(context).pop(); // Close the dialog
                           Navigator.of(context).pop(); // Exit the lesson
+                          // Exit the lesson again if the context still isn't cleared
+                          Navigator.of(context).pop();
                         },
                         child: const Text('End Lesson'),
                       ),

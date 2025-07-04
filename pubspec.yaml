@@ -66,11 +66,10 @@ flutter:
 
   assets:
     - assets/fonts/
-    - assets/letters/images
-    - assets/letters/sounds
-    - assets/vowels/sounds
+    - assets/letters/images/
+    - assets/letters/sounds/
+    - assets/vowels/sounds/
     - assets/sound_effects/
-    - assets/letters/bo-image.png
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
 
