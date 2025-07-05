@@ -32,7 +32,7 @@ List<String> getExerciseOptions<T>(
   return result;
 }
 
-const List consonants = [
+const List<String> completeConsonantsList = [
   'ກ',
   'ຂ',
   'ຄ',

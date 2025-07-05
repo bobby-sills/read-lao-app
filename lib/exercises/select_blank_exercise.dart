@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/sounds_utility.dart';
@@ -10,7 +11,6 @@ enum BottomButtonState { incorrect, correct }
 abstract class SelectBlankExercise extends StatefulExercise {
   final String correctLetter;
   final List<String> allLetters;
-
   SelectBlankExercise({
     required this.correctLetter,
     required this.allLetters,
@@ -31,6 +31,8 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   late bool isDarkMode;
   late Color svgColor;
   bool bottomButtonIsCorrect = true;
+  bool bottomLessonButtonPressed = false;
+  bool checkButtonPressed = false;
   var selectedButton = -1;
 
   void checkAnswer() {
@@ -81,7 +83,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
     );
   }
 
-  void calibrateThemeColors(context) {
+  void calibrateThemeColors(BuildContext context) {
     theme = Theme.of(context);
     isDarkMode = theme.brightness == Brightness.dark;
     svgColor = isDarkMode ? Colors.white : Colors.black;
@@ -90,4 +92,53 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   // The build method is still required (inherited from StatefulExerciseState)
   @override
   Widget build(BuildContext context);
+
+  Widget checkButton() {
+    return SafeArea(
+      child: BottomLessonButton(
+        onPressed: (selectedButton == -1)
+            ? null
+            : (checkButtonPressed) // Stop the user from pressing it twice
+            ? () {} // If it has been pressed, stop it from being pressed again
+            : () {
+                setState(() {
+                  checkButtonPressed = true;
+                });
+                checkAnswer();
+              },
+        buttonText: 'Check',
+        buttonIcon: const Icon(Icons.check_rounded),
+      ),
+    ); // The bottom button
+  }
+
+  @override
+  Widget bottomSheetContent() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(height: 8),
+        Text(
+          bottomButtonIsCorrect ? 'Correct!' : 'Incorrect!',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 8),
+        BottomLessonButton(
+          onPressed: bottomButtonIsCorrect
+              ? Provider.of<LessonProvider>(
+                  context,
+                  listen: false,
+                ).nextExerciseCallback
+              : Navigator.of(
+                  context,
+                ).pop, // Close the bottom sheet no matter what,
+          buttonIcon: bottomButtonIsCorrect
+              ? const Icon(Icons.arrow_forward_rounded)
+              : const Icon(Icons.refresh_rounded),
+          buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
+          buttonColor: bottomButtonIsCorrect ? Colors.green : Colors.red,
+        ),
+      ],
+    );
+  }
 }

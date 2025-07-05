@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/select_blank_exercise.dart';
-import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
 
 enum BottomButtonState { incorrect, correct }
@@ -82,36 +80,6 @@ class SelectSoundExerciseState
           ],
         ),
       ),
-    );
-  }
-
-  @override
-  Widget bottomSheetContent() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(height: 8),
-        Text(
-          bottomButtonIsCorrect ? 'Correct!' : 'Incorrect!',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 8),
-        BottomLessonButton(
-          onPressed: bottomButtonIsCorrect
-              ? Provider.of<LessonProvider>(
-                  context,
-                  listen: false,
-                ).nextExerciseCallback
-              : Navigator.of(
-                  context,
-                ).pop, // Close the bottom sheet no matter what,
-          buttonIcon: bottomButtonIsCorrect
-              ? const Icon(Icons.arrow_forward_rounded)
-              : const Icon(Icons.refresh_rounded),
-          buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
-          buttonColor: bottomButtonIsCorrect ? Colors.green : Colors.red,
-        ),
-      ],
     );
   }
 }

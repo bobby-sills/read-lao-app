@@ -108,6 +108,28 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
           });
         });
 
+        // If everything is matched, then show the bottom bar
+        if (states[ButtonType.sound]!.every(
+              (state) => state == ButtonState.disabled,
+            ) &&
+            states[ButtonType.letter]!.every(
+              (state) => state == ButtonState.disabled,
+            )) {}
+        showBottomBar(
+          context: context,
+          onShow: () {
+            Provider.of<LessonProvider>(
+              context,
+              listen: false,
+            ).setBottomSheetVisible(true);
+          },
+          onHide: () {
+            Provider.of<LessonProvider>(
+              context,
+              listen: false,
+            ).setBottomSheetVisible(false);
+          },
+        );
         // Correct sound effect
         _effectPlayer.playSoundEffect("correct");
       } else {
