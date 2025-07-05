@@ -9,7 +9,7 @@ class HiveUtility {
 
   static bool isLessonCompleted(int lessonIndex) {
     return Hive.box<bool>(lessonCompletionBox).get(lessonIndex) ??
-        true; // set this to false when finished debugging
+        false; // set this to false when finished debugging
   }
 
   static void setLessonCompleted(int lessonIndex, bool value) {
@@ -21,4 +21,3 @@ class HiveUtility {
   set lessonComplete(bool value) =>
       Hive.box<bool>(lessonCompletionBox).put(0, value);
 }
-

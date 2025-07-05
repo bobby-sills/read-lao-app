@@ -110,26 +110,31 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
 
         // If everything is matched, then show the bottom bar
         if (states[ButtonType.sound]!.every(
-              (state) => state == ButtonState.disabled,
+              (state) =>
+                  state == ButtonState.disabled ||
+                  state == ButtonState.complete,
             ) &&
             states[ButtonType.letter]!.every(
-              (state) => state == ButtonState.disabled,
-            )) {}
-        showBottomBar(
-          context: context,
-          onShow: () {
-            Provider.of<LessonProvider>(
-              context,
-              listen: false,
-            ).setBottomSheetVisible(true);
-          },
-          onHide: () {
-            Provider.of<LessonProvider>(
-              context,
-              listen: false,
-            ).setBottomSheetVisible(false);
-          },
-        );
+              (state) =>
+                  state == ButtonState.disabled ||
+                  state == ButtonState.complete,
+            )) {
+          showBottomBar(
+            context: context,
+            onShow: () {
+              Provider.of<LessonProvider>(
+                context,
+                listen: false,
+              ).setBottomSheetVisible(true);
+            },
+            onHide: () {
+              Provider.of<LessonProvider>(
+                context,
+                listen: false,
+              ).setBottomSheetVisible(false);
+            },
+          );
+        }
         // Correct sound effect
         _effectPlayer.playSoundEffect("correct");
       } else {
@@ -151,14 +156,18 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
 
   @override
   Widget bottomSheetContent() {
-    return BottomLessonButton(
-      onPressed: () {
-        Navigator.of(context).pop();
-        Provider.of<LessonProvider>(
-          context,
-          listen: false,
-        ).nextExerciseCallback!();
-      },
+    return Column(
+      children: [
+        SizedBox(height: 16),
+        BottomLessonButton(
+          onPressed: () {
+            Provider.of<LessonProvider>(
+              context,
+              listen: false,
+            ).nextExerciseCallback!();
+          },
+        ),
+      ],
     );
   }
 

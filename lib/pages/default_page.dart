@@ -36,17 +36,17 @@ class _DefaultPageState extends State<DefaultPage> {
             icon: Icon(Icons.create_outlined),
             label: "Practice",
           ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.settings_rounded),
-            icon: Icon(Icons.settings_outlined),
-            label: "Settings",
-          ),
+          // NavigationDestination(
+          //   selectedIcon: Icon(Icons.settings_rounded),
+          //   icon: Icon(Icons.settings_outlined),
+          //   label: "Settings",
+          // ),
         ],
       ),
       body: <Widget>[
         HomePage(),
         const PracticePage(),
-        const SettingsPage(),
+        // const SettingsPage(),
       ][currentPageIndex],
     );
   }

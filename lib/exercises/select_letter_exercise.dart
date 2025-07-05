@@ -18,6 +18,14 @@ class SelectLetterExercise extends SelectBlankExercise {
 class SelectLetterExerciseState
     extends SelectBlankExerciseState<SelectLetterExercise> {
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 500), () {
+      speechPlayer.playLetter(widget.correctLetter);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     calibrateThemeColors(context);
 

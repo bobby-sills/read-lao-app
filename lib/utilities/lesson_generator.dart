@@ -109,7 +109,10 @@ class LessonGenerator {
     generatedLessons[0].add(MatchingExercise(lettersToMatch: oldLetters));
 
     // 3. Mixed Practice (randomized)
-    List<String> combinedLetters = [...oldLetters, ...newLetters];
+    List<String> combinedLetters = <String>{
+      ...oldLetters,
+      ...newLetters,
+    }.toList();
     combinedLetters.shuffle();
 
     final shuffledExercises = <StatefulExercise>[];
@@ -312,6 +315,163 @@ class LessonGenerator {
     return shuffled.take(size).toList();
   }
 
+  // SPECIAL FIRST LESSON CYCLE GENERATOR
+  // ===================================
+
+  /// Generates a special 3-lesson cycle for the very first letters
+  /// This avoids the duplicate letter issue by not mixing old/new letters
+  List<List<StatefulExercise>> generateFirstLessonCycle(
+    List<String> firstThreeLetters,
+  ) {
+    List<List<StatefulExercise>> generatedLessons = [[], [], []];
+
+    // LESSON 1: Pure Introduction (no old letters to mix)
+    // =================================================
+
+    // 1. Individual letter introduction
+    for (var letter in firstThreeLetters) {
+      generatedLessons[0].addAll([
+        LearningExercise(letter: letter),
+        SelectLetterExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+        SelectSoundExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      ]);
+    }
+
+    // 2. Simple matching with all three letters
+    generatedLessons[0].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+
+    // 3. Mixed practice (no duplicates needed)
+    List<String> shuffledLetters = [...firstThreeLetters];
+    shuffledLetters.shuffle();
+
+    for (var letter in shuffledLetters) {
+      generatedLessons[0].addAll([
+        SelectSoundExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+        SelectLetterExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      ]);
+    }
+
+    // 4. Final assessment - single matching with all three
+    generatedLessons[0].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+
+    // LESSON 2: Reinforcement
+    // ======================
+
+    // 1. Quick review
+    for (var letter in firstThreeLetters) {
+      generatedLessons[1].add(
+        SelectLetterExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      );
+    }
+
+    // 2. Matching practice
+    generatedLessons[1].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+
+    // 3. Sound practice
+    for (var letter in firstThreeLetters) {
+      generatedLessons[1].add(
+        SelectSoundExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      );
+    }
+
+    // 4. Mixed exercises
+    List<String> mixedOrder = [...firstThreeLetters];
+    mixedOrder.shuffle();
+    for (var letter in mixedOrder) {
+      generatedLessons[1].add(
+        Random().nextBool()
+            ? SelectLetterExercise(
+                correctLetter: letter,
+                allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+              )
+            : SelectSoundExercise(
+                correctLetter: letter,
+                allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+              ),
+      );
+    }
+
+    // LESSON 3: Mastery
+    // ================
+
+    // 1. Mastery check
+    for (var letter in firstThreeLetters) {
+      generatedLessons[2].addAll([
+        SelectSoundExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+        SelectLetterExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      ]);
+    }
+
+    // 2. Comprehensive matching
+    generatedLessons[2].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+
+    // 3. Speed rounds
+    List<String> speedRound1 = [...firstThreeLetters];
+    List<String> speedRound2 = [...firstThreeLetters];
+    speedRound1.shuffle();
+    speedRound2.shuffle();
+
+    for (var letter in speedRound1) {
+      generatedLessons[2].add(
+        SelectLetterExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      );
+    }
+
+    for (var letter in speedRound2) {
+      generatedLessons[2].add(
+        SelectSoundExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      );
+    }
+
+    // 4. Final graduation check
+    List<String> finalOrder = [...firstThreeLetters];
+    finalOrder.shuffle();
+    for (var letter in finalOrder) {
+      generatedLessons[2].addAll([
+        SelectLetterExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+        SelectSoundExercise(
+          correctLetter: letter,
+          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+        ),
+      ]);
+    }
+
+    return generatedLessons;
+  }
+
   // MAIN CURRICULUM GENERATOR
   // =========================
 
@@ -327,12 +487,9 @@ class LessonGenerator {
       throw ArgumentError('Need at least 3 letters to generate lessons');
     }
 
-    // First cycle: Use first 3 letters for both new and old (extra repetition)
+    // First cycle: Use special first lesson logic to avoid duplicate letter issues
     List<String> firstThree = allLetters.take(3).toList();
-    List<List<StatefulExercise>> firstCycle = generateLessonCycle(
-      firstThree,
-      firstThree,
-    );
+    List<List<StatefulExercise>> firstCycle = generateFirstLessonCycle(firstThree);
     allLessons.addAll(firstCycle);
 
     // Subsequent cycles: 3 new letters + 3 from previous cycle

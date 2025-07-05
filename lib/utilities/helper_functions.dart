@@ -16,50 +16,59 @@ List<String> getExerciseOptions<T>(
 ) {
   final random = Random();
   final result = <String>[];
-  // Ensure the correct letter is in the list and makes sure it doesn't get randomly drawn
-  final indexes = <int>{possibleLetters.indexOf(correct)};
+  List<String> uniqueLetters = possibleLetters.toSet().toList();
+
+  // Check if correct is in the list
+  if (!uniqueLetters.contains(correct)) {
+    throw ArgumentError('correct value must be in possibleLetters');
+  }
+
+  if (count > uniqueLetters.length) {
+    count = uniqueLetters.length;
+  }
+
+  final indexes = <int>{uniqueLetters.indexOf(correct)};
   result.add(correct);
 
   while (indexes.length < count) {
-    final randomIndex = random.nextInt(possibleLetters.length);
+    final randomIndex = random.nextInt(uniqueLetters.length);
     if (indexes.add(randomIndex)) {
-      result.add(possibleLetters[randomIndex]);
+      result.add(uniqueLetters[randomIndex]);
     }
   }
-  result
-      .shuffle(); // Finally shuffles it because otherwise the correct letter is always the first one
 
+  result.shuffle();
   return result;
 }
 
-const List<String> completeConsonantsList = [
-  'ກ',
-  'ຂ',
-  'ຄ',
-  'ງ',
-  'ຈ',
-  'ສ',
-  'ຊ',
-  'ຍ',
-  'ດ',
-  'ຕ',
-  'ຖ',
-  'ທ',
-  'ນ',
-  'ບ',
-  'ປ',
-  'ຜ',
-  'ຝ',
-  'ພ',
-  'ຟ',
-  'ມ',
-  'ຢ',
-  'ຣ',
-  'ລ',
-  'ວ',
-  'ຫ',
-  'ອ',
-  'ຮ',
+const List<String> teachingOrder = [
+  'ກ', // g/k sound
+  'ງ', // visually distinct spacer
+  'ຂ', // g/k sound (pair with ກ but spaced)
+  'ຈ', // visually distinct spacer
+  'ຄ', // g/k sound (final of this group)
+  'ສ', // visually distinct spacer
+  'ຟ', // f/ph sound
+  'ດ', // visually distinct spacer
+  'ຝ', // f/ph sound (pair with ຟ)
+  'ນ', // visually distinct spacer
+  'ປ', // p/bp sound
+  'ຣ', // visually distinct spacer
+  'ບ', // p/bp sound (pair with ປ)
+  'ລ', // visually distinct spacer
+  'ພ', // p/bp sound (final of this group)
+  'ວ', // visually distinct spacer
+  'ຕ', // t sound
+  'ຊ', // visually distinct spacer
+  'ທ', // t sound (pair with ຕ)
+  'ມ', // visually distinct spacer
+  'ຖ', // t sound (final of this group)
+  'ອ', // visually distinct spacer
+  'ຍ', // y/ny sound
+  'ຜ', // visually distinct spacer
+  'ຢ', // y/ny sound (pair with ຍ)
+  'ຫ', // h sound
+  'ຮ', // h sound (pair with ຫ but spaced at end)
 ];
 
 const Map<String, String> laoToRomanization = {
