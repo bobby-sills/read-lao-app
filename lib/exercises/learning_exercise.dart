@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
+import 'package:learn_lao_app/components/dynamic_bold_text.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 
 class LearningExercise extends StatefulExercise {
   final String letter;
+  final String word;
 
-  LearningExercise({required this.letter, super.key});
+  LearningExercise({required this.letter, required this.word, super.key});
 
   @override
   LearningExerciseState createState() => LearningExerciseState();
@@ -78,11 +79,16 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
             ),
             Expanded(
               flex: 2,
-              child: SvgPicture.asset(
-                'assets/letters/${laoToRomanization[widget.letter]}-word.svg',
-                colorFilter: ColorFilter.mode(svgColor, BlendMode.srcIn),
-                allowDrawingOutsideViewBox: true,
-                fit: BoxFit.contain,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: DynamicBoldText(
+                  text: widget.word,
+                  targetCharacter: widget.letter,
+                  fontSize: 48,
+                  boldColor: isDarkMode ? Colors.white : Colors.black,
+                  outlineColor: isDarkMode ? Colors.white : Colors.black,
+                  strokeWidth: 1.5,
+                ),
               ),
             ),
             Spacer(),
