@@ -7,10 +7,4 @@ LessonGenerator lessonGenerator = LessonGenerator();
 class AppData {
   static final List<List<StatefulExercise>> lessons = lessonGenerator
       .generateCompleteCurriculum(teachingOrder);
-  // static final List<List<StatefulExercise>> lessons = [
-  //   [
-  //     MatchingExercise(lettersToMatch: ['ກ', 'ຂ', 'ຄ']),
-  //     MatchingExercise(lettersToMatch: ['ກ', 'ຂ', 'ຄ']),
-  //   ],
-  // ];
 }

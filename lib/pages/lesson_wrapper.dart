@@ -157,7 +157,6 @@ class _LessonWrapperState extends State<LessonWrapper>
           minHeight: 10,
           borderRadius: BorderRadius.circular(15),
         ),
-        actions: [Text('$_exerciseIndex  ')],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),

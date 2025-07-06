@@ -8,76 +8,6 @@ import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 
 class LessonGenerator {
-  /*static List<List<StatefulExercise>> generateLessonTriplet(
-    List<String> oldLetters,
-    List<String> newLetters,
-  ) {
-    List<List<StatefulExercise>> generatedLessons = [[]];
-    // The first lesson is based on the following comment
-    /*
-    For i in [N1, N2, N3]
-        Learning exercise ith letter
-        Listen and match exercise ith letter
-        See and match exercise ith letter
-    Listen and match [O1, O2, O3]
-    Randomize
-        For i in [O1, O2, O3, N1, N2, N3]
-            Listen and match {i}
-            See and match {i}
-    List1: Randomize {O1, O2, O3, N1, N2, N3}
-    Listen and match {first half of List1}
-    Listen and match {second half of List1}
-    */
-    // Generates 3 exercises for each of the new letters
-    for (var letter in newLetters) {
-      generatedLessons[0].addAll([
-        LearningExercise(letter: letter),
-        SelectLetterExercise(
-          correctLetter: letter,
-          allLetters: getExerciseOptions(newLetters, 3, letter),
-        ),
-        SelectSoundExercise(
-          correctLetter: letter,
-          allLetters: getExerciseOptions(newLetters, 3, letter),
-        ),
-      ]);
-    }
-
-    generatedLessons[0].add(MatchingExercise(lettersToMatch: oldLetters));
-    // New shuffled list with all of the new and old letters
-    List<String> combinedLetters = oldLetters + newLetters;
-    combinedLetters.shuffle();
-
-    final shuffledExercises = <StatefulExercise>[];
-    for (var letter in combinedLetters) {
-      shuffledExercises.addAll([
-        SelectSoundExercise(
-          correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 3, letter),
-        ),
-        SelectLetterExercise(
-          correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 3, letter),
-        ),
-      ]);
-    }
-
-    shuffledExercises.shuffle();
-    generatedLessons[0].addAll(shuffledExercises);
-
-    generatedLessons[0].addAll([
-      MatchingExercise(lettersToMatch: combinedLetters.sublist(0, 3)),
-      MatchingExercise(lettersToMatch: combinedLetters.sublist(3, 6)),
-    ]);
-
-
-    // Now for the second lesson
-  
-
-    return generatedLessons;
-  }
-
-  generation*/
   // Complete 3-lesson cycle generator for Lao consonant learning
   // Input: newLetters (3 new consonants), oldLetters (3 previously learned)
 
@@ -93,7 +23,7 @@ class LessonGenerator {
     // 1. New Letter Introduction
     for (var letter in newLetters) {
       generatedLessons[0].addAll([
-        LearningExercise(letter: letter),
+        LearningExercise(letter: letter, word: lettersToWords[letter]!),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(newLetters, 3, letter),
@@ -331,7 +261,7 @@ class LessonGenerator {
     // 1. Individual letter introduction
     for (var letter in firstThreeLetters) {
       generatedLessons[0].addAll([
-        LearningExercise(letter: letter),
+        LearningExercise(letter: letter, word: lettersToWords[letter]!),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
@@ -344,7 +274,9 @@ class LessonGenerator {
     }
 
     // 2. Simple matching with all three letters
-    generatedLessons[0].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+    generatedLessons[0].add(
+      MatchingExercise(lettersToMatch: firstThreeLetters),
+    );
 
     // 3. Mixed practice (no duplicates needed)
     List<String> shuffledLetters = [...firstThreeLetters];
@@ -364,7 +296,9 @@ class LessonGenerator {
     }
 
     // 4. Final assessment - single matching with all three
-    generatedLessons[0].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+    generatedLessons[0].add(
+      MatchingExercise(lettersToMatch: firstThreeLetters),
+    );
 
     // LESSON 2: Reinforcement
     // ======================
@@ -380,7 +314,9 @@ class LessonGenerator {
     }
 
     // 2. Matching practice
-    generatedLessons[1].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+    generatedLessons[1].add(
+      MatchingExercise(lettersToMatch: firstThreeLetters),
+    );
 
     // 3. Sound practice
     for (var letter in firstThreeLetters) {
@@ -427,7 +363,9 @@ class LessonGenerator {
     }
 
     // 2. Comprehensive matching
-    generatedLessons[2].add(MatchingExercise(lettersToMatch: firstThreeLetters));
+    generatedLessons[2].add(
+      MatchingExercise(lettersToMatch: firstThreeLetters),
+    );
 
     // 3. Speed rounds
     List<String> speedRound1 = [...firstThreeLetters];
@@ -489,7 +427,9 @@ class LessonGenerator {
 
     // First cycle: Use special first lesson logic to avoid duplicate letter issues
     List<String> firstThree = allLetters.take(3).toList();
-    List<List<StatefulExercise>> firstCycle = generateFirstLessonCycle(firstThree);
+    List<List<StatefulExercise>> firstCycle = generateFirstLessonCycle(
+      firstThree,
+    );
     allLessons.addAll(firstCycle);
 
     // Subsequent cycles: 3 new letters + 3 from previous cycle

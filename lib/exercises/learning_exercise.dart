@@ -49,7 +49,6 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final bool isDarkMode = theme.brightness == Brightness.dark;
-    final Color svgColor = isDarkMode ? Colors.white : Colors.black;
 
     return Expanded(
       child: Center(
@@ -80,14 +79,14 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
             Expanded(
               flex: 2,
               child: FittedBox(
-                fit: BoxFit.scaleDown,
+                fit: BoxFit.contain,
                 child: DynamicBoldText(
                   text: widget.word,
                   targetCharacter: widget.letter,
-                  fontSize: 48,
+                  fontSize: 200,
                   boldColor: isDarkMode ? Colors.white : Colors.black,
                   outlineColor: isDarkMode ? Colors.white : Colors.black,
-                  strokeWidth: 1.5,
+                  strokeWidth: 2.5,
                 ),
               ),
             ),
