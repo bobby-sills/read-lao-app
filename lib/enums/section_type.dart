@@ -1,0 +1,1 @@
+enum SectionType { consonant, vowel }

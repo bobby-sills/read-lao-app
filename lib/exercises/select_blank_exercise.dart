@@ -47,6 +47,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
       // If the answer is incorrect
       setState(() => bottomButtonIsCorrect = false);
       effectPlayer.playSoundEffect('incorrect');
+      context.read<LessonProvider>().markExerciseAsMistake?.call();
     }
     showBottomBar(
       context: context,
@@ -83,11 +84,21 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
     );
   }
 
+  @override
+  void dispose() {
+    effectPlayer.dispose();
+    speechPlayer.dispose();
+    super.dispose();
+  }
+
   void calibrateThemeColors(BuildContext context) {
     theme = Theme.of(context);
     isDarkMode = theme.brightness == Brightness.dark;
     svgColor = isDarkMode ? Colors.white : Colors.black;
   }
+
+  bool get areButtonsDisabled => 
+      context.watch<LessonProvider>().isBottomSheetVisible;
 
   // The build method is still required (inherited from StatefulExerciseState)
   @override
@@ -113,7 +124,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   }
 
   @override
-  Widget bottomSheetContent() {
+  Widget bottomSheetContent(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -125,10 +136,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
         SizedBox(height: 8),
         BottomLessonButton(
           onPressed: bottomButtonIsCorrect
-              ? Provider.of<LessonProvider>(
-                  context,
-                  listen: false,
-                ).nextExerciseCallback
+              ? context.read<LessonProvider>().nextExercise
               : Navigator.of(
                   context,
                 ).pop, // Close the bottom sheet no matter what,

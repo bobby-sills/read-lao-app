@@ -38,36 +38,39 @@ class SelectSoundExerciseState
               ),
             ),
             Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Column(
-                spacing: 8.0,
-                children: List<Widget>.generate(shuffledLetters.length, (
-                  index,
-                ) {
-                  final letter = shuffledLetters[index];
-                  return FilledButton(
-                    onPressed: () {
-                      speechPlayer.playLetter(letter);
-                      setState(() {
-                        selectedButton = index;
-                      });
-                    },
-                    style: FilledButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 25,
-                        horizontal: 100,
+            AbsorbPointer(
+              absorbing: areButtonsDisabled,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  spacing: 8.0,
+                  children: List<Widget>.generate(shuffledLetters.length, (
+                    index,
+                  ) {
+                    final letter = shuffledLetters[index];
+                    return FilledButton(
+                      onPressed: () {
+                        speechPlayer.playLetter(letter);
+                        setState(() {
+                          selectedButton = index;
+                        });
+                      },
+                      style: FilledButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 25,
+                          horizontal: 100,
+                        ),
+                        backgroundColor: index == selectedButton
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.secondary,
                       ),
-                      backgroundColor: index == selectedButton
-                          ? theme.colorScheme.primary
-                          : theme.colorScheme.secondary,
-                    ),
-                    child: Icon(
-                      Icons.volume_up_rounded,
-                      size: theme.textTheme.displayMedium?.fontSize,
-                    ),
-                  );
-                }),
+                      child: Icon(
+                        Icons.volume_up_rounded,
+                        size: theme.textTheme.displayMedium?.fontSize,
+                      ),
+                    );
+                  }),
+                ),
               ),
             ),
             SafeArea(

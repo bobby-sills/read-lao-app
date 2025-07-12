@@ -1,17 +1,19 @@
 import 'package:flutter/foundation.dart';
 
 class LessonProvider with ChangeNotifier {
-  VoidCallback? nextExerciseCallback;
+  VoidCallback? nextExercise;
+  VoidCallback? markExerciseAsMistake;
+
   bool _isBottomSheetVisible = false;
-
-  void setNextExerciseCallback(VoidCallback callback) {
-    nextExerciseCallback = callback;
-  }
-
-  void setBottomSheetVisible(bool isVisible) {
+  set isBottomSheetVisible(bool isVisible) {
     _isBottomSheetVisible = isVisible;
     notifyListeners();
   }
 
   bool get isBottomSheetVisible => _isBottomSheetVisible;
+
+  void setBottomSheetVisible(bool isVisible) {
+    _isBottomSheetVisible = isVisible;
+    notifyListeners();
+  }
 }

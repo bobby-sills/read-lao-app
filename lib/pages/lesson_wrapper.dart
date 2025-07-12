@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/exercises/review_message.dart';
 import 'package:learn_lao_app/pages/empty_lesson.dart';
 import 'package:learn_lao_app/pages/lesson_complete.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
@@ -30,6 +32,8 @@ class _LessonWrapperState extends State<LessonWrapper>
   // Index to track the current exercise
 
   int _exerciseIndex = 0;
+  final List<Widget> _mistakes = [];
+  final Set<int> _mistakesIndicies = {};
 
   @override
   void initState() {
@@ -56,8 +60,8 @@ class _LessonWrapperState extends State<LessonWrapper>
 
   void _incrementProgress() {
     // incrementValue: how much to increment the progress bar each time
-    double incrementValue = widget.exercises.isNotEmpty
-        ? 1 / widget.exercises.length
+    double incrementValue = _combinedExercises.isNotEmpty
+        ? 1 / _combinedExercises.length
         : 0;
     double targetProgress = (_progress + incrementValue);
 
@@ -80,10 +84,14 @@ class _LessonWrapperState extends State<LessonWrapper>
   void _nextExerciseCallback() {
     _incrementProgress();
 
-    if (_exerciseIndex == widget.exercises.length - 1) {
+    if (_exerciseIndex == _combinedExercises.length - 1) {
       // Use BuildContext from the current widget's build method
       if (mounted) {
-        HiveUtility.setLessonCompleted(widget.lessonIndex, true);
+        HiveUtility.setLessonCompleted(
+          widget.lessonIndex,
+          true,
+          SectionType.consonant,
+        );
         // Check if widget is still mounted
         Navigator.pushReplacement(
           context,
@@ -98,14 +106,27 @@ class _LessonWrapperState extends State<LessonWrapper>
     }
 
     // Dismiss the bottom sheet if it is visible
-    if (Provider.of<LessonProvider>(
-      context,
-      listen: false,
-    ).isBottomSheetVisible) {
+    if (context.read<LessonProvider>().isBottomSheetVisible) {
       Navigator.of(context).pop();
     }
 
     setState(() => _exerciseIndex++);
+  }
+
+  List<Widget> get _combinedExercises => [...widget.exercises, ..._mistakes];
+
+  void _markExerciseAsMistakeCallback() {
+    // If there haven't been any mistakes yet, add the "time for mistakes!" screen
+    setState(() {
+      if (_mistakes.isEmpty) {
+        _mistakes.add(ReviewMessage());
+      }
+      // Make sure the same exercise doesn't get added twice, even if the user gets it wrong
+      if (!_mistakesIndicies.contains(_exerciseIndex)) {
+        _mistakes.add(_combinedExercises[_exerciseIndex]);
+        _mistakesIndicies.add(_exerciseIndex);
+      }
+    });
   }
 
   @override
@@ -136,10 +157,8 @@ class _LessonWrapperState extends State<LessonWrapper>
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
-                          Navigator.of(context).pop(); // Exit the lesson
-                          // Exit the lesson again if the context still isn't cleared
-                          Navigator.of(context).pop();
+                          // Navigates all the way back to the first screen
+                          Navigator.popUntil(context, (route) => route.isFirst);
                         },
                         child: const Text('End Lesson'),
                       ),
@@ -148,7 +167,7 @@ class _LessonWrapperState extends State<LessonWrapper>
                 },
               );
             } else {
-              Navigator.of(context).pop(); // Exit the lesson directly
+              Navigator.popUntil(context, (route) => route.isFirst);
             }
           },
         ),
@@ -164,8 +183,10 @@ class _LessonWrapperState extends State<LessonWrapper>
           children: [
             Consumer<LessonProvider>(
               builder: (context, lessonProvider, child) {
-                lessonProvider.setNextExerciseCallback(_nextExerciseCallback);
-                return widget.exercises[_exerciseIndex];
+                lessonProvider.nextExercise = _nextExerciseCallback;
+                lessonProvider.markExerciseAsMistake =
+                    _markExerciseAsMistakeCallback;
+                return _combinedExercises[_exerciseIndex];
               },
             ),
           ],

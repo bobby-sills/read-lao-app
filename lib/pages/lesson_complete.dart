@@ -1,23 +1,40 @@
 import 'dart:math';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_lao_app/utilities/sounds_utility.dart';
 
-class LessonComplete extends StatelessWidget {
-  LessonComplete({super.key, required this.lessonNum});
+class LessonComplete extends StatefulWidget {
+  const LessonComplete({super.key, required this.lessonNum});
+  final int lessonNum;
+
+  @override
+  State<LessonComplete> createState() => _LessonCompleteState();
+}
+
+class _LessonCompleteState extends State<LessonComplete> {
   final ConfettiController _confettiController = ConfettiController(
     duration: const Duration(seconds: 1),
   );
+  final SoundsUtility _soundPlayer = SoundsUtility();
 
-  final int lessonNum;
+  @override
+  void initState() {
+    super.initState();
+    _confettiController.play();
+    _soundPlayer.playSoundEffect('complete');
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    _soundPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    _confettiController.play();
-
-    AudioPlayer().play(AssetSource('sound_effects/complete.wav'));
 
     return Scaffold(
       body: Stack(
@@ -26,11 +43,33 @@ class LessonComplete extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  'Lesson ${lessonNum + 1} complete!',
-                  style: theme.textTheme.headlineLarge,
+                Container(
+                  padding: EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.check_rounded,
+                    size: 80,
+                    color: Colors.green,
+                  ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 32),
+                Text(
+                  'Lesson ${widget.lessonNum} complete!',
+                  style: theme.textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Well done! Keep up the great work',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                SizedBox(height: 40),
                 ElevatedButton.icon(
                   onPressed: () {
                     Navigator.pop(context);

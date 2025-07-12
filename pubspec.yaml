@@ -41,6 +41,7 @@ dependencies:
   confetti: ^0.8.0
   fluttertoast: ^8.2.12
   auto_size_text: ^3.0.0
+  flutter_sticky_header: ^0.8.0
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +67,7 @@ flutter:
 
   assets:
     - assets/fonts/
-    - assets/letters/images/
+    - assets/letters/images/jpgs/
     - assets/letters/sounds/
     - assets/vowels/sounds/
     - assets/sound_effects/

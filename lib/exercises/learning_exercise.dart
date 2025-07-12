@@ -21,18 +21,21 @@ class LearningExercise extends StatefulExercise {
 class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
   final _speechPlayer = SoundsUtility();
   final _effectPlayer = SoundsUtility();
+
   @override
-  Widget bottomSheetContent() {
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget bottomSheetContent(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 16),
         BottomLessonButton(
           onPressed: () {
             _effectPlayer.playSoundEffect('correct');
-            Provider.of<LessonProvider>(
-              context,
-              listen: false,
-            ).nextExerciseCallback!();
+            context.read<LessonProvider>().nextExercise?.call();
           },
         ),
       ],
@@ -42,6 +45,7 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
   @override
   void dispose() {
     _speechPlayer.dispose();
+    _effectPlayer.dispose();
     super.dispose();
   }
 
@@ -61,7 +65,7 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
                   image: AssetImage(
-                    'assets/letters/images/${laoToRomanization[widget.letter]}.png',
+                    'assets/letters/images/jpgs/${laoToRomanization[widget.letter]}.jpg',
                   ),
                 ),
               ),
@@ -97,23 +101,18 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
                 onPressed: () {
                   _speechPlayer.playLetter(widget.letter);
 
-                  if (!Provider.of<LessonProvider>(
-                    context,
-                    listen: false,
-                  ).isBottomSheetVisible) {
+                  if (!context.read<LessonProvider>().isBottomSheetVisible) {
                     showBottomBar(
                       context: context,
                       onShow: () {
-                        Provider.of<LessonProvider>(
-                          context,
-                          listen: false,
-                        ).setBottomSheetVisible(true);
+                        context.read<LessonProvider>().setBottomSheetVisible(
+                          true,
+                        );
                       },
                       onHide: () {
-                        Provider.of<LessonProvider>(
-                          context,
-                          listen: false,
-                        ).setBottomSheetVisible(false);
+                        context.read<LessonProvider>().setBottomSheetVisible(
+                          false,
+                        );
                       },
                     );
                   }

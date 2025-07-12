@@ -21,17 +21,14 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
   final _speechPlayer = SoundsUtility();
   final _effectPlayer = SoundsUtility();
   @override
-  Widget bottomSheetContent() {
+  Widget bottomSheetContent(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 16),
         BottomLessonButton(
           onPressed: () {
             _effectPlayer.playSoundEffect('correct');
-            Provider.of<LessonProvider>(
-              context,
-              listen: false,
-            ).nextExerciseCallback!();
+            context.read<LessonProvider>().nextExercise?.call();
           },
         ),
       ],
@@ -41,6 +38,7 @@ class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
   @override
   void dispose() {
     _speechPlayer.dispose();
+    _effectPlayer.dispose();
     super.dispose();
   }
 

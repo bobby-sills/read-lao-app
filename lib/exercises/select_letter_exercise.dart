@@ -45,40 +45,43 @@ class SelectLetterExerciseState
             ),
             SizedBox(height: 16),
             // The options
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Column(
-                spacing: 8.0,
-                // Generates a button for each option
-                children: List<Widget>.generate(shuffledLetters.length, (
-                  index,
-                ) {
-                  return FilledButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedButton = index;
-                      });
-                    },
-                    style: FilledButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 100,
+            AbsorbPointer(
+              absorbing: areButtonsDisabled,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  spacing: 8.0,
+                  // Generates a button for each option
+                  children: List<Widget>.generate(shuffledLetters.length, (
+                    index,
+                  ) {
+                    return FilledButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedButton = index;
+                        });
+                      },
+                      style: FilledButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 100,
+                        ),
+                        // Changes background color based on whether the button is selected
+                        backgroundColor: index == selectedButton
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.secondary,
                       ),
-                      // Changes background color based on whether the button is selected
-                      backgroundColor: index == selectedButton
-                          ? theme.colorScheme.primary
-                          : theme.colorScheme.secondary,
-                    ),
-                    child: Text(
-                      shuffledLetters[index],
-                      style: TextStyle(
-                        fontSize: theme.textTheme.displayLarge?.fontSize,
-                        fontFamily: 'Saysettha',
-                        fontWeight: FontWeight.w600,
+                      child: Text(
+                        shuffledLetters[index],
+                        style: TextStyle(
+                          fontSize: theme.textTheme.displayLarge?.fontSize,
+                          fontFamily: 'Saysettha',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ),
             Spacer(),

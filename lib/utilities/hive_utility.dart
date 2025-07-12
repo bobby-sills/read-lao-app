@@ -1,23 +1,33 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learn_lao_app/enums/section_type.dart';
 
 class HiveUtility {
-  static const String lessonCompletionBox = 'lesson_completion';
+  static const String consonantCompletionBox = 'consonant_completion';
 
-  static initializeBoxes() async {
-    await Hive.openBox<bool>(lessonCompletionBox);
+  static const String vowelCompletionBox = 'vowel_completion';
+  static Future<void> initializeBoxes() async {
+    await Hive.openBox<bool>(consonantCompletionBox);
+    await Hive.openBox<bool>(vowelCompletionBox);
   }
 
-  static bool isLessonCompleted(int lessonIndex) {
-    return Hive.box<bool>(lessonCompletionBox).get(lessonIndex) ??
-        false; // set this to false when finished debugging
+  static bool isLessonCompleted(int lessonIndex, SectionType sectionType) {
+    return Hive.box<bool>(
+          sectionType == SectionType.consonant
+              ? consonantCompletionBox
+              : vowelCompletionBox,
+        ).get(lessonIndex) ??
+        false;
   }
 
-  static void setLessonCompleted(int lessonIndex, bool value) {
-    Hive.box<bool>(lessonCompletionBox).put(lessonIndex, value);
+  static void setLessonCompleted(
+    int lessonIndex,
+    bool value,
+    SectionType sectionType,
+  ) {
+    Hive.box<bool>(
+      sectionType == SectionType.consonant
+          ? consonantCompletionBox
+          : vowelCompletionBox,
+    ).put(lessonIndex, value);
   }
-
-  bool get lessonComplete =>
-      Hive.box<bool>(lessonCompletionBox).get(0) ?? false;
-  set lessonComplete(bool value) =>
-      Hive.box<bool>(lessonCompletionBox).put(0, value);
 }

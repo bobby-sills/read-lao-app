@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/pages/home_page.dart';
+import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/pages/lesson_wrapper.dart';
 import 'package:learn_lao_app/utilities/app_data.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
@@ -23,7 +23,7 @@ class LessonNavButton extends StatelessWidget {
           return ChangeNotifierProvider(
             create: (context) => LessonProvider(),
             child: LessonWrapper(
-              exercises: AppData.lessons.elementAtOrNull(index),
+              exercises: AppData.consonantLessons.elementAtOrNull(index),
               lessonIndex: index,
             ),
           );

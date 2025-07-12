@@ -122,16 +122,10 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
           showBottomBar(
             context: context,
             onShow: () {
-              Provider.of<LessonProvider>(
-                context,
-                listen: false,
-              ).setBottomSheetVisible(true);
+              context.read<LessonProvider>().setBottomSheetVisible(true);
             },
             onHide: () {
-              Provider.of<LessonProvider>(
-                context,
-                listen: false,
-              ).setBottomSheetVisible(false);
+              context.read<LessonProvider>().setBottomSheetVisible(false);
             },
           );
         }
@@ -142,6 +136,8 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
           states[ButtonType.sound]![soundIndex] = ButtonState.incorrect;
           states[ButtonType.letter]![letterIndex] = ButtonState.incorrect;
         });
+        _effectPlayer.playSoundEffect("incorrect");
+        context.read<LessonProvider>().markExerciseAsMistake?.call();
         // Set time until deselected if incorrect
         Future.delayed(Duration(milliseconds: 800), () {
           setState(() {
@@ -149,22 +145,25 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
             states[ButtonType.letter]![letterIndex] = ButtonState.deselected;
           });
         });
-        _effectPlayer.playSoundEffect("incorrect");
       }
     }
   }
 
   @override
-  Widget bottomSheetContent() {
+  void dispose() {
+    _speechPlayer.dispose();
+    _effectPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget bottomSheetContent(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 16),
         BottomLessonButton(
           onPressed: () {
-            Provider.of<LessonProvider>(
-              context,
-              listen: false,
-            ).nextExerciseCallback!();
+            context.read<LessonProvider>().nextExercise?.call();
           },
         ),
       ],

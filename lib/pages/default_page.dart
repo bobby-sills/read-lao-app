@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/pages/home_page.dart';
+import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/pages/practice_page.dart';
 
 class DefaultPage extends StatefulWidget {

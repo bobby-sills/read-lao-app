@@ -9,8 +9,11 @@ abstract class StatefulExercise extends StatefulWidget {
 
 abstract class StatefulExerciseState<T extends StatefulExercise>
     extends State<T> {
-
-  void showBottomBar({required BuildContext context, required VoidCallback onShow, required VoidCallback onHide}) {
+  void showBottomBar({
+    required BuildContext context,
+    required VoidCallback onShow,
+    required VoidCallback onHide,
+  }) {
     onShow();
     showBottomSheet(
       context: context,
@@ -22,7 +25,7 @@ abstract class StatefulExerciseState<T extends StatefulExercise>
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [bottomSheetContent()],
+            children: [bottomSheetContent(context)],
           ),
         );
       },
@@ -31,7 +34,7 @@ abstract class StatefulExerciseState<T extends StatefulExercise>
     });
   }
 
-  Widget bottomSheetContent();
+  Widget bottomSheetContent(BuildContext context);
 
   @override
   Widget build(BuildContext context);
