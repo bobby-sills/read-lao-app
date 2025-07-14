@@ -1,6 +1,5 @@
 import 'dart:math';
-
-import 'package:learn_lao_app/exercises/learning_exercise.dart';
+import 'package:learn_lao_app/exercises/learn_consonant_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
 import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
 import 'package:learn_lao_app/exercises/select_letter_exercise.dart';
@@ -23,7 +22,7 @@ class LessonGenerator {
     // 1. New Letter Introduction
     for (var letter in newLetters) {
       generatedLessons[0].addAll([
-        LearningExercise(letter: letter, word: lettersToWords[letter]!),
+        LearnConsonantExercise(letter: letter, word: lettersToWords[letter]!),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(newLetters, 3, letter),
@@ -261,7 +260,7 @@ class LessonGenerator {
     // 1. Individual letter introduction
     for (var letter in firstThreeLetters) {
       generatedLessons[0].addAll([
-        LearningExercise(letter: letter, word: lettersToWords[letter]!),
+        LearnConsonantExercise(letter: letter, word: lettersToWords[letter]!),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),

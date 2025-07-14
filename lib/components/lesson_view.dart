@@ -19,7 +19,6 @@ class LessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ValueListenableBuilder(
       valueListenable: Hive.box<bool>(
         sectionType == SectionType.consonant
@@ -60,6 +59,7 @@ class LessonView extends StatelessWidget {
                         child: LessonNavButton(
                           index: index,
                           lessonStatus: lessonStatus,
+                          sectionType: sectionType,
                         ),
                       ),
                     ),

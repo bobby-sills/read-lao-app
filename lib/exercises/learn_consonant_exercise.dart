@@ -8,17 +8,18 @@ import 'package:learn_lao_app/utilities/shared_styles.dart';
 import 'package:learn_lao_app/utilities/sounds_utility.dart';
 import 'package:provider/provider.dart';
 
-class LearningExercise extends StatefulExercise {
+class LearnConsonantExercise extends StatefulExercise {
   final String letter;
   final String word;
 
-  LearningExercise({required this.letter, required this.word, super.key});
+  LearnConsonantExercise({required this.letter, required this.word, super.key});
 
   @override
   LearningExerciseState createState() => LearningExerciseState();
 }
 
-class LearningExerciseState extends StatefulExerciseState<LearningExercise> {
+class LearningExerciseState
+    extends StatefulExerciseState<LearnConsonantExercise> {
   final _speechPlayer = SoundsUtility();
   final _effectPlayer = SoundsUtility();
 
