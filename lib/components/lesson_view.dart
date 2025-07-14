@@ -3,19 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/pages/navigation_page.dart';
+import 'package:learn_lao_app/utilities/app_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 import 'package:learn_lao_app/components/lesson_nav_button.dart';
 
 class LessonView extends StatelessWidget {
   final SectionType sectionType;
+  final ({SectionType sectionType, int index}) lastLesson;
+  final Function(BuildContext inputContext) setScrollContextCallback;
 
-  const LessonView({super.key, required this.sectionType});
+  const LessonView({
+    super.key,
+    required this.sectionType,
+    required this.lastLesson,
+    required this.setScrollContextCallback,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // Set to -1 if there is nothing to stroll to
+    int indexToScrollTo = -1;
+
+    if (lastLesson.sectionType == sectionType) {
+      // Move the index to scroll to back a little bit so that the actual lesson is in the
+      // more vertically centered in the screen and not hidden at the top
+      indexToScrollTo = max(0, lastLesson.index - 2);
+    }
+
     return ValueListenableBuilder(
       valueListenable: Hive.box<bool>(
-        HiveUtility.consonantCompletionBox,
+        sectionType == SectionType.consonant
+            ? HiveUtility.consonantCompletionBox
+            : HiveUtility.vowelCompletionBox,
       ).listenable(),
       builder: (context, box, _) {
         return SliverPadding(
@@ -51,13 +70,21 @@ class LessonView extends StatelessWidget {
                         child: LessonNavButton(
                           index: index,
                           lessonStatus: lessonStatus,
+                          // If this lesson is the lesson to scroll to,
+                          // then set it as the scroll context
+                          setScrollContextCallback: index == indexToScrollTo
+                              ? setScrollContextCallback
+                              : null,
                         ),
                       ),
                     ),
                   ),
                 );
               },
-              childCount: 20,
+              // Automatically setting list length
+              childCount: sectionType == SectionType.consonant
+                  ? AppData.consonantLessons.length
+                  : AppData.vowelLessons.length,
             ),
           ),
         );

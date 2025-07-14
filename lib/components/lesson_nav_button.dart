@@ -10,10 +10,12 @@ class LessonNavButton extends StatelessWidget {
     super.key,
     required this.index,
     required this.lessonStatus,
+    required this.setScrollContextCallback,
   });
 
   final int index;
   final LessonStatus lessonStatus;
+  final Function(BuildContext inputContext)? setScrollContextCallback;
 
   void _navigateToLesson(BuildContext context) {
     Navigator.push(
@@ -34,6 +36,12 @@ class LessonNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Schedule the scroll context callback to be called after the widget is built
+    if (setScrollContextCallback != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setScrollContextCallback!(context);
+      });
+    }
     final theme = Theme.of(context);
     final child = Text(
       (index + 1).toString(),
