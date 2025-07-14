@@ -97,7 +97,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
     svgColor = isDarkMode ? Colors.white : Colors.black;
   }
 
-  bool get areButtonsDisabled => 
+  bool get areButtonsDisabled =>
       context.watch<LessonProvider>().isBottomSheetVisible;
 
   // The build method is still required (inherited from StatefulExerciseState)

@@ -12,10 +12,9 @@ class ToastUtility {
 
     // Get theme colors
     final isDark = theme.brightness == Brightness.dark;
-     final backgroundColor = (isDark 
-      ? theme.colorScheme.surface
-      : theme.colorScheme.primary)
-      .withValues(alpha: 0.9);
+    final backgroundColor =
+        (isDark ? theme.colorScheme.surface : theme.colorScheme.primary)
+            .withValues(alpha: 0.9);
     final textColor = isDark
         ? Theme.of(context).colorScheme.onSurface
         : Theme.of(context).colorScheme.onPrimary;

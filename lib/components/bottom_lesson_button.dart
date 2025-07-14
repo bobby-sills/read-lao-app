@@ -23,13 +23,13 @@ class _BottomLessonButtonState extends State<BottomLessonButton> {
 
   void _handlePress() {
     if (_isPressed || widget.onPressed == null) return;
-    
+
     setState(() {
       _isPressed = true;
     });
-    
+
     widget.onPressed!();
-    
+
     // Reset after a short delay to prevent rapid consecutive taps
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {

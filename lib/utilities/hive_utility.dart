@@ -16,7 +16,7 @@ class HiveUtility {
               ? consonantCompletionBox
               : vowelCompletionBox,
         ).get(lessonIndex) ??
-        sectionType == SectionType.consonant && lessonIndex < 10;
+        sectionType == SectionType.consonant && lessonIndex < 1;
   }
 
   static void setLessonCompleted(

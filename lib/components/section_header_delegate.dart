@@ -7,7 +7,11 @@ class SectionHeaderDelegate extends SliverPersistentHeaderDelegate {
   SectionHeaderDelegate(this.title, {this.height = 60.0});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(
       height: height,
       color: Theme.of(context).scaffoldBackgroundColor,

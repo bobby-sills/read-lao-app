@@ -16,21 +16,56 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final int lessonButtonSize = 100;
-  BuildContext? contextToScrollTo;
+  final ScrollController _scrollController = ScrollController();
 
-  void _setScrollContextCallback(BuildContext inputContext) {
-    contextToScrollTo = inputContext;
-    // Schedule the scroll to happen after the widget is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (contextToScrollTo != null) {
-        Scrollable.ensureVisible(contextToScrollTo!);
-      }
-    });
+  void _scrollToLesson() {
+    final lastLesson = _getLastCompleteLesson();
+    
+    // Calculate the position based on lesson index and section
+    double targetPosition = 0;
+
+    // Add height for sticky header
+    const double headerHeight = 60;
+
+    if (lastLesson.sectionType == SectionType.consonant) {
+      // For consonant section, just calculate position from lesson index
+      targetPosition =
+          headerHeight +
+          (lastLesson.index * 120); // 100 button height + 20 padding
+    } else {
+      // For vowel section, add all consonant lessons plus vowel header
+      final consonantLessons = AppData.consonantLessons.length;
+      targetPosition =
+          headerHeight +
+          (consonantLessons * 120) +
+          headerHeight +
+          (lastLesson.index * 120);
+    }
+
+    // Add some offset to center the lesson on screen
+    targetPosition = targetPosition - 200;
+
+    // Ensure we don't scroll beyond the bounds
+    targetPosition = targetPosition.clamp(
+      0,
+      _scrollController.position.maxScrollExtent,
+    );
+
+    _scrollController.animateTo(
+      targetPosition,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
   void initState() {
     super.initState();
+    
+    // Schedule the scroll to happen after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToLesson();
+    });
   }
 
   @override
@@ -40,6 +75,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
+          controller: _scrollController,
           slivers: [
             SliverStickyHeader(
               header: Container(
@@ -59,7 +95,6 @@ class _HomePageState extends State<HomePage> {
               sliver: LessonView(
                 sectionType: SectionType.consonant,
                 lastLesson: lastLesson,
-                setScrollContextCallback: _setScrollContextCallback,
               ),
             ),
             SliverStickyHeader(
@@ -80,7 +115,6 @@ class _HomePageState extends State<HomePage> {
               sliver: LessonView(
                 sectionType: SectionType.vowel,
                 lastLesson: lastLesson,
-                setScrollContextCallback: _setScrollContextCallback,
               ),
             ),
           ],
@@ -94,7 +128,6 @@ class _HomePageState extends State<HomePage> {
       SectionType.consonant,
     );
     final lastVowel = HiveUtility.getLastLessonComplete(SectionType.vowel);
-
 
     // If the last consonant has been completed, then the last lesson
     // will be in the vowel section
