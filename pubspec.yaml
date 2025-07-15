@@ -75,7 +75,23 @@ flutter:
   # https://flutter.dev/to/asset-from-package
 
   fonts:
-    - family: Saysettha
+    - family: NotoSansLaoLooped
       fonts:
-        - asset: assets/fonts/saysettha.ttc
+        - asset: assets/fonts/NotoSansLaoLooped.ttf
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Regular.ttf
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Light.ttf
+          weight: 300
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-SemiBold.ttf
           weight: 600
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Black.ttf
+          weight: 900
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Thin.ttf
+          weight: 100

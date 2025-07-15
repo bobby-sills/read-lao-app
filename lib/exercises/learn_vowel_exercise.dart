@@ -59,7 +59,6 @@ class LearnVowelExerciseState
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final bool isDarkMode = theme.brightness == Brightness.dark;
 
     return Expanded(
       child: Center(
@@ -73,10 +72,11 @@ class LearnVowelExerciseState
                 child: DynamicBoldText(
                   text: widget.letter,
                   targetCharacter: vowelPlaceholder,
-                  fontSize: 200,
-                  boldColor: isDarkMode ? Colors.white : Colors.black,
-                  outlineColor: isDarkMode ? Colors.white : Colors.black,
-                  strokeWidth: 2.5,
+                  textStyle: TextStyle(
+                    fontFamily: "NotoSansLaoLooped",
+                    fontWeight: FontWeight.w700,
+                    fontSize: theme.textTheme.headlineLarge!.fontSize,
+                  ),
                 ),
               ),
             ),

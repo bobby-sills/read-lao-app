@@ -75,8 +75,7 @@ class SelectLetterExerciseState
                         shuffledLetters[index],
                         style: TextStyle(
                           fontSize: theme.textTheme.displayLarge?.fontSize,
-                          fontFamily: 'Saysettha',
-                          fontWeight: FontWeight.w600,
+                          fontFamily: 'NotoSansLaoLooped',
                         ),
                       ),
                     );
