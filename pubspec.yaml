@@ -77,7 +77,6 @@ flutter:
   fonts:
     - family: NotoSansLaoLooped
       fonts:
-        - asset: assets/fonts/NotoSansLaoLooped.ttf
         - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Regular.ttf
         - asset: assets/fonts/NotoSansLooped/NotoSansLaoLooped-Bold.ttf
           weight: 700

@@ -62,8 +62,7 @@ class MatchingButton extends StatelessWidget {
         letter,
         style: TextStyle(
           fontSize: theme.textTheme.displayLarge?.fontSize,
-          fontFamily: 'Saysettha',
-          fontWeight: FontWeight.w600,
+          fontFamily: 'NotoSansLaoLooped',
         ),
       );
     } else if (buttonType == ButtonType.sound) {

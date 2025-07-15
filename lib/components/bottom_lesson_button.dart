@@ -22,7 +22,7 @@ class _BottomLessonButtonState extends State<BottomLessonButton> {
   bool _isPressed = false;
 
   void _handlePress() {
-    if (_isPressed || widget.onPressed == null) return;
+    if (_isPressed) return;
 
     setState(() {
       _isPressed = true;
@@ -45,7 +45,7 @@ class _BottomLessonButtonState extends State<BottomLessonButton> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: FilledButton.icon(
-        onPressed: _isPressed ? null : _handlePress,
+        onPressed: widget.onPressed == null ? null : _handlePress,
         icon: widget.buttonIcon,
         label: Text(widget.buttonText),
         iconAlignment: IconAlignment.end,

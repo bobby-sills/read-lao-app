@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/select_blank_exercise.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
 
@@ -73,13 +72,7 @@ class SelectSoundExerciseState
                 ),
               ),
             ),
-            SafeArea(
-              child: BottomLessonButton(
-                onPressed: (selectedButton == -1) ? null : checkAnswer,
-                buttonText: 'Check',
-                buttonIcon: const Icon(Icons.check_rounded),
-              ),
-            ), // The bottom button
+            checkButton(),
           ],
         ),
       ),

@@ -31,8 +31,6 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   late bool isDarkMode;
   late Color svgColor;
   bool bottomButtonIsCorrect = true;
-  bool bottomLessonButtonPressed = false;
-  bool checkButtonPressed = false;
   var selectedButton = -1;
 
   void checkAnswer() {
@@ -107,16 +105,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   Widget checkButton() {
     return SafeArea(
       child: BottomLessonButton(
-        onPressed: (selectedButton == -1)
-            ? null
-            : (checkButtonPressed) // Stop the user from pressing it twice
-            ? () {} // If it has been pressed, stop it from being pressed again
-            : () {
-                setState(() {
-                  checkButtonPressed = true;
-                });
-                checkAnswer();
-              },
+        onPressed: (selectedButton < 0) ? null : checkAnswer,
         buttonText: 'Check',
         buttonIcon: const Icon(Icons.check_rounded),
       ),
@@ -136,10 +125,8 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
         SizedBox(height: 8),
         BottomLessonButton(
           onPressed: bottomButtonIsCorrect
-              ? context.read<LessonProvider>().nextExercise
-              : Navigator.of(
-                  context,
-                ).pop, // Close the bottom sheet no matter what,
+              ? context.read<LessonProvider>().nextExercise!
+              : Navigator.of(context).pop,
           buttonIcon: bottomButtonIsCorrect
               ? const Icon(Icons.arrow_forward_rounded)
               : const Icon(Icons.refresh_rounded),

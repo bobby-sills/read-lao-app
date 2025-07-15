@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
-import 'package:learn_lao_app/components/dynamic_bold_text.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
@@ -28,10 +27,24 @@ class LearnVowelExerciseState
     extends StatefulExerciseState<LearnVowelExercise> {
   final _speechPlayer = SoundsUtility();
   final _effectPlayer = SoundsUtility();
+  late final String letter;
 
   @override
   void initState() {
     super.initState();
+    if (widget.placeholder == null) return;
+    // First separate the string into different runes
+    // Then find the rune that is equal to the placeholder
+    // and change it
+    // Then turn the runes back into a string
+    final letterAsRunes = widget.letter.runes.toList();
+    final defaultPlaceholderRune = vowelPlaceholder.runes.single;
+    final defaultPlaceholderIndex = letterAsRunes.indexWhere(
+      (rune) => rune == defaultPlaceholderRune,
+    );
+    // Replace the default placeholder rune with the custom placeholder rune
+    letterAsRunes[defaultPlaceholderIndex] = widget.placeholder!.runes.single;
+    letter = String.fromCharCodes(letterAsRunes);
   }
 
   @override
@@ -66,28 +79,10 @@ class LearnVowelExerciseState
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              flex: 2,
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: DynamicBoldText(
-                  text: widget.letter,
-                  targetCharacter: vowelPlaceholder,
-                  textStyle: TextStyle(
-                    fontFamily: "NotoSansLaoLooped",
-                    fontWeight: FontWeight.w700,
-                    fontSize: theme.textTheme.headlineLarge!.fontSize,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
               flex: 5,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(
-                  widget.letter,
-                  style: laoStyle.copyWith(fontSize: 10000),
-                ),
+                child: Text(letter, style: laoStyle.copyWith(fontSize: 10000)),
               ),
             ),
             Spacer(),
