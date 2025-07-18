@@ -1,14 +1,19 @@
 import 'package:audioplayers/audioplayers.dart' show AssetSource, AudioPlayer;
 import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 
 class SoundsUtility {
   final audioPlayer = AudioPlayer();
 
-  Future<void> playLetter(String letter) async {
+  Future<void> playLetter(String letter, SectionType sectionType) async {
     try {
       await audioPlayer.play(
-        AssetSource('letters/sounds/${laoToRomanization[letter]}.wav'),
+        AssetSource(
+          sectionType == SectionType.consonant
+              ? 'letters/sounds/${laoToRomanization[letter]}.wav'
+              : 'vowels/sounds/${vowelsIndices.indexOf(letter)}',
+        ),
       );
     } catch (e) {
       if (kDebugMode) {

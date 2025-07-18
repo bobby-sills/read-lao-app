@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   void _scrollToLesson() {
     final lastLesson = _getLastCompleteLesson();
-    
+
     // Calculate the position based on lesson index and section
     double targetPosition = 0;
 
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    
+
     // Schedule the scroll to happen after the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToLesson();

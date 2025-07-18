@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/learn_consonant_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
 import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
@@ -26,16 +27,23 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(newLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(newLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }
 
     // 2. Old Letter Review
-    generatedLessons[0].add(MatchingExercise(lettersToMatch: oldLetters));
+    generatedLessons[0].add(
+      MatchingExercise(
+        lettersToMatch: oldLetters,
+        sectionType: SectionType.consonant,
+      ),
+    );
 
     // 3. Mixed Practice (randomized)
     List<String> combinedLetters = <String>{
@@ -50,10 +58,12 @@ class LessonGenerator {
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }
@@ -64,8 +74,14 @@ class LessonGenerator {
     List<String> finalShuffled = [...combinedLetters];
     finalShuffled.shuffle();
     generatedLessons[0].addAll([
-      MatchingExercise(lettersToMatch: finalShuffled.sublist(0, 3)),
-      MatchingExercise(lettersToMatch: finalShuffled.sublist(3, 6)),
+      MatchingExercise(
+        lettersToMatch: finalShuffled.sublist(0, 3),
+        sectionType: SectionType.consonant,
+      ),
+      MatchingExercise(
+        lettersToMatch: finalShuffled.sublist(3, 6),
+        sectionType: SectionType.consonant,
+      ),
     ]);
 
     // LESSON 2: Reinforcement & Integration
@@ -77,12 +93,18 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(newLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
 
     // 2. Focused New Letter Practice
-    generatedLessons[1].add(MatchingExercise(lettersToMatch: newLetters));
+    generatedLessons[1].add(
+      MatchingExercise(
+        lettersToMatch: newLetters,
+        sectionType: SectionType.consonant,
+      ),
+    );
 
     for (var letter in newLetters) {
       generatedLessons[1].add(
@@ -93,6 +115,7 @@ class LessonGenerator {
             4,
             letter,
           ), // Harder: 4 options
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -106,6 +129,7 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -115,6 +139,7 @@ class LessonGenerator {
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -124,7 +149,10 @@ class LessonGenerator {
     List<String> shuffledCombined = [...combinedLetters];
     shuffledCombined.shuffle();
     generatedLessons[1].add(
-      MatchingExercise(lettersToMatch: shuffledCombined.take(5).toList()),
+      MatchingExercise(
+        lettersToMatch: shuffledCombined.take(5).toList(),
+        sectionType: SectionType.consonant,
+      ),
     );
     List<String> finalMixed = [...combinedLetters];
     finalMixed.shuffle();
@@ -134,10 +162,12 @@ class LessonGenerator {
             ? SelectLetterExercise(
                 correctLetter: letter,
                 allLetters: getExerciseOptions(combinedLetters, 3, letter),
+                sectionType: SectionType.consonant,
               )
             : SelectSoundExercise(
                 correctLetter: letter,
                 allLetters: getExerciseOptions(combinedLetters, 3, letter),
+                sectionType: SectionType.consonant,
               ),
       );
     }
@@ -155,10 +185,12 @@ class LessonGenerator {
             4,
             letter,
           ), // Max difficulty
+          sectionType: SectionType.consonant,
         ),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }
@@ -172,6 +204,7 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -181,6 +214,7 @@ class LessonGenerator {
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -189,7 +223,10 @@ class LessonGenerator {
     List<String> matchingShuffled = [...combinedLetters];
     matchingShuffled.shuffle();
     generatedLessons[2].add(
-      MatchingExercise(lettersToMatch: matchingShuffled.take(5).toList()),
+      MatchingExercise(
+        lettersToMatch: matchingShuffled.take(5).toList(),
+        sectionType: SectionType.consonant,
+      ),
     );
 
     // Split matching with mixed old/new
@@ -197,8 +234,14 @@ class LessonGenerator {
     List<String> splitGroup2 = [oldLetters[2], newLetters[1], newLetters[2]];
 
     generatedLessons[2].addAll([
-      MatchingExercise(lettersToMatch: splitGroup1),
-      MatchingExercise(lettersToMatch: splitGroup2),
+      MatchingExercise(
+        lettersToMatch: splitGroup1,
+        sectionType: SectionType.consonant,
+      ),
+      MatchingExercise(
+        lettersToMatch: splitGroup2,
+        sectionType: SectionType.consonant,
+      ),
     ]);
 
     // 4. Final Assessment
@@ -211,10 +254,12 @@ class LessonGenerator {
         () => SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
         () => SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
       ];
       generatedLessons[2].add(exerciseTypes[Random().nextInt(2)]());
@@ -226,10 +271,12 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }
@@ -264,17 +311,22 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }
 
     // 2. Simple matching with all three letters
     generatedLessons[0].add(
-      MatchingExercise(lettersToMatch: firstThreeLetters),
+      MatchingExercise(
+        lettersToMatch: firstThreeLetters,
+        sectionType: SectionType.consonant,
+      ),
     );
 
     // 3. Mixed practice (no duplicates needed)
@@ -286,17 +338,22 @@ class LessonGenerator {
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }
 
     // 4. Final assessment - single matching with all three
     generatedLessons[0].add(
-      MatchingExercise(lettersToMatch: firstThreeLetters),
+      MatchingExercise(
+        lettersToMatch: firstThreeLetters,
+        sectionType: SectionType.consonant,
+      ),
     );
 
     // LESSON 2: Reinforcement
@@ -308,13 +365,17 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
 
     // 2. Matching practice
     generatedLessons[1].add(
-      MatchingExercise(lettersToMatch: firstThreeLetters),
+      MatchingExercise(
+        lettersToMatch: firstThreeLetters,
+        sectionType: SectionType.consonant,
+      ),
     );
 
     // 3. Sound practice
@@ -323,6 +384,7 @@ class LessonGenerator {
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -336,10 +398,12 @@ class LessonGenerator {
             ? SelectLetterExercise(
                 correctLetter: letter,
                 allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+                sectionType: SectionType.consonant,
               )
             : SelectSoundExercise(
                 correctLetter: letter,
                 allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+                sectionType: SectionType.consonant,
               ),
       );
     }
@@ -353,17 +417,22 @@ class LessonGenerator {
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }
 
     // 2. Comprehensive matching
     generatedLessons[2].add(
-      MatchingExercise(lettersToMatch: firstThreeLetters),
+      MatchingExercise(
+        lettersToMatch: firstThreeLetters,
+        sectionType: SectionType.consonant,
+      ),
     );
 
     // 3. Speed rounds
@@ -377,6 +446,7 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -386,6 +456,7 @@ class LessonGenerator {
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -398,10 +469,12 @@ class LessonGenerator {
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          sectionType: SectionType.consonant,
         ),
       ]);
     }

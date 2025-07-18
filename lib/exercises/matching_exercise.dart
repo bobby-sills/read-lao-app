@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/matching_button.dart';
 import 'package:learn_lao_app/enums/button_type.dart';
+import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
@@ -10,8 +11,13 @@ import 'package:learn_lao_app/enums/button_state.dart';
 
 class MatchingExercise extends StatefulExercise {
   final List<String> lettersToMatch;
+  final SectionType sectionType;
 
-  MatchingExercise({required this.lettersToMatch, super.key});
+  MatchingExercise({
+    required this.lettersToMatch,
+    required this.sectionType,
+    super.key,
+  });
 
   @override
   State<MatchingExercise> createState() => _MatchingExerciseState();
@@ -172,6 +178,8 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
 
   @override
   Widget build(BuildContext context) {
+    // This is needed for generating a unique key
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -204,6 +212,7 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
                               letter: positions[ButtonType.sound]![i],
                               selectButtonCallback: _selectButton,
                               player: _speechPlayer,
+                              sectionType: widget.sectionType,
                             ),
                           ),
                         ),
@@ -227,6 +236,7 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
                               letter: positions[ButtonType.letter]![i],
                               selectButtonCallback: _selectButton,
                               player: _speechPlayer,
+                              sectionType: widget.sectionType,
                             ),
                           ),
                         ),

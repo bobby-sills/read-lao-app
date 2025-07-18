@@ -73,6 +73,8 @@ class LearnVowelExerciseState
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
+    // This is needed for generating a unique key
+
     return Expanded(
       child: Center(
         child: Column(

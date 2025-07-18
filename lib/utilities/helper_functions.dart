@@ -41,7 +41,7 @@ List<String> getExerciseOptions<T>(
   return result;
 }
 
-const List<String> teachingOrder = [
+const List<String> consonantOrder = [
   'ກ', // g/k sound
   'ງ', // visually distinct spacer
   'ຂ', // g/k sound (pair with ກ but spaced)

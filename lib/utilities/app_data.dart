@@ -7,15 +7,11 @@ LessonGenerator lessonGenerator = LessonGenerator();
 
 class AppData {
   static final List<List<StatefulExercise>> consonantLessons = lessonGenerator
-      .generateCompleteCurriculum(teachingOrder);
+      .generateCompleteCurriculum(consonantOrder);
   static final List<List<StatefulExercise>> vowelLessons = [
     [
       for (int i = 0; i < vowelsIndices.length; i++)
-        LearnVowelExercise(
-          letter: vowelsIndices[i],
-          letterIndex: i,
-          placeholder: 'ອ',
-        ),
+        LearnVowelExercise(letter: vowelsIndices[i], letterIndex: i),
     ],
   ];
 }

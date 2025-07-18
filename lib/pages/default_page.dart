@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/pages/practice_page.dart';
+import 'package:learn_lao_app/pages/settings_page.dart';
 
 class DefaultPage extends StatefulWidget {
   const DefaultPage({super.key});
@@ -35,17 +36,17 @@ class _DefaultPageState extends State<DefaultPage> {
             icon: Icon(Icons.create_outlined),
             label: "Practice",
           ),
-          // NavigationDestination(
-          //   selectedIcon: Icon(Icons.settings_rounded),
-          //   icon: Icon(Icons.settings_outlined),
-          //   label: "Settings",
-          // ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.settings_rounded),
+            icon: Icon(Icons.settings_outlined),
+            label: "Settings",
+          ),
         ],
       ),
       body: <Widget>[
         HomePage(),
         const PracticePage(),
-        // const SettingsPage(),
+        const SettingsPage(),
       ][currentPageIndex],
     );
   }

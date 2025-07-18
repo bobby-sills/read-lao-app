@@ -48,6 +48,9 @@ class ReviewMessageState extends StatefulExerciseState<ReviewMessage> {
         },
       );
     });
+
+    // This is needed for generating a unique key
+
     return Expanded(
       child: Center(
         child: Column(

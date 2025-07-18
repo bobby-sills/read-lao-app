@@ -8,6 +8,7 @@ class SelectSoundExercise extends SelectBlankExercise {
   SelectSoundExercise({
     required super.correctLetter,
     required super.allLetters,
+    required super.sectionType,
     super.key,
   });
 
@@ -24,7 +25,6 @@ class SelectSoundExerciseState
     return Expanded(
       child: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
               flex: 2,
@@ -36,43 +36,58 @@ class SelectSoundExerciseState
                 ),
               ),
             ),
-            Spacer(),
-            AbsorbPointer(
-              absorbing: areButtonsDisabled,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  spacing: 8.0,
-                  children: List<Widget>.generate(shuffledLetters.length, (
-                    index,
-                  ) {
-                    final letter = shuffledLetters[index];
-                    return FilledButton(
-                      onPressed: () {
-                        speechPlayer.playLetter(letter);
-                        setState(() {
-                          selectedButton = index;
-                        });
-                      },
-                      style: FilledButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 25,
-                          horizontal: 100,
+            Expanded(
+              flex: 3,
+              child: AbsorbPointer(
+                absorbing: areButtonsDisabled,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  child: Column(
+                    children: List<Widget>.generate(shuffledLetters.length, (
+                      index,
+                    ) {
+                      final letter = shuffledLetters[index];
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: FilledButton(
+                              onPressed: () {
+                                speechPlayer.playLetter(
+                                  letter,
+                                  widget.sectionType,
+                                );
+                                setState(() {
+                                  selectedButton = index;
+                                });
+                              },
+                              style: FilledButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                backgroundColor: index == selectedButton
+                                    ? theme.colorScheme.primary
+                                    : theme.colorScheme.secondary,
+                              ),
+                              child: Icon(
+                                Icons.volume_up_rounded,
+                                size: theme.textTheme.displayMedium?.fontSize,
+                              ),
+                            ),
+                          ),
                         ),
-                        backgroundColor: index == selectedButton
-                            ? theme.colorScheme.primary
-                            : theme.colorScheme.secondary,
-                      ),
-                      child: Icon(
-                        Icons.volume_up_rounded,
-                        size: theme.textTheme.displayMedium?.fontSize,
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+                  ),
                 ),
               ),
             ),
-            checkButton(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: checkButton(),
+            ),
           ],
         ),
       ),

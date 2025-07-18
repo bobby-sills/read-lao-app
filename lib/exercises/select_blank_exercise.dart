@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
+import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/sounds_utility.dart';
@@ -11,9 +12,12 @@ enum BottomButtonState { incorrect, correct }
 abstract class SelectBlankExercise extends StatefulExercise {
   final String correctLetter;
   final List<String> allLetters;
+  final SectionType sectionType;
+
   SelectBlankExercise({
     required this.correctLetter,
     required this.allLetters,
+    required this.sectionType,
     super.key,
   });
 
@@ -72,8 +76,8 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
     shuffledLetters.shuffle();
 
     assert(
-      (widget.allLetters.length - 1) <= 2,
-      'There can be a maximum of 2 incorrect letters',
+      (widget.allLetters.length) <= 4,
+      'There can be a maximum of 4 incorrect letters',
     );
 
     assert(

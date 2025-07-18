@@ -6,6 +6,7 @@ import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/utilities/app_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 import 'package:learn_lao_app/components/lesson_nav_button.dart';
+import 'package:learn_lao_app/utilities/helper_functions.dart';
 
 class LessonView extends StatelessWidget {
   final SectionType sectionType;
@@ -47,21 +48,35 @@ class LessonView extends StatelessWidget {
                     : index == 0
                     ? LessonStatus.nextUp
                     : LessonStatus.notStarted;
+                Widget lessonButton = SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: LessonNavButton(
+                    index: index,
+                    lessonStatus: lessonStatus,
+                    sectionType: sectionType,
+                  ),
+                );
+                late Widget content;
+
+                if (index % 3 == 0) {
+                  String headerContent =
+                      "${(index / 3).ceil() + 1}. ${consonantOrder.sublist(index, index + 3).join(', ')}";
+                  Widget header = Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Text(headerContent, style: TextStyle(fontSize: 20)),
+                  );
+                  content = Column(children: [header, lessonButton]);
+                } else {
+                  content = lessonButton;
+                }
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Center(
                     child: Transform.translate(
                       offset: Offset(xOffset, 0),
-                      child: SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: LessonNavButton(
-                          index: index,
-                          lessonStatus: lessonStatus,
-                          sectionType: sectionType,
-                        ),
-                      ),
+                      child: content,
                     ),
                   ),
                 );

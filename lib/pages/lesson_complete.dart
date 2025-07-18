@@ -51,6 +51,7 @@ class _LessonCompleteState extends State<LessonComplete> {
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   padding: EdgeInsets.all(24),
@@ -66,6 +67,7 @@ class _LessonCompleteState extends State<LessonComplete> {
                 ),
                 SizedBox(height: 32),
                 Text(
+                  textAlign: TextAlign.center,
                   '$textSectionType lesson ${widget.lessonNum + 1} complete!',
                   style: theme.textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.w600,
@@ -73,6 +75,7 @@ class _LessonCompleteState extends State<LessonComplete> {
                 ),
                 SizedBox(height: 16),
                 Text(
+                  textAlign: TextAlign.center,
                   'Well done! Keep up the great work',
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,

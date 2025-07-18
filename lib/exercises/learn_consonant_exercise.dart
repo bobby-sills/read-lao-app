@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/components/dynamic_bold_text.dart';
+import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
@@ -54,6 +55,8 @@ class LearningExerciseState
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
+    // This is needed for generating a unique key
+
     return Expanded(
       child: Center(
         child: Column(
@@ -100,7 +103,10 @@ class LearningExerciseState
               flex: 3,
               child: ElevatedButton(
                 onPressed: () {
-                  _speechPlayer.playLetter(widget.letter);
+                  _speechPlayer.playLetter(
+                    widget.letter,
+                    SectionType.consonant,
+                  );
 
                   if (!context.read<LessonProvider>().isBottomSheetVisible) {
                     showBottomBar(
