@@ -1,13 +1,8 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
-import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
+import 'package:learn_lao_app/exercises/arrange_letters/arrange_letters_exercise.dart';
 import 'package:learn_lao_app/pages/default_page.dart';
-import 'package:learn_lao_app/pages/lesson_wrapper.dart';
-import 'package:learn_lao_app/testing.dart';
+import 'package:provider/provider.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 import 'package:learn_lao_app/utilities/provider/theme_provider.dart';
 
@@ -32,12 +27,15 @@ class MyApp extends StatelessWidget {
       builder: (context, themeProvider, child) {
         return MaterialApp(
           title: 'Learn Lao',
-          theme: themeProvider.lightTheme,
-          darkTheme: themeProvider.darkTheme,
-          themeMode: themeProvider.isDarkMode
-              ? ThemeMode.dark
-              : ThemeMode.light,
-          home: DefaultPage(),
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue,
+              brightness: themeProvider.isDarkMode
+                  ? Brightness.light
+                  : Brightness.light,
+            ),
+          ),
+          home: ArrangeLettersExercise(),
           debugShowCheckedModeBanner: false,
         );
       },
