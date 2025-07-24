@@ -44,6 +44,10 @@ dependencies:
   flutter_sticky_header: ^0.8.0
   super_drag_and_drop: ^0.9.1
   dotted_border: ^3.1.0
+  dart_code_metrics: ^4.19.2
+  flutter_clean_architecture: ^6.0.2
+  dependency_validator: ^3.2.3
+  local_hero: ^0.3.0
 
 dev_dependencies:
   flutter_test:

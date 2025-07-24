@@ -194,7 +194,6 @@ class _LessonWrapperState extends State<LessonWrapper>
                 return _combinedExercises[_exerciseIndex];
               },
             ),
-            Text("$_exerciseIndex"),
           ],
         ),
       ),

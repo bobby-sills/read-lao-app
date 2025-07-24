@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learn_lao_app/exercises/arrange_letters/arrange_letters_exercise.dart';
+import 'package:learn_lao_app/exercises/spelling_exercise/spelling_exercise_test.dart';
+// ignore: unused_import
 import 'package:learn_lao_app/pages/default_page.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
@@ -31,11 +32,11 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.blue,
               brightness: themeProvider.isDarkMode
-                  ? Brightness.light
+                  ? Brightness.dark
                   : Brightness.light,
             ),
           ),
-          home: ArrangeLettersExercise(),
+          home: DefaultPage(),
           debugShowCheckedModeBanner: false,
         );
       },

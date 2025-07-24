@@ -8,16 +8,16 @@ import 'package:learn_lao_app/utilities/sounds_utility.dart';
 import 'package:provider/provider.dart';
 
 class LearnVowelExercise extends StatefulExercise {
-  final String letter;
-  final int letterIndex;
-  final String? placeholder;
-
   LearnVowelExercise({
     required this.letter,
     required this.letterIndex,
     this.placeholder,
     super.key,
   });
+
+  final String letter;
+  final int letterIndex;
+  final String? placeholder;
 
   @override
   LearnVowelExerciseState createState() => LearnVowelExerciseState();
