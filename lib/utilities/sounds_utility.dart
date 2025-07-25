@@ -7,21 +7,13 @@ class SoundsUtility {
   final audioPlayer = AudioPlayer();
 
   Future<void> playLetter(String letter, SectionType sectionType) async {
-    try {
-      await audioPlayer.play(
-        AssetSource(
-          sectionType == SectionType.consonant
-              ? 'letters/sounds/${laoToRomanization[letter]}.wav'
-              : 'vowels/sounds/${vowelsIndices.indexOf(letter)}',
-        ),
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print(
-          "Error: file 'assets/letters/sounds/${laoToRomanization[letter]}.wav' not found",
-        );
-      }
-    }
+    await audioPlayer.play(
+      AssetSource(
+        sectionType == SectionType.consonant
+            ? 'letters/sounds/${laoToRomanization[letter]}.wav'
+            : 'vowels/sounds/${vowelsIndices.indexOf(letter)}',
+      ),
+    );
   }
 
   Future<void> playVowel(int letterIndex) async {
@@ -38,13 +30,7 @@ class SoundsUtility {
   }
 
   Future<void> playSoundEffect(String soundEffect) async {
-    try {
-      await audioPlayer.play(AssetSource('sound_effects/$soundEffect.wav'));
-    } catch (e) {
-      if (kDebugMode) {
-        print("Error: file 'assets/sound_effects/$soundEffect.wav' not found");
-      }
-    }
+    await audioPlayer.play(AssetSource('sound_effects/$soundEffect.wav'));
   }
 
   void dispose() {

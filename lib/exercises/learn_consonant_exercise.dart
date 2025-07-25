@@ -47,7 +47,8 @@ class LearningExerciseState
   @override
   void dispose() {
     _speechPlayer.dispose();
-    _effectPlayer.dispose();
+    //_effectPlayer.dispose(); // idk why it causes an error if I dispose it because then the
+                               // bottom sheet content can't play the correct sound effect
     super.dispose();
   }
 

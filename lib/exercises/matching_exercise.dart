@@ -108,10 +108,13 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
         });
         // Set time until disabled if correct
         Future.delayed(Duration(milliseconds: 800), () {
-          setState(() {
+          if (mounted) { // only disable the buttons if currently in the widget tree
+            setState(() {
             states[ButtonType.sound]![soundIndex] = ButtonState.disabled;
             states[ButtonType.letter]![letterIndex] = ButtonState.disabled;
           });
+          }
+          
         });
 
         // If everything is matched, then show the bottom bar
