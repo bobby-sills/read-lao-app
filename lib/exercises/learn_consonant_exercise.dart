@@ -54,7 +54,6 @@ class LearningExerciseState
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-
     // This is needed for generating a unique key
 
     return Expanded(
@@ -90,11 +89,7 @@ class LearningExerciseState
                 child: DynamicBoldText(
                   text: widget.word,
                   targetCharacter: widget.letter,
-                  textStyle: TextStyle(
-                    fontFamily: "NotoSansLaoLooped",
-                    fontWeight: FontWeight.w700,
-                    fontSize: theme.textTheme.headlineLarge!.fontSize,
-                  ),
+                  textStyle: theme.textTheme.headlineLarge!.copyWith(fontFamily: "NotoSansLaoLooped", fontWeight: FontWeight.w700)
                 ),
               ),
             ),

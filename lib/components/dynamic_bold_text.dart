@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DynamicBoldText extends StatelessWidget {
@@ -14,6 +15,8 @@ class DynamicBoldText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final bool isDarkMode = theme.brightness == Brightness.dark;
     int highlightedRune = targetCharacter.runes.single;
 
     final List<TextSpan> spans = [];
@@ -30,8 +33,7 @@ class DynamicBoldText extends StatelessWidget {
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 1.0
                 ..color =
-                    textStyle.color ??
-                    DefaultTextStyle.of(context).style.color!,
+                    textStyle.color ?? (isDarkMode ? Colors.white : Colors.black)
             ),
           ),
         );

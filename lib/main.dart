@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learn_lao_app/exercises/spelling_exercise/spelling_exercise_test.dart';
 // ignore: unused_import
 import 'package:learn_lao_app/pages/default_page.dart';
 import 'package:provider/provider.dart';

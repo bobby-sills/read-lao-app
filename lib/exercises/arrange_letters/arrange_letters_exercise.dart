@@ -146,7 +146,6 @@ class LetterDropRegion extends StatelessWidget {
               child: Center(child: Text(entry.value)),
             ),
           );
-          ;
         }
 
         return Draggable(

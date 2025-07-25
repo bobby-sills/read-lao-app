@@ -27,7 +27,6 @@ class _SpellingExerciseState
   }
 
   void swapSides() {
-    print('what');
     setState(() {
       if (lower.isEmpty) {
         lower.add(upper[0]);
