@@ -3,7 +3,7 @@ import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/components/dynamic_bold_text.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-import 'package:learn_lao_app/utilities/helper_functions.dart';
+import 'package:learn_lao_app/utilities/letter_data.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
 import 'package:learn_lao_app/utilities/sounds_utility.dart';
@@ -68,7 +68,7 @@ class LearningExerciseState
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
                   image: AssetImage(
-                    'assets/letters/images/jpgs/${laoToRomanization[widget.letter]}.jpg',
+                    'assets/letters/images/jpgs/${LetterData.laoToRomanization[widget.letter]}.jpg',
                   ),
                 ),
               ),
@@ -90,7 +90,10 @@ class LearningExerciseState
                 child: DynamicBoldText(
                   text: widget.word,
                   targetCharacter: widget.letter,
-                  textStyle: theme.textTheme.headlineLarge!.copyWith(fontFamily: "NotoSansLaoLooped", fontWeight: FontWeight.w700)
+                  textStyle: theme.textTheme.headlineLarge!.copyWith(
+                    fontFamily: "NotoSansLaoLooped",
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),

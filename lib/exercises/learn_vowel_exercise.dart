@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-import 'package:learn_lao_app/utilities/helper_functions.dart';
+import 'package:learn_lao_app/utilities/letter_data.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
 import 'package:learn_lao_app/utilities/sounds_utility.dart';
@@ -32,13 +32,16 @@ class LearnVowelExerciseState
   @override
   void initState() {
     super.initState();
-    if (widget.placeholder == null) return;
+    if (widget.placeholder == null) {
+      letter = widget.letter;
+      return;
+    }
     // First separate the string into different runes
     // Then find the rune that is equal to the placeholder
     // and change it
     // Then turn the runes back into a string
     final letterAsRunes = widget.letter.runes.toList();
-    final defaultPlaceholderRune = vowelPlaceholder.runes.single;
+    final defaultPlaceholderRune = LetterData.vowelPlaceholder.runes.single;
     final defaultPlaceholderIndex = letterAsRunes.indexWhere(
       (rune) => rune == defaultPlaceholderRune,
     );

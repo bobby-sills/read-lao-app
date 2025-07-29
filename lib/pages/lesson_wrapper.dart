@@ -127,7 +127,7 @@ class _LessonWrapperState extends State<LessonWrapper>
         _mistakes.add(ReviewMessage());
       }
       // Make sure the same exercise doesn't get added twice, even if the user gets it wrong
-      if (!_mistakesIndicies.contains(_exerciseIndex)) {
+      if (!_mistakes.contains(_combinedExercises[_exerciseIndex])) {
         _mistakes.add(_combinedExercises[_exerciseIndex]);
         _mistakesIndicies.add(_exerciseIndex);
       }

@@ -6,6 +6,7 @@ import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
 import 'package:learn_lao_app/exercises/select_letter_exercise.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
+import 'package:learn_lao_app/utilities/letter_data.dart';
 
 class LessonGenerator {
   // Complete 3-lesson cycle generator for Lao consonant learning
@@ -23,7 +24,10 @@ class LessonGenerator {
     // 1. New Letter Introduction
     for (var letter in newLetters) {
       generatedLessons[0].addAll([
-        LearnConsonantExercise(letter: letter, word: lettersToWords[letter]!),
+        LearnConsonantExercise(
+          letter: letter,
+          word: LetterData.lettersToWords[letter]!,
+        ),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(newLetters, 3, letter),
@@ -307,7 +311,10 @@ class LessonGenerator {
     // 1. Individual letter introduction
     for (var letter in firstThreeLetters) {
       generatedLessons[0].addAll([
-        LearnConsonantExercise(letter: letter, word: lettersToWords[letter]!),
+        LearnConsonantExercise(
+          letter: letter,
+          word: LetterData.lettersToWords[letter]!,
+        ),
         SelectLetterExercise(
           correctLetter: letter,
           allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
