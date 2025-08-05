@@ -1,6 +1,8 @@
 // A function that takes in a list and returns the shuffled version of it
 import 'dart:math';
 
+import 'package:learn_lao_app/utilities/letter_data.dart';
+
 List shuffleList(List list) {
   list.shuffle();
   return list;
@@ -9,7 +11,10 @@ List shuffleList(List list) {
 // Generates a unique list of random `count` values drawn from allOptions
 // excluding the `correct` value. The `correct` value is always included in the
 // returned list.
-List<String> getExerciseOptions<T>(
+
+extension pickCountIncluding on List {}
+
+List<String> pickCountIncluding<T>(
   List<String> possibleLetters,
   int count,
   String correct,
@@ -17,11 +22,12 @@ List<String> getExerciseOptions<T>(
   final random = Random();
   final result = <String>[];
   List<String> uniqueLetters = possibleLetters.toSet().toList();
-
-  // Check if correct is in the list
-  if (!uniqueLetters.contains(correct)) {
-    throw ArgumentError('correct value must be in possibleLetters');
-  }
+  final List<int> randomIndicies = List.generate(
+    uniqueLetters.length,
+    (i) => i,
+  );
+  randomIndicies.shuffle();
+  return randomIndicies.sublist();
 
   if (count > uniqueLetters.length) {
     count = uniqueLetters.length;
@@ -39,4 +45,19 @@ List<String> getExerciseOptions<T>(
 
   result.shuffle();
   return result;
+}
+
+String addConsonantToVowel(String consonant, String vowel) {
+  // First separate the string into different runes
+  // Then find the rune that is equal to the placeholder
+  // and change it
+  // Then turn the runes back into a string
+  final vowelAsRunes = vowel.runes.toList();
+  final defaultPlaceholderRune = LetterData.vowelPlaceholder.runes.single;
+  final defaultPlaceholderIndex = vowelAsRunes.indexWhere(
+    (rune) => rune == defaultPlaceholderRune,
+  );
+  // Replace the default placeholder rune with the custom placeholder rune
+  vowelAsRunes[defaultPlaceholderIndex] = consonant.runes.single;
+  return String.fromCharCodes(vowelAsRunes);
 }

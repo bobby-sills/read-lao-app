@@ -6,7 +6,7 @@ import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/utilities/app_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 import 'package:learn_lao_app/components/lesson_nav_button.dart';
-import 'package:learn_lao_app/utilities/helper_functions.dart';
+import 'package:learn_lao_app/utilities/letter_data.dart';
 
 class LessonView extends StatelessWidget {
   final SectionType sectionType;
@@ -59,9 +59,15 @@ class LessonView extends StatelessWidget {
                 );
                 late Widget content;
 
-                if (index % 3 == 0) {
-                  String headerContent =
-                      "${(index / 3).ceil() + 1}. ${consonantOrder.sublist(index, index + 3).join(', ')}";
+                if (index % 3 == 0 && sectionType == SectionType.consonant) {
+                  final order = (sectionType == SectionType.consonant
+                      ? LetterData.consonantOrder
+                      : LetterData.vowelOrder);
+                  final sublist = order
+                      .sublist(0, (index + 3).clamp(0, order.length))
+                      .join(', ');
+                  final number = (index / 3).ceil() + 1;
+                  String headerContent = "$number. $sublist";
                   Widget header = Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text(headerContent, style: TextStyle(fontSize: 20)),

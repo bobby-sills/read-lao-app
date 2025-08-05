@@ -8,7 +8,7 @@ import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/utilities/letter_data.dart';
 
-class LessonGenerator {
+class ConsonantLessonGenerator {
   // Complete 3-lesson cycle generator for Lao consonant learning
   // Input: newLetters (3 new consonants), oldLetters (3 previously learned)
 
@@ -30,12 +30,12 @@ class LessonGenerator {
         ),
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(newLetters, 3, letter),
+          allLetters: pickCountIncluding(newLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(newLetters, 3, letter),
+          allLetters: pickCountIncluding(newLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
@@ -61,12 +61,12 @@ class LessonGenerator {
       shuffledExercises.addAll([
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 3, letter),
+          incorrectLetters: pickCountIncluding(combinedLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 3, letter),
+          incorrectLetters: pickCountIncluding(combinedLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
@@ -96,7 +96,7 @@ class LessonGenerator {
       generatedLessons[1].add(
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(newLetters, 3, letter),
+          allLetters: pickCountIncluding(newLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -114,7 +114,7 @@ class LessonGenerator {
       generatedLessons[1].add(
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(
+          allLetters: pickCountIncluding(
             combinedLetters,
             4,
             letter,
@@ -132,7 +132,7 @@ class LessonGenerator {
       generatedLessons[1].add(
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -142,7 +142,7 @@ class LessonGenerator {
       generatedLessons[1].add(
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -165,12 +165,12 @@ class LessonGenerator {
         Random().nextBool()
             ? SelectLetterExercise(
                 correctLetter: letter,
-                allLetters: getExerciseOptions(combinedLetters, 3, letter),
+                allLetters: pickCountIncluding(combinedLetters, 3, letter),
                 sectionType: SectionType.consonant,
               )
             : SelectSoundExercise(
                 correctLetter: letter,
-                allLetters: getExerciseOptions(combinedLetters, 3, letter),
+                allLetters: pickCountIncluding(combinedLetters, 3, letter),
                 sectionType: SectionType.consonant,
               ),
       );
@@ -184,7 +184,7 @@ class LessonGenerator {
       generatedLessons[2].addAll([
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(
+          allLetters: pickCountIncluding(
             combinedLetters,
             4,
             letter,
@@ -193,7 +193,7 @@ class LessonGenerator {
         ),
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
@@ -207,7 +207,7 @@ class LessonGenerator {
       generatedLessons[2].add(
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -217,7 +217,7 @@ class LessonGenerator {
       generatedLessons[2].add(
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -257,12 +257,12 @@ class LessonGenerator {
       var exerciseTypes = [
         () => SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
         () => SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
       ];
@@ -274,12 +274,12 @@ class LessonGenerator {
       generatedLessons[2].addAll([
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(combinedLetters, 4, letter),
+          allLetters: pickCountIncluding(combinedLetters, 4, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
@@ -317,12 +317,12 @@ class LessonGenerator {
         ),
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
@@ -344,12 +344,12 @@ class LessonGenerator {
       generatedLessons[0].addAll([
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
@@ -371,7 +371,7 @@ class LessonGenerator {
       generatedLessons[1].add(
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -390,7 +390,7 @@ class LessonGenerator {
       generatedLessons[1].add(
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -404,12 +404,12 @@ class LessonGenerator {
         Random().nextBool()
             ? SelectLetterExercise(
                 correctLetter: letter,
-                allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+                allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
                 sectionType: SectionType.consonant,
               )
             : SelectSoundExercise(
                 correctLetter: letter,
-                allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+                allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
                 sectionType: SectionType.consonant,
               ),
       );
@@ -423,12 +423,12 @@ class LessonGenerator {
       generatedLessons[2].addAll([
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
@@ -452,7 +452,7 @@ class LessonGenerator {
       generatedLessons[2].add(
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -462,7 +462,7 @@ class LessonGenerator {
       generatedLessons[2].add(
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       );
@@ -475,12 +475,12 @@ class LessonGenerator {
       generatedLessons[2].addAll([
         SelectLetterExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
         SelectSoundExercise(
           correctLetter: letter,
-          allLetters: getExerciseOptions(firstThreeLetters, 3, letter),
+          allLetters: pickCountIncluding(firstThreeLetters, 3, letter),
           sectionType: SectionType.consonant,
         ),
       ]);
