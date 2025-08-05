@@ -1,33 +1,52 @@
+import 'dart:math';
+
 class LetterData {
   static const List<String> consonantOrder = [
-    'ກ', // g/k sound
-    'ງ', // visually distinct spacer
-    'ຂ', // g/k sound (pair with ກ but spaced)
-    'ຈ', // visually distinct spacer
-    'ຄ', // g/k sound (final of this group)
-    'ສ', // visually distinct spacer
-    'ຟ', // f/ph sound
-    'ດ', // visually distinct spacer
-    'ຝ', // f/ph sound (pair with ຟ)
-    'ນ', // visually distinct spacer
-    'ປ', // p/bp sound
-    'ຣ', // visually distinct spacer
-    'ບ', // p/bp sound (pair with ປ)
-    'ລ', // visually distinct spacer
-    'ພ', // p/bp sound (final of this group)
-    'ວ', // visually distinct spacer
-    'ຕ', // t sound
-    'ຊ', // visually distinct spacer
-    'ທ', // t sound (pair with ຕ)
-    'ມ', // visually distinct spacer
-    'ຖ', // t sound (final of this group)
-    'ອ', // visually distinct spacer
-    'ຍ', // y/ny sound
-    'ຜ', // visually distinct spacer
-    'ຢ', // y/ny sound (pair with ຍ)
-    'ຫ', // h sound
-    'ຮ', // h sound (pair with ຫ but spaced at end)
+    'ກ',
+    'ງ',
+    'ຂ',
+    'ຈ',
+    'ຄ',
+    'ສ',
+    'ຟ',
+    'ດ',
+    'ຝ',
+    'ນ',
+    'ປ',
+    'ຣ',
+    'ບ',
+    'ລ',
+    'ພ',
+    'ວ',
+    'ຕ',
+    'ຊ',
+    'ທ',
+    'ມ',
+    'ຖ',
+    'ອ',
+    'ຍ',
+    'ຜ',
+    'ຢ',
+    'ຫ',
+    'ຮ',
   ];
+
+  static const List<String> placeholderConsonants = [
+    'ກ',
+    'ຈ',
+    'ສ',
+    'ດ',
+    'ຕ',
+    'ນ',
+    'ບ',
+    'ຟ',
+    'ມ',
+    'ລ',
+  ];
+
+  static String randomPlaceholder(Random random) {
+    return placeholderConsonants[random.nextInt(placeholderConsonants.length)];
+  }
 
   static const Map<String, String> lettersToWords = {
     'ກ': 'ໄກ່',
@@ -121,8 +140,16 @@ class LetterData {
 
   static const String vowelPlaceholder = '◌';
 
-  static const List<String> vowelsIndices = [
-    'ເ◌ຍ, ◌ຽ',
+  static const Map<String, String> vowelVariations = {
+    'ເ◌ຍ': '◌ຽ',
+    '◌ະ': '◌ັ',
+    'ແ◌ະ': 'ແ◌ັ',
+    'ໂ◌ະ': '◌ົ',
+    'ເ◌າະ': '◌ັອ',
+  };
+
+  static const List<String> vowelOrder = [
+    'ເ◌ຍ',
     'ເ◌ືອ',
     '◌ົວ',
     'ໄ◌',

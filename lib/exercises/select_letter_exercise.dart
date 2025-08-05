@@ -7,8 +7,9 @@ enum BottomButtonState { incorrect, correct }
 class SelectLetterExercise extends SelectBlankExercise {
   SelectLetterExercise({
     required super.correctLetter,
-    required super.allLetters,
+    required super.incorrectLetters,
     required super.sectionType,
+    super.usePlaceholders,
     super.key,
   });
 

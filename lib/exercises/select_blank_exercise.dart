@@ -10,16 +10,18 @@ enum BottomButtonState { incorrect, correct }
 
 // This new abstract class extends StatefulExercise
 abstract class SelectBlankExercise extends StatefulExercise {
-  final String correctLetter;
-  final List<String> allLetters;
-  final SectionType sectionType;
-
   SelectBlankExercise({
     required this.correctLetter,
-    required this.allLetters,
+    required this.incorrectLetters,
     required this.sectionType,
+    this.usePlaceholders,
     super.key,
   });
+
+  final String correctLetter;
+  final List<String> incorrectLetters;
+  final SectionType sectionType;
+  final bool? usePlaceholders;
 
   @override
   State<SelectBlankExercise> createState();
@@ -31,6 +33,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   final effectPlayer = SoundsUtility();
   final speechPlayer = SoundsUtility();
   late final List<String> shuffledLetters;
+  late final List<String> allLetters;
   late ThemeData theme;
   late bool isDarkMode;
   late Color svgColor;
@@ -72,17 +75,19 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   void initState() {
     super.initState();
     // Adds the correct letter plus the incorrect letters to the list of options
-    shuffledLetters = List.from(widget.allLetters);
+    shuffledLetters = List.from(
+      widget.incorrectLetters + [widget.correctLetter],
+    );
     shuffledLetters.shuffle();
 
     assert(
-      (widget.allLetters.length) <= 4,
+      (widget.incorrectLetters.length) <= 3,
       'There can be a maximum of 4 incorrect letters',
     );
 
     assert(
-      widget.allLetters.contains(widget.correctLetter),
-      'allLetters must contain correctLetter',
+      !widget.incorrectLetters.contains(widget.correctLetter),
+      'incorrectLetters must not contain correctLetter',
     );
   }
 

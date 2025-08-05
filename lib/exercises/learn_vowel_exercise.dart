@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
+import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-import 'package:learn_lao_app/utilities/letter_data.dart';
+import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
 import 'package:learn_lao_app/utilities/sounds_utility.dart';
 import 'package:provider/provider.dart';
 
 class LearnVowelExercise extends StatefulExercise {
-  LearnVowelExercise({
-    required this.letter,
-    required this.letterIndex,
-    this.placeholder,
-    super.key,
-  });
+  LearnVowelExercise({required this.vowel, this.consonant, super.key});
 
-  final String letter;
-  final int letterIndex;
-  final String? placeholder;
+  final String vowel;
+  final String? consonant;
 
   @override
   LearnVowelExerciseState createState() => LearnVowelExerciseState();
@@ -32,22 +27,9 @@ class LearnVowelExerciseState
   @override
   void initState() {
     super.initState();
-    if (widget.placeholder == null) {
-      letter = widget.letter;
-      return;
-    }
-    // First separate the string into different runes
-    // Then find the rune that is equal to the placeholder
-    // and change it
-    // Then turn the runes back into a string
-    final letterAsRunes = widget.letter.runes.toList();
-    final defaultPlaceholderRune = LetterData.vowelPlaceholder.runes.single;
-    final defaultPlaceholderIndex = letterAsRunes.indexWhere(
-      (rune) => rune == defaultPlaceholderRune,
-    );
-    // Replace the default placeholder rune with the custom placeholder rune
-    letterAsRunes[defaultPlaceholderIndex] = widget.placeholder!.runes.single;
-    letter = String.fromCharCodes(letterAsRunes);
+    letter = widget.consonant == null
+        ? widget.vowel
+        : addConsonantToVowel(widget.vowel, widget.consonant!);
   }
 
   @override
@@ -75,7 +57,6 @@ class LearnVowelExerciseState
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-
     // This is needed for generating a unique key
 
     return Expanded(
@@ -95,7 +76,7 @@ class LearnVowelExerciseState
               flex: 3,
               child: ElevatedButton(
                 onPressed: () {
-                  _speechPlayer.playVowel(widget.letterIndex);
+                  _speechPlayer.playLetter(widget.vowel, SectionType.vowel);
 
                   if (!Provider.of<LessonProvider>(
                     context,

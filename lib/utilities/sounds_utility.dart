@@ -11,7 +11,7 @@ class SoundsUtility {
       AssetSource(
         sectionType == SectionType.consonant
             ? 'letters/sounds/${LetterData.laoToRomanization[letter]}.wav'
-            : 'vowels/sounds/${LetterData.vowelsIndices.indexOf(letter)}',
+            : 'vowels/sounds/${LetterData.vowelOrder.indexOf(letter)}',
       ),
     );
   }
