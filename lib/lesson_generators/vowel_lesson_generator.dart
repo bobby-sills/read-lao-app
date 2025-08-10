@@ -88,25 +88,30 @@ class VowelLessonGenerator {
                 ? SelectLetterExercise.new
                 : SelectSoundExercise.new;
 
+            final String correctLetter;
+            final List<String> incorrectLetters;
+            if (usingDefaultPlaceholder) {
+              correctLetter = variation;
+              incorrectLetters = pickCountExcluding(vowels, 2, variation);
+            } else {
+              correctLetter = addConsonantToVowel(
+                LetterData.randomPlaceholder(random),
+                variation,
+              );
+              incorrectLetters = pickCountExcluding(vowels, 2, variation)
+                  .map(
+                    (vowel_) => addConsonantToVowel(
+                      LetterData.randomPlaceholder(random),
+                      vowel_,
+                    ),
+                  )
+                  .toList();
+            }
+
             lessons[0].add(
               selectExercise(
-                correctLetter: usingDefaultPlaceholder
-                    ? variation
-                    : addConsonantToVowel(
-                        LetterData.randomPlaceholder(random),
-                        variation,
-                      ),
-                incorrectLetters: usingDefaultPlaceholder
-                    // uses a list the list of vowels paired with a consonant as options
-                    ? vowels
-                    : vowels
-                          .map(
-                            (vowel_) => addConsonantToVowel(
-                              LetterData.randomPlaceholder(random),
-                              vowel_,
-                            ),
-                          )
-                          .toList(),
+                correctLetter: correctLetter,
+                incorrectLetters: incorrectLetters,
                 sectionType: SectionType.vowel,
                 usePlaceholders: usingDefaultPlaceholder,
               ),
@@ -170,25 +175,30 @@ class VowelLessonGenerator {
                 ? SelectLetterExercise.new
                 : SelectSoundExercise.new;
 
+            final String correctLetter;
+            final List<String> incorrectLetters;
+            if (usingDefaultPlaceholder) {
+              correctLetter = variation;
+              incorrectLetters = pickCountExcluding(vowels, 2, variation);
+            } else {
+              correctLetter = addConsonantToVowel(
+                LetterData.randomPlaceholder(random),
+                variation,
+              );
+              incorrectLetters = pickCountExcluding(vowels, 2, variation)
+                  .map(
+                    (vowel_) => addConsonantToVowel(
+                      LetterData.randomPlaceholder(random),
+                      vowel_,
+                    ),
+                  )
+                  .toList();
+            }
+
             shuffledExercises.add(
               selectExercise(
-                correctLetter: usingDefaultPlaceholder
-                    ? variation
-                    : addConsonantToVowel(
-                        LetterData.randomPlaceholder(random),
-                        variation,
-                      ),
-                allLetters: usingDefaultPlaceholder
-                    // uses a list the list of vowels paired with a consonant as options
-                    ? vowels
-                    : vowels
-                          .map(
-                            (vowel_) => addConsonantToVowel(
-                              LetterData.randomPlaceholder(random),
-                              vowel_,
-                            ),
-                          )
-                          .toList(),
+                correctLetter: correctLetter,
+                incorrectLetters: incorrectLetters,
                 sectionType: SectionType.vowel,
                 usePlaceholders: usingDefaultPlaceholder,
               ),

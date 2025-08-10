@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_hero/local_hero.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-
-enum SectionLocation { upper, lower }
-
-typedef LetterData = (int, LetterCard);
 
 class SpellingExercise extends StatefulExercise {
   SpellingExercise({super.key});
@@ -15,127 +10,51 @@ class SpellingExercise extends StatefulExercise {
 }
 
 class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
-  SectionLocation sectionLocation = SectionLocation.upper;
-  final List<String> availableLetters = ['a', 'b', 'c', 'd'];
+  static const int _columns = 4;
+  static const double _margin = 8.0;
 
-  late final List<LetterData> upper;
-  late final List<LetterData> lower;
-
-  @override
-  void initState() {
-    super.initState();
-    upper = [];
-    lower = availableLetters
-        .asMap()
-        .entries
-        .map(
-          (entry) => (
-            entry.key, // itemID
-            LetterCard(
-              swapSides: swapSides,
-              letter: entry.value,
-              tag: entry.key,
-            ),
-          ),
-        )
-        .toList();
-  }
-
-  void swapSides(int tag) {
-    setState(() {
-      late final SectionLocation location;
-
-      // If it's in the upper list
-      if (upper.any((data) => data.$1 == tag)) {
-        location = SectionLocation.upper;
-      } else {
-        // and if not in the upper list it's in the lower list
-        location = SectionLocation.lower;
-      }
-      final sectionFrom = (location == SectionLocation.upper) ? upper : lower;
-      final sectionTo = (location == SectionLocation.upper) ? lower : upper;
-
-      final int index = sectionFrom.indexWhere((data) => data.$1 == tag);
-
-      sectionTo.add(sectionFrom[index]);
-      sectionFrom.removeAt(index);
-    });
-  }
+  final topTray = [];
+  final bottomTray = ['a', 'b', 'c', 'd', 'f', 'g'];
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LocalHeroScope(
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeOutExpo,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Card(
-                child: Center(
-                  child: GridView.count(
-                    crossAxisCount: 5,
-                    children: upper.map((letter) => letter.$2).toList(),
-                  ),
-                ),
-              ),
-            ),
-            Spacer(),
-            Expanded(
-              flex: 2,
-              child: Card(
-                child: Center(
-                  child: GridView.count(
-                    crossAxisCount: 5,
-                    children: lower.map((letter) => letter.$2).toList(),
-                  ),
-                ),
-              ),
-            ),
-          ],
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => setState(
+          () => bottomTray.removeAt((bottomTray.length / 2).toInt()),
         ),
+      ),
+      body: LayoutBuilder(
+        builder: (context, contraints) {
+          final double cardSize =
+              (contraints.maxWidth - (_margin * (_columns + 1))) / _columns;
+          return Stack(
+            children: [
+              for (int i = 0; i < bottomTray.length; i++)
+                AnimatedPositioned(
+                  left: ((cardSize + _margin) * i) + _margin,
+                  bottom: ((i % _columns)) * cardSize,
+                  duration: Duration(milliseconds: 100),
+                  child: SizedBox.square(
+                    dimension: cardSize,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(width: 2),
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Center(child: Text(bottomTray[i])),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
 
   @override
   Widget bottomSheetContent(BuildContext context) {
-    return Text("test");
-  }
-}
-
-class LetterCard extends StatelessWidget {
-  const LetterCard({
-    super.key,
-    required this.swapSides,
-    required this.tag,
-    required this.letter,
-  });
-
-  final void Function(int tag) swapSides;
-  final int tag;
-  final String letter;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return LocalHero(
-      tag: tag,
-      child: GestureDetector(
-        onTap: () => swapSides(tag),
-        child: Card(
-          color: Colors.blue,
-          child: SizedBox(
-            height: 100,
-            width: 100,
-            child: Center(
-              child: Text(letter, style: theme.textTheme.displayLarge),
-            ),
-          ),
-        ),
-      ),
-    );
+    return Placeholder();
   }
 }

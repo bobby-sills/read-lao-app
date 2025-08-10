@@ -1,50 +1,21 @@
 // A function that takes in a list and returns the shuffled version of it
-import 'dart:math';
 
 import 'package:learn_lao_app/utilities/letter_data.dart';
 
-List shuffleList(List list) {
-  list.shuffle();
-  return list;
+List<T> shuffleList<T>(List<T> list) {
+  return List.from(list)..shuffle();
 }
 
 // Generates a unique list of random `count` values drawn from allOptions
 // excluding the `correct` value. The `correct` value is always included in the
 // returned list.
 
-extension pickCountIncluding on List {}
-
-List<String> pickCountIncluding<T>(
-  List<String> possibleLetters,
-  int count,
-  String correct,
-) {
-  final random = Random();
-  final result = <String>[];
-  List<String> uniqueLetters = possibleLetters.toSet().toList();
-  final List<int> randomIndicies = List.generate(
-    uniqueLetters.length,
-    (i) => i,
-  );
-  randomIndicies.shuffle();
-  return randomIndicies.sublist();
-
-  if (count > uniqueLetters.length) {
-    count = uniqueLetters.length;
-  }
-
-  final indexes = <int>{uniqueLetters.indexOf(correct)};
-  result.add(correct);
-
-  while (indexes.length < count) {
-    final randomIndex = random.nextInt(uniqueLetters.length);
-    if (indexes.add(randomIndex)) {
-      result.add(uniqueLetters[randomIndex]);
-    }
-  }
-
-  result.shuffle();
-  return result;
+// Type-safe version that maintains the input list type
+List<T> pickCountExcluding<T>(List<T> list, int count, T correct) {
+  List<T> uniqueItems = list.toSet().toList();
+  uniqueItems.remove(correct);
+  uniqueItems.shuffle();
+  return uniqueItems.take(count).toList();
 }
 
 String addConsonantToVowel(String consonant, String vowel) {
