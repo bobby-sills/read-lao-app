@@ -11,9 +11,8 @@ import 'package:provider/provider.dart';
 
 class LearnConsonantExercise extends StatefulExercise {
   final String letter;
-  final String word;
 
-  LearnConsonantExercise({required this.letter, required this.word, super.key});
+  LearnConsonantExercise({required this.letter, super.key});
 
   @override
   LearningExerciseState createState() => LearningExerciseState();
@@ -48,7 +47,7 @@ class LearningExerciseState
   void dispose() {
     _speechPlayer.dispose();
     //_effectPlayer.dispose(); // idk why it causes an error if I dispose it because then the
-                               // bottom sheet content can't play the correct sound effect
+    // bottom sheet content can't play the correct sound effect
     super.dispose();
   }
 
@@ -88,7 +87,7 @@ class LearningExerciseState
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: DynamicBoldText(
-                  text: widget.word,
+                  text: LetterData.lettersToWords[widget.letter]!,
                   targetCharacter: widget.letter,
                   textStyle: theme.textTheme.headlineLarge!.copyWith(
                     fontFamily: "NotoSansLaoLooped",

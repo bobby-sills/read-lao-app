@@ -48,6 +48,7 @@ dependencies:
   flutter_clean_architecture: ^6.0.2
   dependency_validator: ^3.2.3
   local_hero: ^0.3.0
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
