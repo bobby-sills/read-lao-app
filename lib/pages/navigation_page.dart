@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:learn_lao_app/components/lesson_view.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
-import 'package:learn_lao_app/utilities/app_data.dart';
+import 'package:learn_lao_app/utilities/lesson_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 
 enum LessonStatus { notStarted, nextUp, completed }
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
           (lastLesson.index * 120); // 100 button height + 20 padding
     } else {
       // For vowel section, add all consonant lessons plus vowel header
-      final consonantLessons = AppData.consonantLessons.length;
+      final consonantLessons = LessonData.consonantLessons.length;
       targetPosition =
           headerHeight +
           (consonantLessons * 120) +
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
 
     // If the last consonant has been completed, then the last lesson
     // will be in the vowel section
-    if (lastConsonant == AppData.consonantLessons.length - 1) {
+    if (lastConsonant == LessonData.consonantLessons.length - 1) {
       return (sectionType: SectionType.vowel, index: lastVowel);
     } else {
       return (sectionType: SectionType.consonant, index: lastConsonant);

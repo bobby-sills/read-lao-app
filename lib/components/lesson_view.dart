@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/pages/navigation_page.dart';
-import 'package:learn_lao_app/utilities/app_data.dart';
+import 'package:learn_lao_app/utilities/lesson_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 import 'package:learn_lao_app/components/lesson_nav_button.dart';
 import 'package:learn_lao_app/utilities/letter_data.dart';
@@ -89,8 +89,8 @@ class LessonView extends StatelessWidget {
               },
               // Automatically setting list length
               childCount: sectionType == SectionType.consonant
-                  ? AppData.consonantLessons.length
-                  : AppData.vowelLessons.length,
+                  ? LessonData.consonantLessons.length
+                  : LessonData.vowelLessons.length,
             ),
           ),
         );

@@ -12,23 +12,23 @@ import 'package:learn_lao_app/utilities/letter_data.dart';
 
 class VowelLessonGenerator {
   static List<List<StatefulExercise>> generateAllLessons(
-    List<String> vowelOrder,
+    List<String> learningOrder,
   ) {
     final List<List<StatefulExercise>> lessons = [];
     // generate first pair with only two
-    lessons.addAll(generateLessonPair([vowelOrder[0], vowelOrder[1]]));
+    lessons.addAll(_generateLessonPair([learningOrder[0], learningOrder[1]]));
 
     // generate the rest
     // `i` is set to two because the first two were already generated
-    for (var i = 2; i < vowelOrder.length; i++) {
-      final List<String> vowelPair = vowelOrder.sublist(
+    for (var i = 2; i < learningOrder.length; i++) {
+      final List<String> vowelPair = learningOrder.sublist(
         i,
-        (i + 2).clamp(0, vowelOrder.length),
+        (i + 2).clamp(0, learningOrder.length),
       );
       if (kDebugMode) {
         print(vowelPair);
       }
-      lessons.addAll(generateLessonPair(vowelPair));
+      lessons.addAll(_generateLessonPair(vowelPair));
     }
 
     return lessons;
@@ -43,7 +43,7 @@ class VowelLessonGenerator {
   ///
   /// [vowels] List of vowel strings to create exercises for
   /// Returns a list of StatefulExercise objects in the proper learning sequence
-  static List<List<StatefulExercise>> generateLessonPair(List<String> vowels) {
+  static List<List<StatefulExercise>> _generateLessonPair(List<String> vowels) {
     assert(
       vowels.length <= 2,
       'The input must be a _pair_ of vowels, no more than 2',
