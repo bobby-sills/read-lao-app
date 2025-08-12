@@ -3,17 +3,23 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learn_lao_app/exercises/spelling_exercise/spelling_exercise.dart';
 // ignore: unused_import
 import 'package:learn_lao_app/pages/default_page.dart';
+import 'package:learn_lao_app/pages/lesson_wrapper.dart';
+import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 import 'package:learn_lao_app/utilities/provider/theme_provider.dart';
+import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 
 void main() async {
   await Hive.initFlutter();
   await HiveUtility.initializeBoxes();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => LessonProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -36,7 +42,13 @@ class MyApp extends StatelessWidget {
                   : Brightness.light,
             ),
           ),
-          home: SpellingExercise(),
+          home: LessonWrapper(
+            exercises: [
+              SpellingExercise(letters: ['ກ', 'ຂ', 'ຄ', 'ງ', 'ຈ', 'ສ']),
+            ],
+            lessonIndex: 1,
+            sectionType: SectionType.consonant,
+          ),
           debugShowCheckedModeBanner: false,
         );
       },

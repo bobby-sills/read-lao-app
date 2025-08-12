@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/pages/lesson_wrapper.dart';
-import 'package:learn_lao_app/utilities/app_data.dart';
+import 'package:learn_lao_app/utilities/lesson_data.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +20,8 @@ class LessonNavButton extends StatelessWidget {
 
   void _navigateToLesson(BuildContext context) {
     final lessons = sectionType == SectionType.consonant
-        ? AppData.consonantLessons
-        : AppData.vowelLessons;
+        ? LessonData.consonantLessons
+        : LessonData.vowelLessons;
     Navigator.push(
       context,
       MaterialPageRoute(
