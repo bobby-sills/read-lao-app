@@ -43,9 +43,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           home: LessonWrapper(
-            exercises: [
-              SpellingExercise(letters: ['ກ', 'ຂ', 'ຄ', 'ງ', 'ຈ', 'ສ']),
-            ],
+            exercises: [SpellingExercise(word: 'ກຂຄງຈສ')],
             lessonIndex: 1,
             sectionType: SectionType.consonant,
           ),
