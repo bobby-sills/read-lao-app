@@ -53,25 +53,39 @@ class MatchingButton extends StatelessWidget {
     return switch (states[buttonType]![index]) {
       ButtonState.complete => Colors.green,
       ButtonState.incorrect => Colors.red,
-      ButtonState.selected => theme.colorScheme.primary,
-      ButtonState.deselected => theme.colorScheme.secondary,
-      ButtonState.disabled => theme.colorScheme.secondary,
+      ButtonState.selected => theme.colorScheme.secondary,
+      ButtonState.deselected => theme.colorScheme.surface,
+      ButtonState.disabled => theme.colorScheme.surface,
     };
   }
 
-  Widget? _buttonContent(ThemeData theme) {
+  Color _getTextColor(ThemeData theme) {
+    return switch (states[buttonType]![index]) {
+      ButtonState.complete => theme.colorScheme.onPrimary,
+      ButtonState.incorrect => theme.colorScheme.onError,
+      ButtonState.selected => theme.colorScheme.onSecondary,
+      ButtonState.deselected => theme.colorScheme.onSurfaceVariant,
+      ButtonState.disabled => theme.colorScheme.onSurface,
+    };
+  }
+
+  Widget? _buttonContent(ThemeData theme, ButtonState state) {
+    final textColor = _getTextColor(theme);
+
     if (buttonType == ButtonType.letter) {
       return Text(
         letter,
         style: TextStyle(
           fontSize: theme.textTheme.displayLarge?.fontSize,
           fontFamily: 'NotoSansLaoLooped',
+          color: state == ButtonState.disabled ? null : textColor,
         ),
       );
     } else if (buttonType == ButtonType.sound) {
       return Icon(
         Icons.volume_up_rounded,
         size: theme.textTheme.displayMedium?.fontSize,
+        color: state == ButtonState.disabled ? null : textColor,
       );
     }
     return null;
@@ -87,16 +101,13 @@ class MatchingButton extends StatelessWidget {
       tween: ColorTween(end: targetColor),
       duration: Duration(milliseconds: 300),
       builder: (context, color, child) {
-        return OutlinedButton(
-          onPressed: _onPressed,
-          style: state == ButtonState.disabled
+        return ElevatedButton(
+          onPressed: state == ButtonState.disabled ? null : _onPressed,
+          style:
+              state == ButtonState.disabled || state == ButtonState.deselected
               ? null
-              : OutlinedButton.styleFrom(
-                  backgroundColor: color,
-                  side: BorderSide(color: Colors.transparent),
-                  foregroundColor: theme.colorScheme.inversePrimary,
-                ),
-          child: _buttonContent(theme),
+              : ElevatedButton.styleFrom(backgroundColor: color),
+          child: _buttonContent(theme, state),
         );
       },
     );

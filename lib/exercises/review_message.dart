@@ -24,6 +24,7 @@ class ReviewMessageState extends StatefulExerciseState<ReviewMessage> {
             context.read<LessonProvider>().nextExercise?.call();
           },
         ),
+        SizedBox(height: 16),
       ],
     );
   }

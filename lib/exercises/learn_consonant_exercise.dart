@@ -39,6 +39,7 @@ class LearningExerciseState
             context.read<LessonProvider>().nextExercise?.call();
           },
         ),
+        SizedBox(height: 16),
       ],
     );
   }

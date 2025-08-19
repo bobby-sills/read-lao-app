@@ -113,10 +113,13 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
 
   Widget checkButton() {
     return SafeArea(
-      child: BottomLessonButton(
-        onPressed: (selectedButton < 0) ? null : checkAnswer,
-        buttonText: 'Check',
-        buttonIcon: const Icon(Icons.check_rounded),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 0.0),
+        child: BottomLessonButton(
+          onPressed: (selectedButton < 0) ? null : checkAnswer,
+          buttonText: 'Check',
+          buttonIcon: const Icon(Icons.check_rounded),
+        ),
       ),
     ); // The bottom button
   }
@@ -142,6 +145,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
           buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
           buttonColor: bottomButtonIsCorrect ? Colors.green : Colors.red,
         ),
+        SizedBox(height: 16),
       ],
     );
   }

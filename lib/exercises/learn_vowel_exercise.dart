@@ -43,6 +43,7 @@ class LearnVowelExerciseState
             context.read<LessonProvider>().nextExercise?.call();
           },
         ),
+        SizedBox(height: 16),
       ],
     );
   }
