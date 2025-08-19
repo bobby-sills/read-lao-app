@@ -41,6 +41,7 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
   @override
   void initState() {
     super.initState();
+    print(widget.lettersToMatch);
 
     numOfPaires = widget.lettersToMatch.length;
     // Copy the lettersToMatch list to the soundPositions and characterPositions lists
@@ -108,13 +109,13 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
         });
         // Set time until disabled if correct
         Future.delayed(Duration(milliseconds: 800), () {
-          if (mounted) { // only disable the buttons if currently in the widget tree
+          if (mounted) {
+            // only disable the buttons if currently in the widget tree
             setState(() {
-            states[ButtonType.sound]![soundIndex] = ButtonState.disabled;
-            states[ButtonType.letter]![letterIndex] = ButtonState.disabled;
-          });
+              states[ButtonType.sound]![soundIndex] = ButtonState.disabled;
+              states[ButtonType.letter]![letterIndex] = ButtonState.disabled;
+            });
           }
-          
         });
 
         // If everything is matched, then show the bottom bar
@@ -175,6 +176,7 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
             context.read<LessonProvider>().nextExercise?.call();
           },
         ),
+        SizedBox(height: 16),
       ],
     );
   }

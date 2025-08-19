@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/learn_consonant_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
@@ -21,6 +22,7 @@ class ConsonantLessonGenerator {
           correctLetter,
         ),
         sectionType: SectionType.consonant,
+        key: UniqueKey(),
       ),
       SelectLetterExercise(
         correctLetter: correctLetter,
@@ -30,6 +32,7 @@ class ConsonantLessonGenerator {
           correctLetter,
         ),
         sectionType: SectionType.consonant,
+        key: UniqueKey(),
       ),
     ];
   }
@@ -47,7 +50,7 @@ class ConsonantLessonGenerator {
     }
 
     // If are there are more than 5 letters to match, split them up into two different sets of matching exercises
-    final Iterable<List<String>> listOfMatches = (letters.length > 5)
+    final Iterable<List<String>> listOfMatches = (letters.length >= 6)
         ? letters.slices(3)
         : [letters];
 
@@ -55,8 +58,9 @@ class ConsonantLessonGenerator {
     for (List<String> matches in listOfMatches) {
       exercises.add(
         MatchingExercise(
-          lettersToMatch: matches,
+          lettersToMatch: List.from(matches),
           sectionType: SectionType.consonant,
+          key: UniqueKey(),
         ),
       );
     }
@@ -77,6 +81,7 @@ class ConsonantLessonGenerator {
         MatchingExercise(
           lettersToMatch: pickCountExcluding(letters, 4),
           sectionType: SectionType.consonant,
+          key: UniqueKey(),
         ),
       );
     }
@@ -88,12 +93,12 @@ class ConsonantLessonGenerator {
   ) {
     final List<List<StatefulExercise>> lessons = [];
     final List<String> currentLetters = [];
-    for (int i = 0; i < lessons.length; i += 2) {
+    for (int i = 0; i < learningOrder.length; i += 2) {
       // Only remove 2 previously learned letters if there are enough to remove
-      if (lessons.length >= 6) currentLetters.removeRange(0, 2);
+      if (currentLetters.length >= 6) currentLetters.removeRange(0, 2);
       // Add 2 new letters that the user is going to learn
       currentLetters.addAll(
-        learningOrder.slice(i, i.clamp(0, lessons.length - 1)),
+        learningOrder.slice(i, (i + 2).clamp(0, learningOrder.length - 1)),
       );
       lessons.add(_generateLesson(currentLetters));
     }

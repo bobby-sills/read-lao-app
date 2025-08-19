@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:flutter/foundation.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
@@ -25,9 +23,6 @@ class VowelLessonGenerator {
         i,
         (i + 2).clamp(0, learningOrder.length),
       );
-      if (kDebugMode) {
-        print(vowelPair);
-      }
       lessons.addAll(_generateLessonPair(vowelPair));
     }
 

@@ -49,6 +49,7 @@ dependencies:
   dependency_validator: ^3.2.3
   local_hero: ^0.3.0
   collection: ^1.19.1
+  characters: ^1.4.0
 
 dev_dependencies:
   flutter_test:
