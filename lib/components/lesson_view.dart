@@ -59,15 +59,15 @@ class LessonView extends StatelessWidget {
                 );
                 late Widget content;
 
-                if (index % 3 == 0 && sectionType == SectionType.consonant) {
-                  final order = (sectionType == SectionType.consonant
-                      ? LetterData.consonantOrder
-                      : LetterData.vowelOrder);
-                  final sublist = order
-                      .sublist(0, (index + 3).clamp(0, order.length))
+                if (sectionType == SectionType.consonant) {
+                  final int endIndex = ((index + 1) * 2).clamp(
+                    0,
+                    LetterData.consonantOrder.length - 1,
+                  );
+
+                  String headerContent = LetterData.consonantOrder
+                      .sublist(endIndex - 2, endIndex)
                       .join(', ');
-                  final number = (index / 3).ceil() + 1;
-                  String headerContent = "$number. $sublist";
                   Widget header = Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text(headerContent, style: TextStyle(fontSize: 20)),
