@@ -41,7 +41,6 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
   @override
   void initState() {
     super.initState();
-    print(widget.lettersToMatch);
 
     numOfPaires = widget.lettersToMatch.length;
     // Copy the lettersToMatch list to the soundPositions and characterPositions lists

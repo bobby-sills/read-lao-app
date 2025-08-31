@@ -60,11 +60,10 @@ class LessonView extends StatelessWidget {
                 late Widget content;
 
                 if (sectionType == SectionType.consonant) {
-                  final int endIndex = ((index + 1) * 2).clamp(
+                  final int endIndex = ((index * 2) + 2).clamp(
                     0,
-                    LetterData.consonantOrder.length - 1,
+                    LetterData.consonantOrder.length,
                   );
-
                   String headerContent = LetterData.consonantOrder
                       .sublist(endIndex - 2, endIndex)
                       .join(', ');

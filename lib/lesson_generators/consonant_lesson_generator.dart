@@ -76,7 +76,7 @@ class ConsonantLessonGenerator {
       );
     }
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < (letters.length / 3); i++) {
       shuffledExercises.add(
         MatchingExercise(
           lettersToMatch: pickCountExcluding(letters, 4),
@@ -85,6 +85,8 @@ class ConsonantLessonGenerator {
         ),
       );
     }
+
+    exercises.addAll(shuffledExercises);
     return exercises;
   }
 
@@ -97,9 +99,10 @@ class ConsonantLessonGenerator {
       // Only remove 2 previously learned letters if there are enough to remove
       if (currentLetters.length >= 6) currentLetters.removeRange(0, 2);
       // Add 2 new letters that the user is going to learn
-      currentLetters.addAll(
-        learningOrder.slice(i, (i + 2).clamp(0, learningOrder.length - 1)),
-      );
+      final int endIndex = (i + 2).clamp(0, learningOrder.length);
+      currentLetters.addAll(learningOrder.sublist(endIndex - 2, endIndex));
+      print(learningOrder.sublist(endIndex - 2, endIndex));
+
       lessons.add(_generateLesson(currentLetters));
     }
     return lessons;
