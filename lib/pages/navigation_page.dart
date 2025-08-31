@@ -31,15 +31,15 @@ class _HomePageState extends State<HomePage> {
       // For consonant section, just calculate position from lesson index
       targetPosition =
           headerHeight +
-          (lastLesson.index * 120); // 100 button height + 20 padding
+          (lastLesson.index * 181); // 161 lesson height + 20 padding
     } else {
       // For vowel section, add all consonant lessons plus vowel header
       final consonantLessons = LessonData.consonantLessons.length;
       targetPosition =
           headerHeight +
-          (consonantLessons * 120) +
+          (consonantLessons * 181) +
           headerHeight +
-          (lastLesson.index * 120);
+          (lastLesson.index * 181);
     }
 
     // Add some offset to center the lesson on screen

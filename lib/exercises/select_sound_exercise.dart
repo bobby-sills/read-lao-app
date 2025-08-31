@@ -27,13 +27,21 @@ class SelectSoundExerciseState
       child: Center(
         child: Column(
           children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                widget.correctLetter,
-                style: laoStyle.copyWith(fontSize: 256),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: SizedBox(
+                height: 256,
+                width: 256,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    widget.correctLetter,
+                    style: laoStyle.copyWith(fontSize: 256),
+                  ),
+                ),
               ),
             ),
+
             AbsorbPointer(
               absorbing: areButtonsDisabled,
               child: Padding(

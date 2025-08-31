@@ -68,7 +68,7 @@ class LearningExerciseState
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
                   image: AssetImage(
-                    'assets/letters/images/jpgs/${LetterData.laoToRomanization[widget.letter]}.jpg',
+                    'assets/consonants/images/${LetterData.laoToRomanization[widget.letter]}.jpg',
                   ),
                 ),
               ),

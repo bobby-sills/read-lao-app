@@ -1,5 +1,5 @@
 name: learn_lao_app
-description: "A new Flutter project."
+description: "An app to teach the lao alphabet"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -75,8 +75,8 @@ flutter:
 
   assets:
     - assets/fonts/
-    - assets/letters/images/jpgs/
-    - assets/letters/sounds/
+    - assets/consonants/images/
+    - assets/consonants/sounds/
     - assets/vowels/sounds/
     - assets/sound_effects/
   # For details regarding adding assets from package dependencies, see
