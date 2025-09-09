@@ -33,7 +33,7 @@ class LessonView extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final double xOffset = sin(index * 100) * 96;
-                // If the lesson is complete, set the status to completed
+                // If the lesson is complete, set the status to completed.
                 // If the previous lesson is completed, set the status to nextUp
                 // But even if the previous lesson is not complete, set the status to nextUp if it's the first lesson
                 // Otherwise, set the status to notStarted

@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/enums/section_type.dart';
 import 'package:learn_lao_app/exercises/learn_consonant_exercise.dart';
+import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
 import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
 import 'package:learn_lao_app/exercises/select_letter_exercise.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
+import 'package:learn_lao_app/typedefs/matching_data.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:collection/collection.dart';
 
-class ConsonantLessonGenerator {
+class LessonGenerator {
+  /*
+   *  ~ lesson generator function plan ~
+   *
+   *  learn new letters and practice them with lesson pair - done
+   *  match all letters currently learning - done
+   *  start batch of shuffled exercises containing:
+   *    lesson pair of each letter
+   *    guess nonsense words from new letters
+   *    practice spelling (<=3) words with (any) letters learned in previous lessons
+   *  match all letters currently learning
+  */
+
   static List<StatefulExercise> _generateExercisePair({
     required String correctLetter,
     required List<String> allLetters,
+    required SectionType sectionType,
   }) {
     return [
       SelectSoundExercise(
@@ -21,7 +36,7 @@ class ConsonantLessonGenerator {
           (allLetters.length - 1).clamp(0, 2),
           correctLetter,
         ),
-        sectionType: SectionType.consonant,
+        sectionType: sectionType,
         key: UniqueKey(),
       ),
       SelectLetterExercise(
@@ -31,20 +46,71 @@ class ConsonantLessonGenerator {
           (allLetters.length - 1).clamp(0, 2),
           correctLetter,
         ),
-        sectionType: SectionType.consonant,
+        sectionType: sectionType,
         key: UniqueKey(),
       ),
     ];
+  }
+
+  static List<StatefulExercise> generateLesson(
+    List<String> previouslyLearnedConsonants,
+    List<String> previouslyLearnedVowels,
+    List<String> newConsonants,
+    List<String> newVowels,
+    List<String> currentlyLearningConsonants,
+    List<String> currentlyLearningVowels,
+  ) {
+    final List<StatefulExercise> lesson = [];
+    lesson.addAll([
+      ...newConsonants.map(
+        (consonant) => LearnConsonantExercise(consonant: consonant),
+      ),
+      ...newVowels.map((vowel) => LearnVowelExercise(vowel: vowel)),
+    ]);
+    List<MatchingData> lettersToMatch = [
+      ...newConsonants.map((consonant) => {consonant: SectionType.consonant}),
+      ...newVowels.map((vowel) => {vowel: SectionType.vowel}),
+      ...currentlyLearningConsonants.map(
+        (consonant) => {consonant: SectionType.consonant},
+      ),
+      ...currentlyLearningVowels.map((vowel) => {vowel: SectionType.vowel}),
+    ];
+
+    late final List<List<MatchingData>> matchingSets;
+    // If the complete list of letters to match is split-up-able into
+    // equally sized chunkes of 5, split it up into chunks of 5
+    if (lettersToMatch.length % 5 == 0) {
+      matchingSets = lettersToMatch.slices(5).toList();
+    } else {
+      matchingSets = lettersToMatch.slices(4).toList();
+      // If the last set of matches has only a single pair in it
+      // Move that pair to the second to last set of matches
+      final lastIndex = matchingSets.length - 1;
+      if (matchingSets[lastIndex].length == 1) {
+        matchingSets[lastIndex - 1].add(matchingSets[lastIndex][0]);
+        matchingSets.removeAt(lastIndex);
+      }
+    }
+
+    for (List<MatchingData> matchingSet in matchingSets) {
+      final MatchingData matchingData = {
+        for (MatchingData data in matchingSet) ...data,
+      };
+      lesson.add(MatchingExercise(lettersToMatch: matchingData));
+    }
+
+    return [];
   }
 
   static List<StatefulExercise> _generateLesson(List<String> letters) {
     final List<StatefulExercise> exercises = [];
     for (String correctLetter in letters) {
       exercises.addAll([
-        LearnConsonantExercise(letter: correctLetter),
+        LearnConsonantExercise(consonant: correctLetter),
         ..._generateExercisePair(
           correctLetter: correctLetter,
           allLetters: letters,
+          sectionType: SectionType.consonant,
         )..shuffle(),
       ]);
     }
@@ -54,12 +120,13 @@ class ConsonantLessonGenerator {
         ? letters.slices(3)
         : [letters];
 
-    // Loop over each set of letters to matche
+    // Loop over each set of letters to match
     for (List<String> matches in listOfMatches) {
       exercises.add(
         MatchingExercise(
-          lettersToMatch: List.from(matches),
-          sectionType: SectionType.consonant,
+          lettersToMatch: {
+            for (String item in List.from(matches)) item: SectionType.consonant,
+          },
           key: UniqueKey(),
         ),
       );
@@ -72,6 +139,7 @@ class ConsonantLessonGenerator {
         _generateExercisePair(
           correctLetter: correctLetter,
           allLetters: letters,
+          sectionType: SectionType.consonant,
         ),
       );
     }
@@ -79,8 +147,10 @@ class ConsonantLessonGenerator {
     for (int i = 0; i < (letters.length / 3); i++) {
       shuffledExercises.add(
         MatchingExercise(
-          lettersToMatch: pickCountExcluding(letters, 4),
-          sectionType: SectionType.consonant,
+          lettersToMatch: {
+            for (String item in pickCountExcluding(letters, 4))
+              item: SectionType.consonant,
+          },
           key: UniqueKey(),
         ),
       );

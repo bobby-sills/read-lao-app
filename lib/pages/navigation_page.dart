@@ -97,26 +97,26 @@ class _HomePageState extends State<HomePage> {
                 lastLesson: lastLesson,
               ),
             ),
-            // SliverStickyHeader(
-            //   header: Container(
-            //     height: 60,
-            //     color: Theme.of(context).primaryColor,
-            //     padding: const EdgeInsets.symmetric(horizontal: 16),
-            //     alignment: Alignment.centerLeft,
-            //     child: const Text(
-            //       'Vowels',
-            //       style: TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 20,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ),
-            //   sliver: LessonView(
-            //     sectionType: SectionType.vowel,
-            //     lastLesson: lastLesson,
-            //   ),
-            // ),
+            SliverStickyHeader(
+              header: Container(
+                height: 60,
+                color: Theme.of(context).primaryColor,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  'Vowels',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              sliver: LessonView(
+                sectionType: SectionType.vowel,
+                lastLesson: lastLesson,
+              ),
+            ),
           ],
         ),
       ),

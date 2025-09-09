@@ -10,7 +10,7 @@ class SoundsUtility {
       AssetSource(
         sectionType == SectionType.consonant
             ? 'consonants/sounds/${LetterData.laoToRomanization[letter]}.wav'
-            : 'vowels/sounds/${LetterData.vowelOrder.indexOf(letter)}',
+            : 'vowels/sounds/${LetterData.getVowelIndex(letter) + 1}.wav',
       ),
     );
   }

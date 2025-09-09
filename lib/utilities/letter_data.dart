@@ -146,8 +146,48 @@ class LetterData {
     'ແ◌ະ': 'ແ◌ັ',
     'ໂ◌ະ': '◌ົ',
     'ເ◌າະ': '◌ັອ',
-    'ເ◌ະ': 'ເ◌ັ',
   };
+
+  static int getVowelIndex(String vowel) {
+    final int index = vowelOrder.indexOf(vowel);
+    if (index == -1) {
+      return vowelsIndex.indexOf(
+        vowelVariations.keys.firstWhere((key) => vowelVariations[key] == vowel),
+      );
+    } else {
+      return index;
+    }
+  }
+
+  static const List<String> vowelsIndex = [
+    '◌ະ',
+    '◌າ',
+    '◌ິ',
+    '◌ີ',
+    '◌ຶ',
+    '◌ື',
+    '◌ຸ',
+    '◌ູ',
+    'ເ◌ະ',
+    'ເ◌',
+    'ແ◌ະ',
+    'ແ◌',
+    'ໂ◌ະ',
+    'ໂ◌',
+    'ເ◌າະ',
+    '◌ໍ',
+    'ເ◌ິ',
+    'ເ◌ີ',
+    'ເ◌ຍ',
+    'ເ◌ືອ',
+    '◌ົວ',
+    'ໄ◌',
+    'ໃ◌',
+    'ເ◌ົາ',
+    '◌ຳ',
+    '◌ອຍ',
+    '◌ວຍ',
+  ];
 
   static const List<String> vowelOrder = [
     'ເ◌ຍ',
