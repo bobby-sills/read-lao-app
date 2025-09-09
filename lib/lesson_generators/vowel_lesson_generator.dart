@@ -132,25 +132,27 @@ class VowelLessonGenerator {
       MatchingExercise(
         // adds each of the vowels to the list, and randomly chooses between the
         // two variations
-        lettersToMatch: variations
-            .map((variation) => variation[random.nextInt(variation.length)])
-            .toList(),
-        sectionType: SectionType.vowel,
+        lettersToMatch: {
+          for (String item in variations.map(
+            (variation) => variation[random.nextInt(variation.length)],
+          ))
+            item: SectionType.vowel,
+        },
       ),
     );
     lessons[0].add(
       MatchingExercise(
         // adds each of the vowels to the list, and randomly chooses between the
         // two variations
-        lettersToMatch: variations
-            .map(
-              (variation) => addConsonantToVowel(
-                LetterData.randomPlaceholder(random),
-                variation[random.nextInt(variation.length)],
-              ),
-            )
-            .toList(),
-        sectionType: SectionType.vowel,
+        lettersToMatch: {
+          for (String item in variations.map(
+            (variation) => addConsonantToVowel(
+              LetterData.randomPlaceholder(random),
+              variation[random.nextInt(variation.length)],
+            ),
+          ))
+            item: SectionType.consonant,
+        },
       ),
     );
 
@@ -210,10 +212,12 @@ class VowelLessonGenerator {
       MatchingExercise(
         // adds each of the vowels to the list, and randomly chooses between the
         // two variations
-        lettersToMatch: variations
-            .map((variation) => variation[random.nextInt(variation.length)])
-            .toList(),
-        sectionType: SectionType.vowel,
+        lettersToMatch: {
+          for (String item in variations.map(
+            (variation) => variation[random.nextInt(variation.length)],
+          ))
+            item: SectionType.vowel,
+        },
       ),
     );
     for (int i = 0; i < 2; i++) {
@@ -221,15 +225,15 @@ class VowelLessonGenerator {
         MatchingExercise(
           // adds each of the vowels to the list, and randomly chooses between the
           // two variations
-          lettersToMatch: variations
-              .map(
-                (variation) => addConsonantToVowel(
-                  LetterData.randomPlaceholder(random),
-                  variation[random.nextInt(variation.length)],
-                ),
-              )
-              .toList(),
-          sectionType: SectionType.vowel,
+          lettersToMatch: {
+            for (String item in variations.map(
+              (variation) => addConsonantToVowel(
+                LetterData.randomPlaceholder(random),
+                variation[random.nextInt(variation.length)],
+              ),
+            ))
+              item: SectionType.vowel,
+          },
         ),
       );
     }

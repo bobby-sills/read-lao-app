@@ -10,9 +10,9 @@ import 'package:learn_lao_app/utilities/sounds_utility.dart';
 import 'package:provider/provider.dart';
 
 class LearnConsonantExercise extends StatefulExercise {
-  final String letter;
+  final String consonant;
 
-  LearnConsonantExercise({required this.letter, super.key});
+  LearnConsonantExercise({required this.consonant, super.key});
 
   @override
   LearningExerciseState createState() => LearningExerciseState();
@@ -68,7 +68,7 @@ class LearningExerciseState
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
                   image: AssetImage(
-                    'assets/consonants/images/${LetterData.laoToRomanization[widget.letter]}.jpg',
+                    'assets/consonants/images/${LetterData.laoToRomanization[widget.consonant]}.jpg',
                   ),
                 ),
               ),
@@ -78,7 +78,7 @@ class LearningExerciseState
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  widget.letter,
+                  widget.consonant,
                   style: laoStyle.copyWith(fontSize: 10000),
                 ),
               ),
@@ -88,8 +88,8 @@ class LearningExerciseState
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: DynamicBoldText(
-                  text: LetterData.lettersToWords[widget.letter]!,
-                  targetCharacter: widget.letter,
+                  text: LetterData.lettersToWords[widget.consonant]!,
+                  targetCharacter: widget.consonant,
                   textStyle: theme.textTheme.headlineLarge!.copyWith(
                     fontFamily: "NotoSansLaoLooped",
                     fontWeight: FontWeight.w700,
@@ -103,7 +103,7 @@ class LearningExerciseState
               child: ElevatedButton(
                 onPressed: () {
                   _speechPlayer.playLetter(
-                    widget.letter,
+                    widget.consonant,
                     SectionType.consonant,
                   );
 
