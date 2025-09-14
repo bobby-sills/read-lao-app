@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 
 class HiveUtility {
   static const String consonantCompletionBox = 'consonant_completion';
@@ -10,34 +10,34 @@ class HiveUtility {
     await Hive.openBox<bool>(vowelCompletionBox);
   }
 
-  static bool isLessonCompleted(int lessonIndex, SectionType sectionType) {
+  static bool isLessonCompleted(int lessonIndex, LetterType sectionType) {
     return Hive.box<bool>(
-          sectionType == SectionType.consonant
+          sectionType == LetterType.consonant
               ? consonantCompletionBox
               : vowelCompletionBox,
         ).get(lessonIndex) ??
-        lessonIndex < 12;
+        false;
   }
 
   static void setLessonCompleted(
     int lessonIndex,
     bool value,
-    SectionType sectionType,
+    LetterType sectionType,
   ) {
     Hive.box<bool>(
-      sectionType == SectionType.consonant
+      sectionType == LetterType.consonant
           ? consonantCompletionBox
           : vowelCompletionBox,
     ).put(lessonIndex, value);
   }
 
-  static String boxName(SectionType sectionType) {
-    return sectionType == SectionType.consonant
+  static String boxName(LetterType sectionType) {
+    return sectionType == LetterType.consonant
         ? consonantCompletionBox
         : vowelCompletionBox;
   }
 
-  static int getLastLessonComplete(SectionType sectionType) {
+  static int getLastLessonComplete(LetterType sectionType) {
     int lastLessonIndex = 0;
     while (isLessonCompleted(lastLessonIndex, sectionType)) {
       lastLessonIndex++;

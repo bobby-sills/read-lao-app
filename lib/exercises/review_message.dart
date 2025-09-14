@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 import 'package:provider/provider.dart';
 
 class ReviewMessage extends StatefulExercise {
@@ -13,7 +13,7 @@ class ReviewMessage extends StatefulExercise {
 }
 
 class ReviewMessageState extends StatefulExerciseState<ReviewMessage> {
-  final _effectPlayer = SoundsUtility();
+  final _effectPlayer = AudioUtility();
   @override
   Widget bottomSheetContent(BuildContext context) {
     return Column(

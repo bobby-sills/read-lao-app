@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 import 'package:provider/provider.dart';
 
 enum CardState { on, off }
@@ -22,9 +22,9 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
   late final List<CardState> states;
   final List<int> clickOrder = [];
   bool bottomButtonIsCorrect = true;
-  final SoundsUtility soundsUtility = SoundsUtility();
-  final effectPlayer = SoundsUtility();
-  final speechPlayer = SoundsUtility();
+  final AudioUtility soundsUtility = AudioUtility();
+  final effectPlayer = AudioUtility();
+  final speechPlayer = AudioUtility();
 
   @override
   initState() {

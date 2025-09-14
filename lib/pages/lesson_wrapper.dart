@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
-import 'package:learn_lao_app/exercises/review_message.dart';
+import 'package:provider/provider.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/pages/empty_lesson.dart';
 import 'package:learn_lao_app/pages/lesson_complete.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
+import 'package:learn_lao_app/exercises/review_message.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
-import 'package:provider/provider.dart';
 
 class LessonWrapper extends StatefulWidget {
   final List<Widget> exercises;
   final int lessonIndex;
-  final SectionType sectionType;
+  final LetterType sectionType;
 
   // If null is passed into the exercises parameter, meaning that there is no lesson for that index,
   //    the default value will be an empty list, which will display the EmptyLesson widget.
@@ -92,7 +92,7 @@ class _LessonWrapperState extends State<LessonWrapper>
         HiveUtility.setLessonCompleted(
           widget.lessonIndex,
           true,
-          SectionType.consonant,
+          LetterType.consonant,
         );
         // Check if widget is still mounted
         Navigator.pushReplacement(

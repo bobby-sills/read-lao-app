@@ -149,7 +149,7 @@ class LetterData {
   };
 
   static int getVowelIndex(String vowel) {
-    final int index = vowelOrder.indexOf(vowel);
+    final int index = vowelsIndex.indexOf(vowel);
     if (index == -1) {
       return vowelsIndex.indexOf(
         vowelVariations.keys.firstWhere((key) => vowelVariations[key] == vowel),
@@ -189,7 +189,7 @@ class LetterData {
     '◌ວຍ',
   ];
 
-  static const List<String> vowelOrder = [
+  static const List<String> vowelTeachingOrder = [
     'ເ◌ຍ',
     'ເ◌ືອ',
     '◌ົວ',

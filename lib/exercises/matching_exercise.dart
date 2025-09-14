@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/matching_button.dart';
 import 'package:learn_lao_app/enums/button_type.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
-import 'package:learn_lao_app/typedefs/matching_data.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
+import 'package:learn_lao_app/typedefs/letter_type.dart';
+import 'package:learn_lao_app/utilities/letter_data.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 import 'package:learn_lao_app/enums/button_state.dart';
 
 class MatchingExercise extends StatefulExercise {
-  final MatchingData lettersToMatch;
+  final List<Letter> lettersToMatch;
 
   MatchingExercise({required this.lettersToMatch, super.key});
 
@@ -22,10 +23,10 @@ class MatchingExercise extends StatefulExercise {
 class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
     with SingleTickerProviderStateMixin {
   // These are seperate players for the sound and effect, so that they can be played at the same time
-  final SoundsUtility _speechPlayer = SoundsUtility();
-  final SoundsUtility _effectPlayer = SoundsUtility();
+  final AudioUtility _speechPlayer = AudioUtility();
+  final AudioUtility _effectPlayer = AudioUtility();
 
-  late final Map<ButtonType, List<String>> positions;
+  late final Map<ButtonType, List<Letter>> positions;
   late final Map<ButtonType, List<ButtonState>> states;
   late final int numOfPaires;
   late final ThemeData theme;
@@ -42,8 +43,8 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
     // Copy the lettersToMatch list to the soundPositions and characterPositions lists
     // This is done so that the original list is not modified when shuffling
     positions = {
-      ButtonType.sound: widget.lettersToMatch.keys.toList(),
-      ButtonType.letter: widget.lettersToMatch.keys.toList(),
+      ButtonType.sound: List.from(widget.lettersToMatch),
+      ButtonType.letter: List.from(widget.lettersToMatch),
     };
 
     // Shuffle the soundPositions and characterPositions lists
@@ -93,9 +94,33 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
     int letterIndex = states[ButtonType.letter]!.indexOf(ButtonState.selected);
 
     if (soundIndex != -1 && letterIndex != -1) {
-      bool isMatch =
-          positions[ButtonType.sound]![soundIndex] ==
-          positions[ButtonType.letter]![letterIndex];
+      LetterType letterButtonLetterType =
+          positions[ButtonType.letter]![letterIndex].type;
+      LetterType soundButtonLetterType =
+          positions[ButtonType.letter]![letterIndex].type;
+      bool isMatch = false;
+      // If the letter types of both the buttons are the same
+      if (letterButtonLetterType == soundButtonLetterType) {
+        // If the letter type is a consonant
+        if (letterButtonLetterType == LetterType.consonant) {
+          isMatch =
+              positions[ButtonType.sound]![soundIndex] ==
+              positions[ButtonType.letter]![letterIndex];
+          // If the letter type is a vowel
+        } else if (letterButtonLetterType == LetterType.vowel) {
+          // This ensures that even if matching a variation
+          // to a non variation version of that vowel
+          // still marks it as correct by using the
+          // getVowelIndex function
+          isMatch =
+              LetterData.getVowelIndex(
+                positions[ButtonType.sound]![soundIndex].character,
+              ) ==
+              LetterData.getVowelIndex(
+                positions[ButtonType.letter]![letterIndex].character,
+              );
+        }
+      } // else match is already set to false
 
       if (isMatch) {
         setState(() {
@@ -212,9 +237,6 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
                               letter: positions[ButtonType.sound]![i],
                               selectButtonCallback: _selectButton,
                               player: _speechPlayer,
-                              sectionType:
-                                  widget.lettersToMatch[positions[ButtonType
-                                      .sound]![i]]!,
                             ),
                           ),
                         ),
@@ -238,9 +260,6 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
                               letter: positions[ButtonType.letter]![i],
                               selectButtonCallback: _selectButton,
                               player: _speechPlayer,
-                              sectionType:
-                                  widget.lettersToMatch[positions[ButtonType
-                                      .letter]![i]]!,
                             ),
                           ),
                         ),

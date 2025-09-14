@@ -8,7 +8,6 @@ class SelectLetterExercise extends SelectBlankExercise {
   SelectLetterExercise({
     required super.correctLetter,
     required super.incorrectLetters,
-    required super.sectionType,
     super.usePlaceholders,
     super.key,
   });
@@ -23,7 +22,7 @@ class SelectLetterExerciseState
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 500), () {
-      speechPlayer.playLetter(widget.correctLetter, widget.sectionType);
+      speechPlayer.playLetter(widget.correctLetter);
     });
   }
 
@@ -41,10 +40,8 @@ class SelectLetterExerciseState
                 height: 256,
                 width: 256,
                 child: ElevatedButton(
-                  onPressed: () => speechPlayer.playLetter(
-                    widget.correctLetter,
-                    widget.sectionType,
-                  ),
+                  onPressed: () =>
+                      speechPlayer.playLetter(widget.correctLetter),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(24),
                     shape: RoundedRectangleBorder(
@@ -91,7 +88,7 @@ class SelectLetterExerciseState
                                 )
                               : null,
                           child: Text(
-                            letter,
+                            letter.character,
                             style: laoStyle.copyWith(
                               fontSize: theme.textTheme.displayMedium?.fontSize,
                               // color: selectedButton == index

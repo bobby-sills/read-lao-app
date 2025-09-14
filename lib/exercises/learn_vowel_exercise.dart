@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
+import 'package:learn_lao_app/typedefs/letter_type.dart';
 import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 import 'package:provider/provider.dart';
 
 class LearnVowelExercise extends StatefulExercise {
@@ -20,8 +21,8 @@ class LearnVowelExercise extends StatefulExercise {
 
 class LearnVowelExerciseState
     extends StatefulExerciseState<LearnVowelExercise> {
-  final _speechPlayer = SoundsUtility();
-  final _effectPlayer = SoundsUtility();
+  final _speechPlayer = AudioUtility();
+  final _effectPlayer = AudioUtility();
   late final String letter;
 
   @override
@@ -50,8 +51,6 @@ class LearnVowelExerciseState
 
   @override
   void dispose() {
-    _speechPlayer.dispose();
-    _effectPlayer.dispose();
     super.dispose();
   }
 
@@ -77,7 +76,9 @@ class LearnVowelExerciseState
               flex: 3,
               child: ElevatedButton(
                 onPressed: () {
-                  _speechPlayer.playLetter(widget.vowel, SectionType.vowel);
+                  _speechPlayer.playLetter(
+                    Letter(character: widget.vowel, type: LetterType.vowel),
+                  );
 
                   if (!Provider.of<LessonProvider>(
                     context,

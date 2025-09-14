@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 
 class LessonComplete extends StatefulWidget {
   const LessonComplete({
@@ -12,7 +12,7 @@ class LessonComplete extends StatefulWidget {
     required this.sectionType,
   });
   final int lessonNum;
-  final SectionType sectionType;
+  final LetterType sectionType;
 
   @override
   State<LessonComplete> createState() => _LessonCompleteState();
@@ -22,7 +22,7 @@ class _LessonCompleteState extends State<LessonComplete> {
   final ConfettiController _confettiController = ConfettiController(
     duration: const Duration(seconds: 1),
   );
-  final SoundsUtility _soundPlayer = SoundsUtility();
+  final AudioUtility _soundPlayer = AudioUtility();
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _LessonCompleteState extends State<LessonComplete> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final String textSectionType = widget.sectionType == SectionType.consonant
+    final String textSectionType = widget.sectionType == LetterType.consonant
         ? "Consonant"
         : "Vowel";
 

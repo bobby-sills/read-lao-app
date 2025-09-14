@@ -7,10 +7,15 @@ import 'package:learn_lao_app/utilities/letter_data.dart';
 // returned list.
 
 // Type-safe version that maintains the input list type
-List<T> pickCountExcluding<T>(List<T> list, int count, [T? correct]) {
+List<T> pickCountExcluding<T>({
+  required List<T> list,
+  required int count,
+  T? correct,
+}) {
   List<T> uniqueItems = list.toSet().toList();
   uniqueItems.remove(correct);
   uniqueItems.shuffle();
+  count = count.clamp(0, list.length);
   return uniqueItems.take(count).toList();
 }
 

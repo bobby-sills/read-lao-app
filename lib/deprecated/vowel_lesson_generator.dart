@@ -1,5 +1,8 @@
+// ignore_for_file: type=lint
+
 import 'dart:math';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:flutter/material.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
 import 'package:learn_lao_app/exercises/select_letter_exercise.dart';
@@ -87,27 +90,34 @@ class VowelLessonGenerator {
             final List<String> incorrectLetters;
             if (usingDefaultPlaceholder) {
               correctLetter = variation;
-              incorrectLetters = pickCountExcluding(vowels, 2, variation);
+              incorrectLetters = pickCountExcluding(
+                list: vowels,
+                count: 2,
+                correct: variation,
+              );
             } else {
               correctLetter = addConsonantToVowel(
                 LetterData.randomPlaceholder(random),
                 variation,
               );
-              incorrectLetters = pickCountExcluding(vowels, 2, variation)
-                  .map(
-                    (vowel_) => addConsonantToVowel(
-                      LetterData.randomPlaceholder(random),
-                      vowel_,
-                    ),
-                  )
-                  .toList();
+              incorrectLetters =
+                  pickCountExcluding(list: vowels, count: 2, correct: variation)
+                      .map(
+                        (vowel_) => addConsonantToVowel(
+                          LetterData.randomPlaceholder(random),
+                          vowel_,
+                        ),
+                      )
+                      .toList();
             }
 
             lessons[0].add(
               selectExercise(
-                correctLetter: correctLetter,
-                incorrectLetters: incorrectLetters,
-                sectionType: SectionType.vowel,
+                correctLetter: correctLetter.characters,
+                incorrectLetters: incorrectLetters
+                    .map((letter) => {letter: LetterType.vowel})
+                    .toList(),
+                sectionType: LetterType.vowel,
                 usePlaceholders: usingDefaultPlaceholder,
               ),
             );
@@ -136,7 +146,7 @@ class VowelLessonGenerator {
           for (String item in variations.map(
             (variation) => variation[random.nextInt(variation.length)],
           ))
-            item: SectionType.vowel,
+            item: LetterType.vowel,
         },
       ),
     );
@@ -151,7 +161,7 @@ class VowelLessonGenerator {
               variation[random.nextInt(variation.length)],
             ),
           ))
-            item: SectionType.consonant,
+            item: LetterType.consonant,
         },
       ),
     );
@@ -176,27 +186,34 @@ class VowelLessonGenerator {
             final List<String> incorrectLetters;
             if (usingDefaultPlaceholder) {
               correctLetter = variation;
-              incorrectLetters = pickCountExcluding(vowels, 2, variation);
+              incorrectLetters = pickCountExcluding(
+                list: vowels,
+                count: 2,
+                correct: variation,
+              );
             } else {
               correctLetter = addConsonantToVowel(
                 LetterData.randomPlaceholder(random),
                 variation,
               );
-              incorrectLetters = pickCountExcluding(vowels, 2, variation)
-                  .map(
-                    (vowel_) => addConsonantToVowel(
-                      LetterData.randomPlaceholder(random),
-                      vowel_,
-                    ),
-                  )
-                  .toList();
+              incorrectLetters =
+                  pickCountExcluding(list: vowels, count: 2, correct: variation)
+                      .map(
+                        (vowel_) => addConsonantToVowel(
+                          LetterData.randomPlaceholder(random),
+                          vowel_,
+                        ),
+                      )
+                      .toList();
             }
 
             shuffledExercises.add(
               selectExercise(
                 correctLetter: correctLetter,
-                incorrectLetters: incorrectLetters,
-                sectionType: SectionType.vowel,
+                incorrectLetters: incorrectLetters
+                    .map((letter) => {letter: LetterType.vowel})
+                    .toList(),
+                sectionType: LetterType.vowel,
                 usePlaceholders: usingDefaultPlaceholder,
               ),
             );
@@ -216,7 +233,7 @@ class VowelLessonGenerator {
           for (String item in variations.map(
             (variation) => variation[random.nextInt(variation.length)],
           ))
-            item: SectionType.vowel,
+            item: LetterType.vowel,
         },
       ),
     );
@@ -232,7 +249,7 @@ class VowelLessonGenerator {
                 variation[random.nextInt(variation.length)],
               ),
             ))
-              item: SectionType.vowel,
+              item: LetterType.vowel,
           },
         ),
       );

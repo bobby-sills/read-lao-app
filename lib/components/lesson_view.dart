@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/utilities/lesson_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
@@ -9,8 +9,8 @@ import 'package:learn_lao_app/components/lesson_nav_button.dart';
 import 'package:learn_lao_app/utilities/letter_data.dart';
 
 class LessonView extends StatelessWidget {
-  final SectionType sectionType;
-  final ({SectionType sectionType, int index}) lastLesson;
+  final LetterType sectionType;
+  final ({LetterType sectionType, int index}) lastLesson;
 
   const LessonView({
     super.key,
@@ -22,7 +22,7 @@ class LessonView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: Hive.box<bool>(
-        sectionType == SectionType.consonant
+        sectionType == LetterType.consonant
             ? HiveUtility.consonantCompletionBox
             : HiveUtility.vowelCompletionBox,
       ).listenable(),
@@ -38,11 +38,11 @@ class LessonView extends StatelessWidget {
                 // But even if the previous lesson is not complete, set the status to nextUp if it's the first lesson
                 // Otherwise, set the status to notStarted
                 final lessonStatus =
-                    HiveUtility.isLessonCompleted(index, SectionType.consonant)
+                    HiveUtility.isLessonCompleted(index, LetterType.consonant)
                     ? LessonStatus.completed
                     : HiveUtility.isLessonCompleted(
                         index - 1,
-                        SectionType.consonant,
+                        LetterType.consonant,
                       )
                     ? LessonStatus.nextUp
                     : index == 0
@@ -59,7 +59,7 @@ class LessonView extends StatelessWidget {
                 );
                 late Widget content;
 
-                if (sectionType == SectionType.consonant) {
+                if (sectionType == LetterType.consonant) {
                   final int endIndex = ((index * 2) + 2).clamp(
                     0,
                     LetterData.consonantOrder.length,
@@ -87,7 +87,7 @@ class LessonView extends StatelessWidget {
                 );
               },
               // Automatically setting list length
-              childCount: sectionType == SectionType.consonant
+              childCount: sectionType == LetterType.consonant
                   ? LessonData.consonantLessons.length
                   : LessonData.vowelLessons.length,
             ),

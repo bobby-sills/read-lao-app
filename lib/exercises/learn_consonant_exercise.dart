@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/components/dynamic_bold_text.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
+import 'package:learn_lao_app/typedefs/letter_type.dart';
 import 'package:learn_lao_app/utilities/letter_data.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/shared_styles.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 import 'package:provider/provider.dart';
 
 class LearnConsonantExercise extends StatefulExercise {
@@ -20,8 +21,8 @@ class LearnConsonantExercise extends StatefulExercise {
 
 class LearningExerciseState
     extends StatefulExerciseState<LearnConsonantExercise> {
-  final _speechPlayer = SoundsUtility();
-  final _effectPlayer = SoundsUtility();
+  final _speechPlayer = AudioUtility();
+  final _effectPlayer = AudioUtility();
 
   @override
   void initState() {
@@ -103,8 +104,10 @@ class LearningExerciseState
               child: ElevatedButton(
                 onPressed: () {
                   _speechPlayer.playLetter(
-                    widget.consonant,
-                    SectionType.consonant,
+                    Letter(
+                      character: widget.consonant,
+                      type: LetterType.consonant,
+                    ),
                   );
 
                   if (!context.read<LessonProvider>().isBottomSheetVisible) {
