@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/pages/lesson_wrapper.dart';
 import 'package:learn_lao_app/utilities/lesson_data.dart';
@@ -16,10 +16,10 @@ class LessonNavButton extends StatelessWidget {
 
   final int index;
   final LessonStatus lessonStatus;
-  final SectionType sectionType;
+  final LetterType sectionType;
 
   void _navigateToLesson(BuildContext context) {
-    final lessons = sectionType == SectionType.consonant
+    final lessons = sectionType == LetterType.consonant
         ? LessonData.consonantLessons
         : LessonData.vowelLessons;
     Navigator.push(

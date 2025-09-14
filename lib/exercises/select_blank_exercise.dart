@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:learn_lao_app/components/bottom_lesson_button.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
+import 'package:learn_lao_app/typedefs/letter_type.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
+import 'package:learn_lao_app/utilities/letter_data.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 import 'package:provider/provider.dart';
 
 enum BottomButtonState { incorrect, correct }
@@ -13,14 +15,12 @@ abstract class SelectBlankExercise extends StatefulExercise {
   SelectBlankExercise({
     required this.correctLetter,
     required this.incorrectLetters,
-    required this.sectionType,
     this.usePlaceholders,
     super.key,
   });
 
-  final String correctLetter;
-  final List<String> incorrectLetters;
-  final SectionType sectionType;
+  final Letter correctLetter;
+  final List<Letter> incorrectLetters;
   final bool? usePlaceholders;
 
   @override
@@ -30,10 +30,9 @@ abstract class SelectBlankExercise extends StatefulExercise {
 // The corresponding State class that extends StatefulExerciseState
 abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
     extends StatefulExerciseState<T> {
-  final effectPlayer = SoundsUtility();
-  final speechPlayer = SoundsUtility();
-  late final List<String> shuffledLetters;
-  late final List<String> allLetters;
+  final effectPlayer = AudioUtility();
+  final speechPlayer = AudioUtility();
+  late final List<Letter> shuffledLetters;
   late ThemeData theme;
   late bool isDarkMode;
   late Color svgColor;
@@ -41,8 +40,20 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   var selectedButton = -1;
 
   void checkAnswer() {
-    final bool isCorrect =
-        shuffledLetters[selectedButton] == widget.correctLetter;
+    late final bool isCorrect;
+    if (shuffledLetters[selectedButton].type == widget.correctLetter.type) {
+      if (widget.correctLetter.type == LetterType.vowel) {
+        isCorrect =
+            LetterData.getVowelIndex(
+              shuffledLetters[selectedButton].character,
+            ) ==
+            LetterData.getVowelIndex(shuffledLetters[selectedButton].character);
+      } else {
+        isCorrect = shuffledLetters[selectedButton] == widget.correctLetter;
+      }
+    } else {
+      isCorrect = false;
+    }
 
     if (isCorrect) {
       // If the answer is correct
@@ -74,21 +85,15 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   @override
   void initState() {
     super.initState();
-    // Adds the correct letter plus the incorrect letters to the list of options
-    shuffledLetters = List.from(
-      widget.incorrectLetters + [widget.correctLetter],
-    );
+    shuffledLetters = [...widget.incorrectLetters, widget.correctLetter];
     shuffledLetters.shuffle();
 
     assert(
-      (widget.incorrectLetters.length) <= 3,
-      'There can be a maximum of 4 incorrect letters',
+      widget.incorrectLetters.length <= 3,
+      'There can be a maximum of 3 incorrect letters',
     );
 
-    assert(
-      !widget.incorrectLetters.contains(widget.correctLetter),
-      'incorrectLetters must not contain correctLetter',
-    );
+    assert(!widget.incorrectLetters.contains(widget.correctLetter));
   }
 
   @override

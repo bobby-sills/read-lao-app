@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:learn_lao_app/components/lesson_view.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
+import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/utilities/lesson_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     // Add height for sticky header
     const double headerHeight = 60;
 
-    if (lastLesson.sectionType == SectionType.consonant) {
+    if (lastLesson.sectionType == LetterType.consonant) {
       // For consonant section, just calculate position from lesson index
       targetPosition =
           headerHeight +
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               sliver: LessonView(
-                sectionType: SectionType.consonant,
+                sectionType: LetterType.consonant,
                 lastLesson: lastLesson,
               ),
             ),
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               sliver: LessonView(
-                sectionType: SectionType.vowel,
+                sectionType: LetterType.vowel,
                 lastLesson: lastLesson,
               ),
             ),
@@ -123,18 +123,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  ({SectionType sectionType, int index}) _getLastCompleteLesson() {
+  ({LetterType sectionType, int index}) _getLastCompleteLesson() {
     final lastConsonant = HiveUtility.getLastLessonComplete(
-      SectionType.consonant,
+      LetterType.consonant,
     );
-    final lastVowel = HiveUtility.getLastLessonComplete(SectionType.vowel);
+    final lastVowel = HiveUtility.getLastLessonComplete(LetterType.vowel);
 
     // If the last consonant has been completed, then the last lesson
     // will be in the vowel section
     if (lastConsonant == LessonData.consonantLessons.length - 1) {
-      return (sectionType: SectionType.vowel, index: lastVowel);
+      return (sectionType: LetterType.vowel, index: lastVowel);
     } else {
-      return (sectionType: SectionType.consonant, index: lastConsonant);
+      return (sectionType: LetterType.consonant, index: lastConsonant);
     }
   }
 }

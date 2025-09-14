@@ -8,7 +8,6 @@ class SelectSoundExercise extends SelectBlankExercise {
   SelectSoundExercise({
     required super.correctLetter,
     required super.incorrectLetters,
-    required super.sectionType,
     super.usePlaceholders,
     super.key,
   });
@@ -35,7 +34,7 @@ class SelectSoundExerciseState
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    widget.correctLetter,
+                    widget.correctLetter.character,
                     style: laoStyle.copyWith(fontSize: 256),
                   ),
                 ),
@@ -64,7 +63,8 @@ class SelectSoundExerciseState
                         height: 80,
                         child: ElevatedButton(
                           onPressed: () {
-                            speechPlayer.playLetter(letter, widget.sectionType);
+                            // Find the letter type from the incorrectLetters or use sectionType for correct letter
+                            speechPlayer.playLetter(letter);
                             setState(() {
                               selectedButton = index;
                             });

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/enums/section_type.dart';
-import 'package:learn_lao_app/utilities/sounds_utility.dart';
+import 'package:learn_lao_app/typedefs/letter_type.dart';
+import 'package:learn_lao_app/utilities/audio_utility.dart';
 import 'package:learn_lao_app/enums/button_state.dart';
 import 'package:learn_lao_app/enums/button_type.dart';
 
@@ -8,10 +8,9 @@ class MatchingButton extends StatelessWidget {
   final ButtonType buttonType;
   final int index;
   final Map<ButtonType, List<ButtonState>> states;
-  final String letter;
+  final Letter letter;
   final Function(int index, ButtonType buttonType) selectButtonCallback;
-  final SoundsUtility player;
-  final SectionType sectionType;
+  final AudioUtility player;
 
   const MatchingButton({
     super.key,
@@ -21,7 +20,6 @@ class MatchingButton extends StatelessWidget {
     required this.letter,
     required this.selectButtonCallback,
     required this.player,
-    required this.sectionType,
   });
 
   VoidCallback? get _onPressed {
@@ -41,7 +39,7 @@ class MatchingButton extends StatelessWidget {
           // and the buttonType is a sound button
           if (buttonType == ButtonType.sound) {
             if (state == ButtonState.deselected) {
-              player.playLetter(letter, sectionType);
+              player.playLetter(letter);
             }
           }
           selectButtonCallback(index, buttonType);
@@ -74,7 +72,7 @@ class MatchingButton extends StatelessWidget {
 
     if (buttonType == ButtonType.letter) {
       return Text(
-        letter,
+        letter.character,
         style: TextStyle(
           fontSize: theme.textTheme.displayLarge?.fontSize,
           fontFamily: 'NotoSansLaoLooped',
