@@ -10,7 +10,6 @@ import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 class LessonWrapper extends StatefulWidget {
   final List<Widget> exercises;
   final int lessonIndex;
-  final LetterType sectionType;
 
   // If null is passed into the exercises parameter, meaning that there is no lesson for that index,
   //    the default value will be an empty list, which will display the EmptyLesson widget.
@@ -19,7 +18,6 @@ class LessonWrapper extends StatefulWidget {
     super.key,
     required List<Widget>? exercises,
     required this.lessonIndex,
-    required this.sectionType,
   }) : exercises = exercises ?? const [];
 
   @override
@@ -99,10 +97,7 @@ class _LessonWrapperState extends State<LessonWrapper>
           context,
           MaterialPageRoute(
             builder: (context) {
-              return LessonComplete(
-                lessonNum: widget.lessonIndex,
-                sectionType: widget.sectionType,
-              );
+              return LessonComplete(lessonNum: widget.lessonIndex);
             },
           ),
         );

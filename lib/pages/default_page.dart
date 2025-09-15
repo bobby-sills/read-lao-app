@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/pages/navigation_page.dart';
 import 'package:learn_lao_app/pages/practice_page.dart';
 import 'package:learn_lao_app/pages/settings_page.dart';
+import 'package:learn_lao_app/pages/navigation_page.dart';
 
 class DefaultPage extends StatefulWidget {
   const DefaultPage({super.key});

@@ -1,18 +1,11 @@
 import 'dart:math';
-
-import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/enums/letter_type.dart';
+import 'package:confetti/confetti.dart';
 import 'package:learn_lao_app/utilities/audio_utility.dart';
 
 class LessonComplete extends StatefulWidget {
-  const LessonComplete({
-    super.key,
-    required this.lessonNum,
-    required this.sectionType,
-  });
+  const LessonComplete({super.key, required this.lessonNum});
   final int lessonNum;
-  final LetterType sectionType;
 
   @override
   State<LessonComplete> createState() => _LessonCompleteState();
@@ -41,9 +34,6 @@ class _LessonCompleteState extends State<LessonComplete> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final String textSectionType = widget.sectionType == LetterType.consonant
-        ? "Consonant"
-        : "Vowel";
 
     return Scaffold(
       body: Stack(
@@ -68,7 +58,7 @@ class _LessonCompleteState extends State<LessonComplete> {
                 SizedBox(height: 32),
                 Text(
                   textAlign: TextAlign.center,
-                  '$textSectionType lesson ${widget.lessonNum + 1} complete!',
+                  'Another lesson ${widget.lessonNum + 1} complete!',
                   style: theme.textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

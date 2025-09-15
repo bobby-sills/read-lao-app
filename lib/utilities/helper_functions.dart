@@ -1,6 +1,6 @@
+import 'package:learn_lao_app/utilities/letter_data.dart';
 // A function that takes in a list and returns the shuffled version of it
 
-import 'package:learn_lao_app/utilities/letter_data.dart';
 
 // Generates a unique list of random `count` values drawn from allOptions
 // excluding the `correct` value. The `correct` value is always included in the
