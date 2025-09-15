@@ -1,9 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:learn_lao_app/components/lesson_view.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/utilities/lesson_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
+import 'package:learn_lao_app/components/lesson_nav_button.dart';
 
 enum LessonStatus { notStarted, nextUp, completed }
 
@@ -21,26 +22,9 @@ class _HomePageState extends State<HomePage> {
   void _scrollToLesson() {
     final lastLesson = _getLastCompleteLesson();
 
-    // Calculate the position based on lesson index and section
-    double targetPosition = 0;
-
-    // Add height for sticky header
-    const double headerHeight = 60;
-
-    if (lastLesson.sectionType == LetterType.consonant) {
-      // For consonant section, just calculate position from lesson index
-      targetPosition =
-          headerHeight +
-          (lastLesson.index * 181); // 161 lesson height + 20 padding
-    } else {
-      // For vowel section, add all consonant lessons plus vowel header
-      final consonantLessons = LessonData.consonantLessons.length;
-      targetPosition =
-          headerHeight +
-          (consonantLessons * 181) +
-          headerHeight +
-          (lastLesson.index * 181);
-    }
+    // Calculate the position based on lesson index
+    double targetPosition =
+        lastLesson.index * 120.0; // 100 lesson height + 20 padding
 
     // Add some offset to center the lesson on screen
     targetPosition = targetPosition - 200;
@@ -70,52 +54,58 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final lastLesson = _getLastCompleteLesson();
-
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            SliverStickyHeader(
-              header: Container(
-                height: 60,
-                color: Theme.of(context).primaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Consonants',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            ValueListenableBuilder(
+              valueListenable: Hive.box<bool>(
+                HiveUtility.consonantCompletionBox,
+              ).listenable(),
+              builder: (context, box, _) {
+                return SliverPadding(
+                  padding: const EdgeInsets.all(8.0),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final double xOffset = sin(index * 100) * 96;
+                      final lessonStatus =
+                          HiveUtility.isLessonCompleted(
+                            index,
+                            LetterType.consonant,
+                          )
+                          ? LessonStatus.completed
+                          : HiveUtility.isLessonCompleted(
+                              index - 1,
+                              LetterType.consonant,
+                            )
+                          ? LessonStatus.nextUp
+                          : index == 0
+                          ? LessonStatus.nextUp
+                          : LessonStatus.notStarted;
+
+                      Widget lessonButton = SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: LessonNavButton(
+                          index: index,
+                          lessonStatus: lessonStatus,
+                        ),
+                      );
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Center(
+                          child: Transform.translate(
+                            offset: Offset(xOffset, 0),
+                            child: lessonButton,
+                          ),
+                        ),
+                      );
+                    }, childCount: LessonData.allLessons.length),
                   ),
-                ),
-              ),
-              sliver: LessonView(
-                sectionType: LetterType.consonant,
-                lastLesson: lastLesson,
-              ),
-            ),
-            SliverStickyHeader(
-              header: Container(
-                height: 60,
-                color: Theme.of(context).primaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Vowels',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              sliver: LessonView(
-                sectionType: LetterType.vowel,
-                lastLesson: lastLesson,
-              ),
+                );
+              },
             ),
           ],
         ),
@@ -127,14 +117,6 @@ class _HomePageState extends State<HomePage> {
     final lastConsonant = HiveUtility.getLastLessonComplete(
       LetterType.consonant,
     );
-    final lastVowel = HiveUtility.getLastLessonComplete(LetterType.vowel);
-
-    // If the last consonant has been completed, then the last lesson
-    // will be in the vowel section
-    if (lastConsonant == LessonData.consonantLessons.length - 1) {
-      return (sectionType: LetterType.vowel, index: lastVowel);
-    } else {
-      return (sectionType: LetterType.consonant, index: lastConsonant);
-    }
+    return (sectionType: LetterType.consonant, index: lastConsonant);
   }
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/components/bottom_lesson_button.dart';
+import 'package:provider/provider.dart';
 import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/typedefs/letter_type.dart';
-import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/utilities/letter_data.dart';
-import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 import 'package:learn_lao_app/utilities/audio_utility.dart';
-import 'package:provider/provider.dart';
+import 'package:learn_lao_app/exercises/stateful_exercise.dart';
+import 'package:learn_lao_app/components/bottom_lesson_button.dart';
+import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
+import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 
-enum BottomButtonState { incorrect, correct }
 
 // This new abstract class extends StatefulExercise
 abstract class SelectBlankExercise extends StatefulExercise {
@@ -49,7 +49,9 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
             ) ==
             LetterData.getVowelIndex(shuffledLetters[selectedButton].character);
       } else {
-        isCorrect = shuffledLetters[selectedButton] == widget.correctLetter;
+        isCorrect =
+            shuffledLetters[selectedButton].character ==
+            widget.correctLetter.character;
       }
     } else {
       isCorrect = false;
@@ -85,7 +87,25 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
   @override
   void initState() {
     super.initState();
-    shuffledLetters = [...widget.incorrectLetters, widget.correctLetter];
+    final Set<String> uniqueCharacters = {};
+    if (this is SelectSoundExerciseState) {
+      shuffledLetters =
+          [...widget.incorrectLetters, widget.correctLetter]
+              .map(
+                (letter) => Letter(
+                  character: letter.type == LetterType.consonant
+                      ? letter.character
+                      : LetterData.vowelsIndex[LetterData.getVowelIndex(
+                          letter.character,
+                        )],
+                  type: letter.type,
+                ),
+              )
+              .toList()
+            ..retainWhere((letter) => uniqueCharacters.add(letter.character));
+    } else {
+      shuffledLetters = [...widget.incorrectLetters, widget.correctLetter];
+    }
     shuffledLetters.shuffle();
 
     assert(

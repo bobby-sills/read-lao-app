@@ -1,15 +1,16 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:learn_lao_app/enums/letter_type.dart';
-import 'package:learn_lao_app/exercises/learn_consonant_exercise.dart';
-import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
+import 'package:learn_lao_app/typedefs/letter_type.dart';
+import 'package:learn_lao_app/utilities/letter_data.dart';
+import 'package:learn_lao_app/utilities/helper_functions.dart';
+import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
+import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
 import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
 import 'package:learn_lao_app/exercises/select_letter_exercise.dart';
-import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-import 'package:learn_lao_app/typedefs/letter_type.dart';
-import 'package:learn_lao_app/utilities/helper_functions.dart';
-import 'package:collection/collection.dart';
-import 'package:learn_lao_app/utilities/letter_data.dart';
+import 'package:learn_lao_app/exercises/learn_consonant_exercise.dart';
 
 class LessonGenerator {
   /*
@@ -149,6 +150,9 @@ class LessonGenerator {
     shuffledExercises.shuffle();
     lesson.addAll(shuffledExercises);
 
+    for (List<Letter> matchingSet in matchingSets) {
+      lesson.add(MatchingExercise(lettersToMatch: matchingSet));
+    }
     return lesson;
   }
 
@@ -168,6 +172,16 @@ class LessonGenerator {
         Letter(character: pair[1], type: LetterType.vowel),
       );
       lessons.add(
+        generateLesson(
+          previouslyLearnedConsonants,
+          previouslyLearnedVowels,
+          [newConsonant], // new consonant
+          [newVowel], // new vowel
+          currentlyLearningConsonants,
+          currentlyLearningVowels,
+        ),
+      );
+      inspect(
         generateLesson(
           previouslyLearnedConsonants,
           previouslyLearnedVowels,
@@ -201,98 +215,6 @@ class LessonGenerator {
           previouslyLearnedVowels.add(currentlyLearningVowels.removeLast());
         }
       }
-    }
-    return lessons;
-  }
-
-  static List<StatefulExercise> _generateLesson(List<String> letters) {
-    final List<StatefulExercise> exercises = [];
-    for (String correctLetter in letters) {
-      exercises.addAll([
-        LearnConsonantExercise(consonant: correctLetter),
-        ..._generateExercisePair(
-          letter: Letter(character: correctLetter, type: LetterType.consonant),
-          allLetters: letters
-              .map(
-                (letter) =>
-                    Letter(character: letter, type: LetterType.consonant),
-              )
-              .toList(),
-        )..shuffle(),
-      ]);
-    }
-
-    // If are there are more than 5 letters to match, split them up into two different sets of matching exercises
-    final Iterable<List<String>> listOfMatches = (letters.length >= 6)
-        ? letters.slices(3)
-        : [letters];
-
-    // Loop over each set of letters to match
-    for (List<String> matches in listOfMatches) {
-      exercises.add(
-        MatchingExercise(
-          lettersToMatch: matches
-              .map(
-                (match) => Letter(character: match, type: LetterType.consonant),
-              )
-              .toList(),
-          key: UniqueKey(),
-        ),
-      );
-    }
-
-    final List<StatefulExercise> shuffledExercises = [];
-
-    for (String correctLetter in letters) {
-      shuffledExercises.addAll(
-        _generateExercisePair(
-          letter: Letter(character: correctLetter, type: LetterType.consonant),
-          allLetters: letters
-              .map(
-                (letter) =>
-                    Letter(character: letter, type: LetterType.consonant),
-              )
-              .toList(),
-        ),
-      );
-    }
-
-    for (int i = 0; i < (letters.length / 3); i++) {
-      shuffledExercises.add(
-        MatchingExercise(
-          lettersToMatch: pickCountExcluding(
-            list: letters
-                .map(
-                  (letter) =>
-                      Letter(character: letter, type: LetterType.consonant),
-                )
-                .toList(),
-            count: 4,
-          ),
-
-          key: UniqueKey(),
-        ),
-      );
-    }
-
-    exercises.addAll(shuffledExercises);
-    return exercises;
-  }
-
-  static List<List<StatefulExercise>> generateAllLessons(
-    List<String> learningOrder,
-  ) {
-    final List<List<StatefulExercise>> lessons = [];
-    final List<String> currentLetters = [];
-    for (int i = 0; i < learningOrder.length; i += 2) {
-      // Only remove 2 previously learned letters if there are enough to remove
-      if (currentLetters.length >= 6) currentLetters.removeRange(0, 2);
-      // Add 2 new letters that the user is going to learn
-      final int endIndex = (i + 2).clamp(0, learningOrder.length);
-      currentLetters.addAll(learningOrder.sublist(endIndex - 2, endIndex));
-      print(learningOrder.sublist(endIndex - 2, endIndex));
-
-      lessons.add(_generateLesson(currentLetters));
     }
     return lessons;
   }
