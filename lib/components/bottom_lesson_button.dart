@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BottomLessonButton extends StatefulWidget {
   final void Function()? onPressed;
@@ -28,6 +29,7 @@ class _BottomLessonButtonState extends State<BottomLessonButton> {
       _isPressed = true;
     });
 
+    HapticFeedback.lightImpact();
     widget.onPressed!();
 
     // Reset after a short delay to prevent rapid consecutive taps

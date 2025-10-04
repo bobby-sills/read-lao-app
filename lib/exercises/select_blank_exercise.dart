@@ -9,7 +9,6 @@ import 'package:learn_lao_app/components/bottom_lesson_button.dart';
 import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
 import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
 
-
 // This new abstract class extends StatefulExercise
 abstract class SelectBlankExercise extends StatefulExercise {
   SelectBlankExercise({
@@ -110,7 +109,7 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
 
     assert(
       widget.incorrectLetters.length <= 3,
-      'There can be a maximum of 3 incorrect letters',
+      'incorrectLetters.length: ${widget.incorrectLetters.length}',
     );
 
     assert(!widget.incorrectLetters.contains(widget.correctLetter));
