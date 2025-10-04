@@ -1,10 +1,10 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/typedefs/letter_type.dart';
 import 'package:learn_lao_app/utilities/letter_data.dart';
-import 'package:learn_lao_app/utilities/helper_functions.dart';
 import 'package:learn_lao_app/exercises/stateful_exercise.dart';
 import 'package:learn_lao_app/exercises/matching_exercise.dart';
 import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
@@ -26,22 +26,24 @@ class LessonGenerator {
   */
 
   static List<StatefulExercise> _generateExercisePair({
-    required Letter letter,
+    required Letter correctLetter,
     required List<Letter> allLetters,
   }) {
-    final List<Letter> incorrectLetters = pickCountExcluding(
-      list: allLetters,
-      count: (allLetters.length - 1).clamp(0, 2),
-      correct: letter,
-    );
+    final List<Letter> incorrectLetters =
+        (List<Letter>.from(allLetters)..removeWhere(
+              (letter) => letter.character == correctLetter.character,
+            ))
+            .shuffled()
+            .take(2)
+            .toList();
     return [
       SelectSoundExercise(
-        correctLetter: letter,
+        correctLetter: correctLetter,
         incorrectLetters: incorrectLetters,
         key: UniqueKey(),
       ),
       SelectLetterExercise(
-        correctLetter: letter,
+        correctLetter: correctLetter,
         incorrectLetters: incorrectLetters,
         key: UniqueKey(),
       ),
@@ -71,10 +73,10 @@ class LessonGenerator {
     final List<StatefulExercise> lesson = [];
     List<Letter> allLetters = [
       ...newConsonants,
+      ...currentlyLearningConsonants,
       ...newVowels
           .map((vowel) => _vowelWithPotentialVariation(vowel))
           .expand((element) => element),
-      ...currentlyLearningConsonants,
       ...currentlyLearningVowels
           .map((vowel) => _vowelWithPotentialVariation(vowel))
           .expand((element) => element),
@@ -90,7 +92,7 @@ class LessonGenerator {
             (consonant) => <StatefulExercise>[
               LearnConsonantExercise(consonant: consonant.character),
               ..._generateExercisePair(
-                letter: consonant,
+                correctLetter: consonant,
                 allLetters: allLetters,
               ),
             ],
@@ -105,7 +107,7 @@ class LessonGenerator {
               ..._vowelWithPotentialVariation(vowel)
                   .map(
                     (vowel) => _generateExercisePair(
-                      letter: vowel,
+                      correctLetter: vowel,
                       allLetters: allLetters,
                     ),
                   )
@@ -139,11 +141,30 @@ class LessonGenerator {
       lesson.add(MatchingExercise(lettersToMatch: matchingSet));
     }
 
+    // Main lesson content
     final List<StatefulExercise> shuffledExercises = [];
+
+    Set<int> solidifiedLetters = [
+      ...currentlyLearningConsonants,
+      ...previouslyLearnedConsonants,
+      ...currentlyLearningVowels
+          .map((vowel) => _vowelWithPotentialVariation(vowel))
+          .expand((element) => element),
+      ...previouslyLearnedVowels
+          .map((vowel) => _vowelWithPotentialVariation(vowel))
+          .expand((element) => element),
+    ].map((letter) => letter.character.runes.single).toSet();
+    final List<String> availableWords = [];
+
+    for (String word in LetterData.spellingWords) {
+      if (solidifiedLetters.containsAll(word.runes.toSet())) {
+        availableWords.add(word);
+      }
+    }
 
     for (Letter letter in allLetters) {
       shuffledExercises.addAll(
-        _generateExercisePair(letter: letter, allLetters: allLetters),
+        _generateExercisePair(correctLetter: letter, allLetters: allLetters),
       );
     }
 
@@ -153,7 +174,11 @@ class LessonGenerator {
     for (List<Letter> matchingSet in matchingSets) {
       lesson.add(MatchingExercise(lettersToMatch: matchingSet));
     }
+
     return lesson;
+    // return LetterData.spellingWords
+    //     .map((word) => SpellingExercise(word: word))
+    //     .toList();
   }
 
   static List<List<StatefulExercise>> generateLessons() {

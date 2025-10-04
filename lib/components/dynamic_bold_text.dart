@@ -31,8 +31,11 @@ class DynamicBoldText extends StatelessWidget {
               foreground: Paint()
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 1.0
+                ..strokeJoin = StrokeJoin.round
+                ..isAntiAlias = true
                 ..color =
-                    textStyle.color ?? (isDarkMode ? Colors.white : Colors.black)
+                    textStyle.color ??
+                    (isDarkMode ? Colors.white : Colors.black),
             ),
           ),
         );

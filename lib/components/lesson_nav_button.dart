@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_lao_app/pages/lesson_wrapper.dart';
 import 'package:learn_lao_app/pages/navigation_page.dart';
@@ -16,6 +17,7 @@ class LessonNavButton extends StatelessWidget {
   final LessonStatus lessonStatus;
 
   void _navigateToLesson(BuildContext context) {
+    HapticFeedback.lightImpact();
     Navigator.push(
       context,
       MaterialPageRoute(

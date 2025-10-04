@@ -20,17 +20,19 @@ class SpellingExercise extends StatefulExercise {
 class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
   late final List<int> tray;
   late final List<CardState> states;
+  late final List<int> shuffledIndices;
   final List<int> clickOrder = [];
   bool bottomButtonIsCorrect = true;
-  final AudioUtility soundsUtility = AudioUtility();
-  final effectPlayer = AudioUtility();
-  final speechPlayer = AudioUtility();
+  final AudioUtility effectPlayer = AudioUtility();
+  final AudioUtility speechPlayer = AudioUtility();
 
   @override
   initState() {
     super.initState();
     tray = widget.word.runes.toList();
     states = List.filled(tray.length, CardState.on);
+    shuffledIndices = List.generate(tray.length, (index) => index);
+    shuffledIndices.shuffle();
   }
 
   String get _displayText {
@@ -81,7 +83,9 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
     });
   }
 
-  Future<void> _playWord() async {}
+  Future<void> _playWord() async {
+    await speechPlayer.playWord(widget.word);
+  }
 
   void checkAnswer() {
     final bool isCorrect = _displayText == widget.word;
@@ -168,24 +172,24 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
                 crossAxisCount: 4,
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 children: [
-                  for (int i = 0; i < tray.length; i++)
+                  for (int displayIndex = 0; displayIndex < tray.length; displayIndex++)
                     GestureDetector(
-                      onTap: () => _onCardTap(i),
+                      onTap: () => _onCardTap(shuffledIndices[displayIndex]),
                       child: Card(
-                        elevation: states[i] == CardState.on ? 4.0 : 0.0,
-                        color: states[i] == CardState.on
+                        elevation: states[shuffledIndices[displayIndex]] == CardState.on ? 4.0 : 0.0,
+                        color: states[shuffledIndices[displayIndex]] == CardState.on
                             ? Theme.of(context).colorScheme.surface
                             : Theme.of(
                                 context,
                               ).colorScheme.surfaceContainerHighest,
                         child: Center(
                           child: Text(
-                            laoRuneToDisplayString(tray[i]),
+                            laoRuneToDisplayString(tray[shuffledIndices[displayIndex]]),
                             style: TextStyle(
                               fontFamily: "NotoSansLaoLooped",
                               fontWeight: FontWeight.w500,
                               fontSize: 36,
-                              color: states[i] == CardState.on
+                              color: states[shuffledIndices[displayIndex]] == CardState.on
                                   ? Theme.of(context).colorScheme.onSurface
                                   : Theme.of(
                                       context,

@@ -189,6 +189,16 @@ class LetterData {
     '◌ວຍ',
   ];
 
+  static const List<String> spellingWords = [
+    'ກະແຈ',
+    'ຕັດ',
+    'ຕັ່ງ',
+    'ຖັງ',
+    'ທະນູ',
+    'ພະ',
+    'ໜັກ',
+  ];
+
   static const List<String> vowelTeachingOrder = [
     'ເ◌ຍ',
     'ເ◌ືອ',

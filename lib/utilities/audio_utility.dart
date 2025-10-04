@@ -23,6 +23,10 @@ class AudioUtility {
     await audioPlayer.play(AssetSource('sound_effects/$soundEffect.wav'));
   }
 
+  Future<void> playWord(String word) async {
+    await audioPlayer.play(AssetSource('words/$word.mp3'));
+  }
+
   void dispose() {
     audioPlayer.dispose();
   }

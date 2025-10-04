@@ -40,6 +40,7 @@ dependencies:
   dart_code_metrics: ^4.19.2
   dependency_validator: ^3.2.3
   collection: ^1.19.1
+  haptic_feedback: ^0.5.1+1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/consonants/sounds/
     - assets/vowels/sounds/
     - assets/sound_effects/
+    - assets/words/
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
 
