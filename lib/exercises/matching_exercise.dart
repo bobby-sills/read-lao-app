@@ -149,6 +149,7 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
                   state == ButtonState.disabled ||
                   state == ButtonState.complete,
             )) {
+          _effectPlayer.playSoundEffect("correct");
           showBottomBar(
             context: context,
             onShow: () {
@@ -159,14 +160,11 @@ class _MatchingExerciseState extends StatefulExerciseState<MatchingExercise>
             },
           );
         }
-        // Correct sound effect
-        _effectPlayer.playSoundEffect("correct");
       } else {
         setState(() {
           states[ButtonType.sound]![soundIndex] = ButtonState.incorrect;
           states[ButtonType.letter]![letterIndex] = ButtonState.incorrect;
         });
-        _effectPlayer.playSoundEffect("incorrect");
         context.read<LessonProvider>().markExerciseAsMistake?.call();
         // Set time until deselected if incorrect
         Future.delayed(Duration(milliseconds: 800), () {

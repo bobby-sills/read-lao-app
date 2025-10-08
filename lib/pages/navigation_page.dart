@@ -20,11 +20,11 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
 
   void _scrollToLesson() {
-    final lastLesson = _getLastCompleteLesson();
+    final lastLessonIndex = HiveUtility.getLastLessonComplete();
 
     // Calculate the position based on lesson index
     double targetPosition =
-        lastLesson.index * 120.0; // 100 lesson height + 20 padding
+        lastLessonIndex * 120.0; // 100 lesson height + 20 padding
 
     // Add some offset to center the lesson on screen
     targetPosition = targetPosition - 200;
@@ -56,67 +56,48 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
+        child: ListView.builder(
           controller: _scrollController,
-          slivers: [
-            ValueListenableBuilder(
+          itemCount: LessonData.allLessons.length,
+          itemBuilder: (context, index) {
+            return ValueListenableBuilder(
               valueListenable: Hive.box<bool>(
-                HiveUtility.consonantCompletionBox,
+                HiveUtility.lessonCompletionBox,
               ).listenable(),
-              builder: (context, box, _) {
-                return SliverPadding(
-                  padding: const EdgeInsets.all(8.0),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      final double xOffset = sin(index * 100) * 96;
-                      final lessonStatus =
-                          HiveUtility.isLessonCompleted(
-                            index,
-                            LetterType.consonant,
-                          )
-                          ? LessonStatus.completed
-                          : HiveUtility.isLessonCompleted(
-                              index - 1,
-                              LetterType.consonant,
-                            )
-                          ? LessonStatus.nextUp
-                          : index == 0
-                          ? LessonStatus.nextUp
-                          : LessonStatus.notStarted;
+              builder: (BuildContext context, Box<bool> box, Widget? child) {
+                final double xOffset = sin(index * 100) * 96;
+                final lessonStatus = HiveUtility.isLessonCompleted(index)
+                    ? LessonStatus.completed
+                    : HiveUtility.isLessonCompleted(index - 1)
+                        ? LessonStatus.nextUp
+                        : index == 0
+                            ? LessonStatus.nextUp
+                            : LessonStatus.notStarted;
 
-                      Widget lessonButton = SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: LessonNavButton(
-                          index: index,
-                          lessonStatus: lessonStatus,
-                        ),
-                      );
+                Widget lessonButton = SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: LessonNavButton(
+                    index: index,
+                    lessonStatus: lessonStatus,
+                  ),
+                );
 
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Center(
-                          child: Transform.translate(
-                            offset: Offset(xOffset, 0),
-                            child: lessonButton,
-                          ),
-                        ),
-                      );
-                    }, childCount: LessonData.allLessons.length),
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Center(
+                    child: Transform.translate(
+                      offset: Offset(xOffset, 0),
+                      child: lessonButton,
+                    ),
                   ),
                 );
               },
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
   }
 
-  ({LetterType sectionType, int index}) _getLastCompleteLesson() {
-    final lastConsonant = HiveUtility.getLastLessonComplete(
-      LetterType.consonant,
-    );
-    return (sectionType: LetterType.consonant, index: lastConsonant);
-  }
 }

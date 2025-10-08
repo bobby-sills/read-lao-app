@@ -62,55 +62,99 @@ class LearnVowelExerciseState
     return Expanded(
       child: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(
-              flex: 5,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(letter, style: laoStyle.copyWith(fontSize: 10000)),
+                child: Text(letter, style: laoStyle.copyWith(fontSize: 200)),
               ),
             ),
-            Spacer(),
-            Expanded(
-              flex: 3,
-              child: ElevatedButton(
-                onPressed: () {
-                  _speechPlayer.playLetter(
-                    Letter(character: widget.vowel, type: LetterType.vowel),
-                  );
-
-                  if (!Provider.of<LessonProvider>(
-                    context,
-                    listen: false,
-                  ).isBottomSheetVisible) {
-                    showBottomBar(
-                      context: context,
-                      onShow: () {
-                        Provider.of<LessonProvider>(
-                          context,
-                          listen: false,
-                        ).setBottomSheetVisible(true);
-                      },
-                      onHide: () {
-                        Provider.of<LessonProvider>(
-                          context,
-                          listen: false,
-                        ).setBottomSheetVisible(false);
-                      },
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: SizedBox(
+                height: 256,
+                width: 256,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _speechPlayer.playLetter(
+                      Letter(character: widget.vowel, type: LetterType.vowel),
                     );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 100),
-                ),
-                child: Icon(
-                  Icons.volume_up_rounded,
-                  size: theme.textTheme.displayMedium?.fontSize,
+
+                    if (!Provider.of<LessonProvider>(
+                      context,
+                      listen: false,
+                    ).isBottomSheetVisible) {
+                      showBottomBar(
+                        context: context,
+                        onShow: () {
+                          Provider.of<LessonProvider>(
+                            context,
+                            listen: false,
+                          ).setBottomSheetVisible(true);
+                        },
+                        onHide: () {
+                          Provider.of<LessonProvider>(
+                            context,
+                            listen: false,
+                          ).setBottomSheetVisible(false);
+                        },
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(24),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Icon(Icons.volume_up_rounded, size: 48),
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 100),
+            // Expanded(
+            //   flex: 3,
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       _speechPlayer.playLetter(
+            //         Letter(character: widget.vowel, type: LetterType.vowel),
+            //       );
+            //
+            //       if (!Provider.of<LessonProvider>(
+            //         context,
+            //         listen: false,
+            //       ).isBottomSheetVisible) {
+            //         showBottomBar(
+            //           context: context,
+            //           onShow: () {
+            //             Provider.of<LessonProvider>(
+            //               context,
+            //               listen: false,
+            //             ).setBottomSheetVisible(true);
+            //           },
+            //           onHide: () {
+            //             Provider.of<LessonProvider>(
+            //               context,
+            //               listen: false,
+            //             ).setBottomSheetVisible(false);
+            //           },
+            //         );
+            //       }
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 100),
+            //     ),
+            //     child: Icon(
+            //       Icons.volume_up_rounded,
+            //       size: theme.textTheme.displayMedium?.fontSize,
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 100),
           ],
         ),
       ),
