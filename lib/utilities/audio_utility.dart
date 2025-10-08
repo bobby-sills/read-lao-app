@@ -20,7 +20,20 @@ class AudioUtility {
   }
 
   Future<void> playSoundEffect(String soundEffect) async {
-    await audioPlayer.play(AssetSource('sound_effects/$soundEffect.wav'));
+    late final String filename;
+    switch (soundEffect) {
+      case "correct":
+        filename = "correct.wav";
+        break;
+      case "complete":
+        filename = "complete.wav";
+        break;
+      case "incorrect":
+        filename = "incorrect.wav";
+        break;
+      default:
+    }
+    await audioPlayer.play(AssetSource('sound_effects/$filename'));
   }
 
   Future<void> playWord(String word) async {

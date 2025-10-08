@@ -58,7 +58,7 @@ class _LessonCompleteState extends State<LessonComplete> {
                 SizedBox(height: 32),
                 Text(
                   textAlign: TextAlign.center,
-                  'Another lesson ${widget.lessonNum + 1} complete!',
+                  'Lesson ${widget.lessonNum + 1} complete!',
                   style: theme.textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

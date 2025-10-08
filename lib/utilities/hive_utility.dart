@@ -1,45 +1,23 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learn_lao_app/enums/letter_type.dart';
 
 class HiveUtility {
-  static const String consonantCompletionBox = 'consonant_completion';
-  static const String vowelCompletionBox = 'vowel_completion';
+  static const String lessonCompletionBox = 'lesson_completion';
 
   static Future<void> initializeBoxes() async {
-    await Hive.openBox<bool>(consonantCompletionBox);
-    await Hive.openBox<bool>(vowelCompletionBox);
+    await Hive.openBox<bool>(lessonCompletionBox);
   }
 
-  static bool isLessonCompleted(int lessonIndex, LetterType sectionType) {
-    return Hive.box<bool>(
-          sectionType == LetterType.consonant
-              ? consonantCompletionBox
-              : vowelCompletionBox,
-        ).get(lessonIndex) ??
-        false;
+  static bool isLessonCompleted(int lessonIndex) {
+    return Hive.box<bool>(lessonCompletionBox).get(lessonIndex) ?? false;
   }
 
-  static void setLessonCompleted(
-    int lessonIndex,
-    bool value,
-    LetterType sectionType,
-  ) {
-    Hive.box<bool>(
-      sectionType == LetterType.consonant
-          ? consonantCompletionBox
-          : vowelCompletionBox,
-    ).put(lessonIndex, value);
+  static void setLessonCompleted(int lessonIndex, bool value) {
+    Hive.box<bool>(lessonCompletionBox).put(lessonIndex, value);
   }
 
-  static String boxName(LetterType sectionType) {
-    return sectionType == LetterType.consonant
-        ? consonantCompletionBox
-        : vowelCompletionBox;
-  }
-
-  static int getLastLessonComplete(LetterType sectionType) {
+  static int getLastLessonComplete() {
     int lastLessonIndex = 0;
-    while (isLessonCompleted(lastLessonIndex, sectionType)) {
+    while (isLessonCompleted(lastLessonIndex)) {
       lastLessonIndex++;
     }
     return lastLessonIndex;

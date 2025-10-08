@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +154,7 @@ class LessonGenerator {
       ...previouslyLearnedVowels
           .map((vowel) => _vowelWithPotentialVariation(vowel))
           .expand((element) => element),
-    ].map((letter) => letter.character.runes.single).toSet();
+    ].map((letter) => letter.character.runes).expand((runes) => runes).toSet();
     final List<String> availableWords = [];
 
     for (String word in LetterData.spellingWords) {
@@ -189,7 +190,7 @@ class LessonGenerator {
     final List<Letter> currentlyLearningConsonants = [];
     final List<Letter> currentlyLearningVowels = [];
     for (final pair in IterableZip([
-      LetterData.consonantOrder,
+      LetterData.consonantTeachingOrder,
       LetterData.vowelTeachingOrder,
     ])) {
       final (newConsonant, newVowel) = (
@@ -197,16 +198,6 @@ class LessonGenerator {
         Letter(character: pair[1], type: LetterType.vowel),
       );
       lessons.add(
-        generateLesson(
-          previouslyLearnedConsonants,
-          previouslyLearnedVowels,
-          [newConsonant], // new consonant
-          [newVowel], // new vowel
-          currentlyLearningConsonants,
-          currentlyLearningVowels,
-        ),
-      );
-      inspect(
         generateLesson(
           previouslyLearnedConsonants,
           previouslyLearnedVowels,

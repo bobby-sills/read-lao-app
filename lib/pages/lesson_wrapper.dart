@@ -87,11 +87,7 @@ class _LessonWrapperState extends State<LessonWrapper>
     if (_exerciseIndex == _combinedExercises.length - 1) {
       // Use BuildContext from the current widget's build method
       if (mounted) {
-        HiveUtility.setLessonCompleted(
-          widget.lessonIndex,
-          true,
-          LetterType.consonant,
-        );
+        HiveUtility.setLessonCompleted(widget.lessonIndex, true);
         // Check if widget is still mounted
         Navigator.pushReplacement(
           context,
