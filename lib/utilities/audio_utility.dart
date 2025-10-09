@@ -13,8 +13,8 @@ class AudioUtility {
     await audioPlayer.play(
       AssetSource(
         letter.type == LetterType.consonant
-            ? 'consonants/sounds/${LetterData.laoToRomanization[letter.character]}_normalized.wav'
-            : 'vowels/sounds/${LetterData.getVowelIndex(letter.character) + 1}_normalized.wav',
+            ? 'consonants/sounds/${LetterData.laoToRomanization[letter.character]}.wav'
+            : 'vowels/sounds/${LetterData.getVowelIndex(letter.character) + 1}.wav',
       ),
     );
   }
