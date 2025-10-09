@@ -5,6 +5,7 @@ import 'package:learn_lao_app/enums/letter_type.dart';
 import 'package:learn_lao_app/utilities/lesson_data.dart';
 import 'package:learn_lao_app/utilities/hive_utility.dart';
 import 'package:learn_lao_app/components/lesson_nav_button.dart';
+import 'package:learn_lao_app/pages/settings_page.dart';
 
 enum LessonStatus { notStarted, nextUp, completed }
 
@@ -56,45 +57,70 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView.builder(
-          controller: _scrollController,
-          itemCount: LessonData.allLessons.length,
-          itemBuilder: (context, index) {
-            return ValueListenableBuilder(
-              valueListenable: Hive.box<bool>(
-                HiveUtility.lessonCompletionBox,
-              ).listenable(),
-              builder: (BuildContext context, Box<bool> box, Widget? child) {
-                final double xOffset = sin(index * 100) * 96;
-                final lessonStatus = HiveUtility.isLessonCompleted(index)
-                    ? LessonStatus.completed
-                    : HiveUtility.isLessonCompleted(index - 1)
-                        ? LessonStatus.nextUp
-                        : index == 0
-                            ? LessonStatus.nextUp
-                            : LessonStatus.notStarted;
-
-                Widget lessonButton = SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: LessonNavButton(
-                    index: index,
-                    lessonStatus: lessonStatus,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.settings),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsPage(),
+                        ),
+                      );
+                    },
                   ),
-                );
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: LessonData.allLessons.length,
+                itemBuilder: (context, index) {
+                  return ValueListenableBuilder(
+                    valueListenable: Hive.box<bool>(
+                      HiveUtility.lessonCompletionBox,
+                    ).listenable(),
+                    builder: (BuildContext context, Box<bool> box, Widget? child) {
+                      final double xOffset = sin(index * 100) * 96;
+                      final lessonStatus = HiveUtility.isLessonCompleted(index)
+                          ? LessonStatus.completed
+                          : HiveUtility.isLessonCompleted(index - 1)
+                              ? LessonStatus.nextUp
+                              : index == 0
+                                  ? LessonStatus.nextUp
+                                  : LessonStatus.notStarted;
 
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Center(
-                    child: Transform.translate(
-                      offset: Offset(xOffset, 0),
-                      child: lessonButton,
-                    ),
-                  ),
-                );
-              },
-            );
-          },
+                      Widget lessonButton = SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: LessonNavButton(
+                          index: index,
+                          lessonStatus: lessonStatus,
+                        ),
+                      );
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Center(
+                          child: Transform.translate(
+                            offset: Offset(xOffset, 0),
+                            child: lessonButton,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
