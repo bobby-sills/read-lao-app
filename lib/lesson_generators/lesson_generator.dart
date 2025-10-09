@@ -3,15 +3,15 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'package:learn_lao_app/enums/letter_type.dart';
-import 'package:learn_lao_app/typedefs/letter_type.dart';
-import 'package:learn_lao_app/utilities/letter_data.dart';
-import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-import 'package:learn_lao_app/exercises/matching_exercise.dart';
-import 'package:learn_lao_app/exercises/learn_vowel_exercise.dart';
-import 'package:learn_lao_app/exercises/select_sound_exercise.dart';
-import 'package:learn_lao_app/exercises/select_letter_exercise.dart';
-import 'package:learn_lao_app/exercises/learn_consonant_exercise.dart';
+import 'package:read_lao/enums/letter_type.dart';
+import 'package:read_lao/typedefs/letter_type.dart';
+import 'package:read_lao/utilities/letter_data.dart';
+import 'package:read_lao/exercises/stateful_exercise.dart';
+import 'package:read_lao/exercises/matching_exercise.dart';
+import 'package:read_lao/exercises/learn_vowel_exercise.dart';
+import 'package:read_lao/exercises/select_sound_exercise.dart';
+import 'package:read_lao/exercises/select_letter_exercise.dart';
+import 'package:read_lao/exercises/learn_consonant_exercise.dart';
 
 class LessonGenerator {
   /*

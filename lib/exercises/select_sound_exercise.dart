@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/utilities/shared_styles.dart';
-import 'package:learn_lao_app/exercises/select_blank_exercise.dart';
+import 'package:read_lao/utilities/shared_styles.dart';
+import 'package:read_lao/exercises/select_blank_exercise.dart';
 
 
 class SelectSoundExercise extends SelectBlankExercise {

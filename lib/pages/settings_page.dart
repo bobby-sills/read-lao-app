@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_lao_app/utilities/provider/theme_provider.dart';
+import 'package:read_lao/utilities/provider/theme_provider.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

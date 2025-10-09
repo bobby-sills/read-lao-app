@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_lao_app/utilities/audio_utility.dart';
-import 'package:learn_lao_app/exercises/stateful_exercise.dart';
-import 'package:learn_lao_app/components/bottom_lesson_button.dart';
-import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
+import 'package:read_lao/utilities/audio_utility.dart';
+import 'package:read_lao/exercises/stateful_exercise.dart';
+import 'package:read_lao/components/bottom_lesson_button.dart';
+import 'package:read_lao/utilities/provider/lesson_provider.dart';
 
 class ReviewMessage extends StatefulExercise {
   ReviewMessage({super.key});

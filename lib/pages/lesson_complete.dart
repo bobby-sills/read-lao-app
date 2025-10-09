@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
-import 'package:learn_lao_app/utilities/audio_utility.dart';
+import 'package:read_lao/utilities/audio_utility.dart';
 
 class LessonComplete extends StatefulWidget {
   const LessonComplete({super.key, required this.lessonNum});

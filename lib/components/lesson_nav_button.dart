@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_lao_app/pages/lesson_wrapper.dart';
-import 'package:learn_lao_app/pages/navigation_page.dart';
-import 'package:learn_lao_app/utilities/lesson_data.dart';
-import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
+import 'package:read_lao/pages/lesson_wrapper.dart';
+import 'package:read_lao/pages/navigation_page.dart';
+import 'package:read_lao/utilities/lesson_data.dart';
+import 'package:read_lao/utilities/provider/lesson_provider.dart';
 
 class LessonNavButton extends StatelessWidget {
   const LessonNavButton({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learn_lao_app/pages/navigation_page.dart';
-import 'package:learn_lao_app/utilities/hive_utility.dart';
-import 'package:learn_lao_app/utilities/provider/theme_provider.dart';
-import 'package:learn_lao_app/utilities/provider/lesson_provider.dart';
+import 'package:read_lao/pages/navigation_page.dart';
+import 'package:read_lao/utilities/hive_utility.dart';
+import 'package:read_lao/utilities/provider/theme_provider.dart';
+import 'package:read_lao/utilities/provider/lesson_provider.dart';
 
 void main() async {
   await Hive.initFlutter();
