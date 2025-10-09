@@ -1,4 +1,4 @@
-import 'package:learn_lao_app/utilities/letter_data.dart';
+import 'package:read_lao/utilities/letter_data.dart';
 // A function that takes in a list and returns the shuffled version of it
 
 

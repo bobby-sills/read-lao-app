@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learn_lao_app/enums/button_type.dart';
-import 'package:learn_lao_app/enums/button_state.dart';
-import 'package:learn_lao_app/typedefs/letter_type.dart';
-import 'package:learn_lao_app/utilities/audio_utility.dart';
+import 'package:read_lao/enums/button_type.dart';
+import 'package:read_lao/enums/button_state.dart';
+import 'package:read_lao/typedefs/letter_type.dart';
+import 'package:read_lao/utilities/audio_utility.dart';
 
 class MatchingButton extends StatelessWidget {
   final ButtonType buttonType;

@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:learn_lao_app/enums/letter_type.dart';
-import 'package:learn_lao_app/typedefs/letter_type.dart';
-import 'package:learn_lao_app/utilities/letter_data.dart';
+import 'package:read_lao/enums/letter_type.dart';
+import 'package:read_lao/typedefs/letter_type.dart';
+import 'package:read_lao/utilities/letter_data.dart';
 
 class AudioUtility {
   final audioPlayer = AudioPlayer();

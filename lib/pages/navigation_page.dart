@@ -1,11 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learn_lao_app/enums/letter_type.dart';
-import 'package:learn_lao_app/utilities/lesson_data.dart';
-import 'package:learn_lao_app/utilities/hive_utility.dart';
-import 'package:learn_lao_app/components/lesson_nav_button.dart';
-import 'package:learn_lao_app/pages/settings_page.dart';
+import 'package:read_lao/enums/letter_type.dart';
+import 'package:read_lao/utilities/lesson_data.dart';
+import 'package:read_lao/utilities/hive_utility.dart';
+import 'package:read_lao/components/lesson_nav_button.dart';
+import 'package:read_lao/pages/settings_page.dart';
 
 enum LessonStatus { notStarted, nextUp, completed }
 
@@ -61,19 +61,29 @@ class _HomePageState extends State<HomePage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.settings),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsPage(),
-                        ),
-                      );
-                    },
+                  const Text(
+                    'Read Lao',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: const Icon(Icons.settings),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsPage(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
