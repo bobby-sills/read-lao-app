@@ -177,9 +177,6 @@ class LessonGenerator {
     }
 
     return lesson;
-    // return LetterData.spellingWords
-    //     .map((word) => SpellingExercise(word: word))
-    //     .toList();
   }
 
   static List<List<StatefulExercise>> generateLessons() {
