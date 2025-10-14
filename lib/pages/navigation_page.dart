@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:read_lao/enums/letter_type.dart';
 import 'package:read_lao/utilities/lesson_data.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/components/lesson_nav_button.dart';
@@ -66,10 +65,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const Text(
                     'Read Lao',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -97,35 +93,37 @@ class _HomePageState extends State<HomePage> {
                     valueListenable: Hive.box<bool>(
                       HiveUtility.lessonCompletionBox,
                     ).listenable(),
-                    builder: (BuildContext context, Box<bool> box, Widget? child) {
-                      final double xOffset = sin(index * 100) * 96;
-                      final lessonStatus = HiveUtility.isLessonCompleted(index)
-                          ? LessonStatus.completed
-                          : HiveUtility.isLessonCompleted(index - 1)
+                    builder:
+                        (BuildContext context, Box<bool> box, Widget? child) {
+                          final double xOffset = sin(index * 100) * 96;
+                          final lessonStatus =
+                              HiveUtility.isLessonCompleted(index)
+                              ? LessonStatus.completed
+                              : HiveUtility.isLessonCompleted(index - 1)
                               ? LessonStatus.nextUp
                               : index == 0
-                                  ? LessonStatus.nextUp
-                                  : LessonStatus.notStarted;
+                              ? LessonStatus.nextUp
+                              : LessonStatus.notStarted;
 
-                      Widget lessonButton = SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: LessonNavButton(
-                          index: index,
-                          lessonStatus: lessonStatus,
-                        ),
-                      );
+                          Widget lessonButton = SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: LessonNavButton(
+                              index: index,
+                              lessonStatus: lessonStatus,
+                            ),
+                          );
 
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Center(
-                          child: Transform.translate(
-                            offset: Offset(xOffset, 0),
-                            child: lessonButton,
-                          ),
-                        ),
-                      );
-                    },
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: Center(
+                              child: Transform.translate(
+                                offset: Offset(xOffset, 0),
+                                child: lessonButton,
+                              ),
+                            ),
+                          );
+                        },
                   );
                 },
               ),
@@ -135,5 +133,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }

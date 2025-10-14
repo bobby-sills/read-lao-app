@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:read_lao/enums/letter_type.dart';
+import 'package:read_lao/exercises/spelling_exercise/spelling_exercise.dart';
 import 'package:read_lao/typedefs/letter_type.dart';
 import 'package:read_lao/utilities/letter_data.dart';
 import 'package:read_lao/exercises/stateful_exercise.dart';
@@ -63,14 +64,14 @@ class LessonGenerator {
         : [vowel];
   }
 
-  static List<StatefulExercise> generateLesson(
-    List<Letter> previouslyLearnedConsonants,
-    List<Letter> previouslyLearnedVowels,
-    List<Letter> newConsonants,
-    List<Letter> newVowels,
-    List<Letter> currentlyLearningConsonants,
-    List<Letter> currentlyLearningVowels,
-  ) {
+  static List<StatefulExercise> generateLesson({
+    required List<Letter> previouslyLearnedConsonants,
+    required List<Letter> previouslyLearnedVowels,
+    required List<Letter> newConsonants,
+    required List<Letter> newVowels,
+    required List<Letter> currentlyLearningConsonants,
+    required List<Letter> currentlyLearningVowels,
+  }) {
     final List<StatefulExercise> lesson = [];
     List<Letter> allLetters = [
       ...newConsonants,
@@ -129,12 +130,14 @@ class LessonGenerator {
       matchingSets = allLetters.slices(4).toList();
       // If the last set of matches has only a single pair in it
       // Move that pair to the second to last set of matches
-      final lastIndex = matchingSets.length - 1;
-      if (matchingSets[lastIndex].length == 1) {
-        // Converts it to a growable list;
-        matchingSets[lastIndex - 1] = matchingSets[lastIndex - 1].toList();
-        matchingSets[lastIndex - 1].add(matchingSets[lastIndex][0]);
-        matchingSets.removeAt(lastIndex);
+      if (matchingSets.length > 1) {
+        final lastIndex = matchingSets.length - 1;
+        if (matchingSets[lastIndex].length == 1) {
+          // Converts it to a growable list;
+          matchingSets[lastIndex - 1] = matchingSets[lastIndex - 1].toList();
+          matchingSets[lastIndex - 1].add(matchingSets[lastIndex][0]);
+          matchingSets.removeAt(lastIndex);
+        }
       }
     }
 
@@ -163,6 +166,14 @@ class LessonGenerator {
       }
     }
 
+    shuffledExercises.addAll(
+      LetterData.spellingWords
+          .where((word) => solidifiedLetters.containsAll(word.runes.toSet()))
+          .shuffled()
+          .take(3)
+          .map((word) => SpellingExercise(word: word)),
+    );
+
     for (Letter letter in allLetters) {
       shuffledExercises.addAll(
         _generateExercisePair(correctLetter: letter, allLetters: allLetters),
@@ -179,56 +190,83 @@ class LessonGenerator {
     return lesson;
   }
 
+  static void _generateLessonsForLetterType({
+    required List<List<StatefulExercise>> lessons,
+    required List<String> teachingOrder,
+    required LetterType letterType,
+    required List<Letter> previouslyLearnedConsonants,
+    required List<Letter> currentlyLearningConsonants,
+    required List<Letter> previouslyLearnedVowels,
+    required List<Letter> currentlyLearningVowels,
+  }) {
+    int i = 0;
+    while (i < teachingOrder.length) {
+      // During the first lesson, include 2 new letters instead of 1
+      final int lettersToAdd = (i == 0) ? 2 : 1;
+      final int remainingLetters = teachingOrder.length - i;
+      final int actualLettersToAdd = lettersToAdd.clamp(1, remainingLetters);
+
+      final List<Letter> newLetters = List.generate(
+        actualLettersToAdd,
+        (index) => Letter(
+          character: teachingOrder[i + index],
+          type: letterType,
+        ),
+      );
+
+      final bool isConsonant = letterType == LetterType.consonant;
+      lessons.add(
+        generateLesson(
+          previouslyLearnedConsonants: previouslyLearnedConsonants,
+          previouslyLearnedVowels: previouslyLearnedVowels,
+          newConsonants: isConsonant ? newLetters : [],
+          newVowels: isConsonant ? [] : newLetters,
+          currentlyLearningConsonants: currentlyLearningConsonants,
+          currentlyLearningVowels: currentlyLearningVowels,
+        ),
+      );
+
+      final List<Letter> currentlyLearning =
+          isConsonant ? currentlyLearningConsonants : currentlyLearningVowels;
+      final List<Letter> previouslyLearned =
+          isConsonant ? previouslyLearnedConsonants : previouslyLearnedVowels;
+
+      currentlyLearning.addAll(newLetters);
+      if (currentlyLearning.length > 6) {
+        previouslyLearned.add(currentlyLearning.removeAt(0));
+      }
+
+      i += actualLettersToAdd;
+    }
+  }
+
   static List<List<StatefulExercise>> generateLessons() {
     final List<List<StatefulExercise>> lessons = [];
 
     final List<Letter> previouslyLearnedConsonants = [];
-    final List<Letter> previouslyLearnedVowels = [];
     final List<Letter> currentlyLearningConsonants = [];
+    _generateLessonsForLetterType(
+      lessons: lessons,
+      teachingOrder: LetterData.consonantTeachingOrder,
+      letterType: LetterType.consonant,
+      previouslyLearnedConsonants: previouslyLearnedConsonants,
+      currentlyLearningConsonants: currentlyLearningConsonants,
+      previouslyLearnedVowels: [],
+      currentlyLearningVowels: [],
+    );
+
+    final List<Letter> previouslyLearnedVowels = [];
     final List<Letter> currentlyLearningVowels = [];
-    for (final pair in IterableZip([
-      LetterData.consonantTeachingOrder,
-      LetterData.vowelTeachingOrder,
-    ])) {
-      final (newConsonant, newVowel) = (
-        Letter(character: pair[0], type: LetterType.consonant),
-        Letter(character: pair[1], type: LetterType.vowel),
-      );
-      lessons.add(
-        generateLesson(
-          previouslyLearnedConsonants,
-          previouslyLearnedVowels,
-          [newConsonant], // new consonant
-          [newVowel], // new vowel
-          currentlyLearningConsonants,
-          currentlyLearningVowels,
-        ),
-      );
-      currentlyLearningConsonants.add(newConsonant);
-      currentlyLearningVowels.add(newVowel);
-      // If the total length of the letters currently being leraned is more than
-      // 6
-      if (currentlyLearningConsonants.length + currentlyLearningVowels.length >
-          6) {
-        // If the consonants list has more than the vowels list
-        // delete one from the consonants list, and vice versa
-        if (currentlyLearningConsonants.length ==
-            currentlyLearningVowels.length) {
-          previouslyLearnedConsonants.add(
-            currentlyLearningConsonants.removeLast(),
-          );
-          previouslyLearnedVowels.add(currentlyLearningVowels.removeLast());
-        } else if (currentlyLearningConsonants.length >
-            currentlyLearningVowels.length) {
-          previouslyLearnedConsonants.add(
-            currentlyLearningConsonants.removeLast(),
-          );
-        } else if (currentlyLearningVowels.length >
-            currentlyLearningConsonants.length) {
-          previouslyLearnedVowels.add(currentlyLearningVowels.removeLast());
-        }
-      }
-    }
+    _generateLessonsForLetterType(
+      lessons: lessons,
+      teachingOrder: LetterData.vowelTeachingOrder,
+      letterType: LetterType.vowel,
+      previouslyLearnedConsonants: [],
+      currentlyLearningConsonants: [],
+      previouslyLearnedVowels: previouslyLearnedVowels,
+      currentlyLearningVowels: currentlyLearningVowels,
+    );
+
     return lessons;
   }
 }
