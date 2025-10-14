@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:read_lao/enums/letter_type.dart';
 import 'package:read_lao/pages/empty_lesson.dart';
 import 'package:read_lao/pages/lesson_complete.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
