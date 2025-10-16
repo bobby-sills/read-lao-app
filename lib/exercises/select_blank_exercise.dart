@@ -92,12 +92,12 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
           [...widget.incorrectLetters, widget.correctLetter]
               .map(
                 (letter) => Letter(
-                  character: letter.type == LetterType.consonant
+                  letter.type == LetterType.consonant
                       ? letter.character
                       : LetterData.vowelsIndex[LetterData.getVowelIndex(
                           letter.character,
                         )],
-                  type: letter.type,
+                  letter.type,
                 ),
               )
               .toList()

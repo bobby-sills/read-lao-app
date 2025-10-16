@@ -25,6 +25,7 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
   bool bottomButtonIsCorrect = true;
   final AudioUtility effectPlayer = AudioUtility();
   final AudioUtility speechPlayer = AudioUtility();
+  int incorrectCount = 0;
 
   @override
   initState() {
@@ -94,6 +95,7 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
       effectPlayer.playSoundEffect('correct');
       setState(() => bottomButtonIsCorrect = true);
     } else {
+      incorrectCount++;
       effectPlayer.playSoundEffect('incorrect');
       setState(() => bottomButtonIsCorrect = false);
       context.read<LessonProvider>().markExerciseAsMistake?.call();
@@ -117,6 +119,8 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Expanded(
       child: SafeArea(
         child: Column(
@@ -172,24 +176,36 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
                 crossAxisCount: 4,
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 children: [
-                  for (int displayIndex = 0; displayIndex < tray.length; displayIndex++)
+                  for (
+                    int displayIndex = 0;
+                    displayIndex < tray.length;
+                    displayIndex++
+                  )
                     GestureDetector(
                       onTap: () => _onCardTap(shuffledIndices[displayIndex]),
                       child: Card(
-                        elevation: states[shuffledIndices[displayIndex]] == CardState.on ? 4.0 : 0.0,
-                        color: states[shuffledIndices[displayIndex]] == CardState.on
-                            ? Theme.of(context).colorScheme.surface
-                            : Theme.of(
-                                context,
-                              ).colorScheme.surfaceContainerHighest,
+                        elevation:
+                            states[shuffledIndices[displayIndex]] ==
+                                CardState.on
+                            ? 4.0
+                            : 0.0,
+                        color:
+                            states[shuffledIndices[displayIndex]] ==
+                                CardState.on
+                            ? null
+                            : theme.colorScheme.surfaceContainerHighest,
                         child: Center(
                           child: Text(
-                            laoRuneToDisplayString(tray[shuffledIndices[displayIndex]]),
+                            laoRuneToDisplayString(
+                              tray[shuffledIndices[displayIndex]],
+                            ),
                             style: TextStyle(
                               fontFamily: "NotoSansLaoLooped",
                               fontWeight: FontWeight.w500,
                               fontSize: 36,
-                              color: states[shuffledIndices[displayIndex]] == CardState.on
+                              color:
+                                  states[shuffledIndices[displayIndex]] ==
+                                      CardState.on
                                   ? Theme.of(context).colorScheme.onSurface
                                   : Theme.of(
                                       context,
@@ -237,7 +253,16 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
               ? const Icon(Icons.arrow_forward_rounded)
               : const Icon(Icons.refresh_rounded),
           buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
-          buttonColor: bottomButtonIsCorrect ? Colors.green : Colors.red,
+          buttonColor: bottomButtonIsCorrect
+              ? Colors.greenAccent
+              : Colors.redAccent,
+        ),
+        SizedBox(height: 8),
+        BottomLessonButton(
+          onPressed: context.read<LessonProvider>().nextExercise!,
+          buttonIcon: const Icon(Icons.skip_next),
+          buttonText: 'Skip',
+          buttonColor: Colors.orangeAccent,
         ),
         SizedBox(height: 16),
       ],

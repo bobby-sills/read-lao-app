@@ -1,1 +1,1 @@
-enum LetterType { consonant, vowel }
+enum LetterType { consonant, vowel, tone }

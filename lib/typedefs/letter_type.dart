@@ -4,5 +4,5 @@ class Letter {
   final String character;
   final LetterType type;
 
-  Letter({required this.character, required this.type});
+  Letter(this.character, this.type);
 }
