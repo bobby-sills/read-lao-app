@@ -171,6 +171,8 @@ class LetterData {
     'ເ◌າະ': '◌ັອ',
   };
 
+  static const List<int> toneMarkRunes = [3784, 3785, 3786, 3787];
+
   static int getVowelIndex(String vowel) {
     final int index = vowelsIndex.indexOf(vowel);
     if (index == -1) {

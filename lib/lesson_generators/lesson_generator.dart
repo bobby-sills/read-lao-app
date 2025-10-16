@@ -189,12 +189,7 @@ class LessonGenerator {
       lessons.add(MatchingExercise(lettersToMatch: matchingSet));
     }
 
-    return LetterData.spellingWords
-        .where((word) => solidifiedLetters.containsAll(word.runes.toSet()))
-        .shuffled()
-        .take(3)
-        .map((word) => SpellingExercise(word: word))
-        .toList();
+    return lessons;
   }
 
   static List<List<StatefulExercise>> _generateLessonsForLetterType({

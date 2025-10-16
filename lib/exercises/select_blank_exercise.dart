@@ -167,7 +167,9 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
               ? const Icon(Icons.arrow_forward_rounded)
               : const Icon(Icons.refresh_rounded),
           buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
-          buttonColor: bottomButtonIsCorrect ? Colors.green : Colors.red,
+          buttonColor: bottomButtonIsCorrect
+              ? Colors.greenAccent
+              : Colors.redAccent,
         ),
         SizedBox(height: 16),
       ],

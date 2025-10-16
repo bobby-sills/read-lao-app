@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/audio_utility.dart';
 import 'package:read_lao/exercises/stateful_exercise.dart';
 import 'package:read_lao/components/bottom_lesson_button.dart';
+import 'package:read_lao/utilities/letter_data.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
 
 enum CardState { on, off }
@@ -22,15 +23,24 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
   late final List<CardState> states;
   late final List<int> shuffledIndices;
   final List<int> clickOrder = [];
+  late final String processedWord;
   bool bottomButtonIsCorrect = true;
   final AudioUtility effectPlayer = AudioUtility();
   final AudioUtility speechPlayer = AudioUtility();
   int incorrectCount = 0;
+  bool isCorrect = false;
+  int timesIncorrect = 0;
 
   @override
   initState() {
     super.initState();
-    tray = widget.word.runes.toList();
+    processedWord = String.fromCharCodes(
+      widget.word.runes.where(
+        (rune) => !LetterData.toneMarkRunes.contains(rune),
+      ),
+    );
+
+    tray = processedWord.runes.toList();
     states = List.filled(tray.length, CardState.on);
     shuffledIndices = List.generate(tray.length, (index) => index);
     shuffledIndices.shuffle();
@@ -89,15 +99,19 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
   }
 
   void checkAnswer() {
-    final bool isCorrect = _displayText == widget.word;
+    setState(() {
+      isCorrect = _displayText == processedWord;
+    });
 
     if (isCorrect) {
       effectPlayer.playSoundEffect('correct');
       setState(() => bottomButtonIsCorrect = true);
     } else {
-      incorrectCount++;
+      setState(() {
+        incorrectCount++;
+        bottomButtonIsCorrect = false;
+      });
       effectPlayer.playSoundEffect('incorrect');
-      setState(() => bottomButtonIsCorrect = false);
       context.read<LessonProvider>().markExerciseAsMistake?.call();
     }
     showBottomBar(
@@ -158,7 +172,9 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
                     ),
                     child: Center(
                       child: Text(
-                        _displayText,
+                        // Once the lesson is correct, display the text with the
+                        // added tone markers
+                        isCorrect ? widget.word : _displayText,
                         style: TextStyle(
                           fontFamily: "NotoSansLaoLooped",
                           fontSize: 36,
@@ -257,13 +273,15 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
               ? Colors.greenAccent
               : Colors.redAccent,
         ),
-        SizedBox(height: 8),
-        BottomLessonButton(
-          onPressed: context.read<LessonProvider>().nextExercise!,
-          buttonIcon: const Icon(Icons.skip_next),
-          buttonText: 'Skip',
-          buttonColor: Colors.orangeAccent,
-        ),
+        if (incorrectCount >= 3) ...[
+          SizedBox(height: 8),
+          BottomLessonButton(
+            onPressed: context.read<LessonProvider>().nextExercise!,
+            buttonIcon: const Icon(Icons.skip_next),
+            buttonText: 'Skip',
+            buttonColor: Colors.orangeAccent,
+          ),
+        ],
         SizedBox(height: 16),
       ],
     );
