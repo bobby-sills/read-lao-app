@@ -39,7 +39,7 @@ class LessonNavButton extends StatelessWidget {
     final theme = Theme.of(context);
     final child = Text(
       (index + 1).toString(),
-      style: TextStyle(fontSize: theme.textTheme.displayMedium?.fontSize),
+      style: TextStyle(fontSize: theme.textTheme.displaySmall?.fontSize),
     );
 
     if (lessonStatus == LessonStatus.nextUp) {

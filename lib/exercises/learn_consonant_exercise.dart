@@ -104,10 +104,7 @@ class LearningExerciseState
               child: ElevatedButton(
                 onPressed: () {
                   _speechPlayer.playLetter(
-                    Letter(
-                      character: widget.consonant,
-                      type: LetterType.consonant,
-                    ),
+                    Letter(widget.consonant, LetterType.consonant),
                   );
 
                   if (!context.read<LessonProvider>().isBottomSheetVisible) {

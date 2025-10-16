@@ -76,7 +76,7 @@ class LearnVowelExerciseState
                 child: ElevatedButton(
                   onPressed: () {
                     _speechPlayer.playLetter(
-                      Letter(character: widget.vowel, type: LetterType.vowel),
+                      Letter(widget.vowel, LetterType.vowel),
                     );
 
                     if (!Provider.of<LessonProvider>(

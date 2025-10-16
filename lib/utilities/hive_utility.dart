@@ -8,7 +8,8 @@ class HiveUtility {
   }
 
   static bool isLessonCompleted(int lessonIndex) {
-    return Hive.box<bool>(lessonCompletionBox).get(lessonIndex) ?? false;
+    return Hive.box<bool>(lessonCompletionBox).get(lessonIndex) ??
+        lessonIndex < 100;
   }
 
   static void setLessonCompleted(int lessonIndex, bool value) {
