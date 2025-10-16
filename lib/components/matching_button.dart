@@ -49,8 +49,8 @@ class MatchingButton extends StatelessWidget {
 
   Color _getTargetColor(ThemeData theme) {
     return switch (states[buttonType]![index]) {
-      ButtonState.complete => Colors.green,
-      ButtonState.incorrect => Colors.red,
+      ButtonState.complete => Colors.greenAccent,
+      ButtonState.incorrect => Colors.redAccent,
       ButtonState.selected => theme.colorScheme.secondary,
       ButtonState.deselected => theme.colorScheme.surface,
       ButtonState.disabled => theme.colorScheme.surface,
