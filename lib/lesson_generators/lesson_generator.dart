@@ -245,9 +245,9 @@ class LessonGenerator {
   static List<List<StatefulExercise>> generateLessons() {
     final List<List<StatefulExercise>> lessons = [];
 
-    // lessons.addAll(
-    //   _generateLessonsForLetterType(letterType: LetterType.consonant),
-    // );
+    lessons.addAll(
+      _generateLessonsForLetterType(letterType: LetterType.consonant),
+    );
     lessons.addAll(_generateLessonsForLetterType(letterType: LetterType.vowel));
 
     return lessons;
