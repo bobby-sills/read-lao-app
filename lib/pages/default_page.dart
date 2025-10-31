@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_lao/pages/navigation_page.dart';
+import 'package:read_lao/pages/lessons_page.dart' show HomePage;
 import 'package:read_lao/pages/practice_page.dart';
 import 'package:read_lao/pages/settings_page.dart';
 
@@ -29,7 +29,7 @@ class _DefaultPageState extends State<DefaultPage> {
           NavigationDestination(
             selectedIcon: Icon(Icons.home_rounded),
             icon: Icon(Icons.home_outlined),
-            label: "Home",
+            label: "Lessons",
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.create_rounded),
@@ -44,7 +44,7 @@ class _DefaultPageState extends State<DefaultPage> {
         ],
       ),
       body: <Widget>[
-        HomePage(),
+        const HomePage(),
         const PracticePage(),
         const SettingsPage(),
       ][currentPageIndex],

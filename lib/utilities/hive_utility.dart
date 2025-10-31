@@ -8,8 +8,7 @@ class HiveUtility {
   }
 
   static bool isLessonCompleted(int lessonIndex) {
-    return Hive.box<bool>(lessonCompletionBox).get(lessonIndex) ??
-        lessonIndex < 100;
+    return Hive.box<bool>(lessonCompletionBox).get(lessonIndex) ?? false;
   }
 
   static void setLessonCompleted(int lessonIndex, bool value) {
@@ -22,5 +21,10 @@ class HiveUtility {
       lastLessonIndex++;
     }
     return lastLessonIndex;
+  }
+
+  static Future<void> clearAllData() async {
+    final box = Hive.box<bool>(lessonCompletionBox);
+    await box.clear();
   }
 }
