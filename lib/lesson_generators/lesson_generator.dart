@@ -1,18 +1,20 @@
 // ignore: unused_import
 import 'dart:developer';
+
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:read_lao/enums/letter_type.dart';
-import 'package:read_lao/exercises/spelling_exercise/spelling_exercise.dart';
+import 'package:read_lao/exercises/learn_consonant_exercise.dart';
+import 'package:read_lao/exercises/learn_vowel_exercise.dart';
+import 'package:read_lao/exercises/matching_exercise.dart';
+import 'package:read_lao/exercises/select_letter_exercise.dart';
+import 'package:read_lao/exercises/select_sound_exercise.dart';
+import 'package:read_lao/exercises/stateful_exercise.dart';
 import 'package:read_lao/typedefs/letter_type.dart';
 import 'package:read_lao/utilities/letter_data.dart';
-import 'package:read_lao/exercises/stateful_exercise.dart';
-import 'package:read_lao/exercises/matching_exercise.dart';
-import 'package:read_lao/exercises/learn_vowel_exercise.dart';
-import 'package:read_lao/exercises/select_sound_exercise.dart';
-import 'package:read_lao/exercises/select_letter_exercise.dart';
-import 'package:read_lao/exercises/learn_consonant_exercise.dart';
+
+import '../exercises/spelling_exercise/spelling_exercise.dart';
 
 class LessonGenerator {
   /*
@@ -151,6 +153,11 @@ class LessonGenerator {
     // Main lesson content
     final List<StatefulExercise> shuffledExercises = [];
 
+    for (Letter letter in allLetters) {
+      shuffledExercises.addAll(
+        _generateExercisePair(correctLetter: letter, allLetters: allLetters),
+      );
+    }
     Set<int> solidifiedLetters =
         (lessonType == LetterType.consonant
                 ? [...currentlyLearningLetters, ...previouslyLearnedLetters]
@@ -168,17 +175,17 @@ class LessonGenerator {
 
     if (lessonType == LetterType.vowel) {
       shuffledExercises.addAll(
-        LetterData.spellingWords
-            .where((word) => solidifiedLetters.containsAll(word.runes.toSet()))
+        LetterData.spellingWords.keys
+            .where(
+              (word) =>
+                  solidifiedLetters.containsAll(
+                    LetterData.spellingWords[word]!,
+                  ) ||
+                  LetterData.spellingWords[word]!.isEmpty,
+            )
             .shuffled()
             .take(3)
             .map((word) => SpellingExercise(word: word)),
-      );
-    }
-
-    for (Letter letter in allLetters) {
-      shuffledExercises.addAll(
-        _generateExercisePair(correctLetter: letter, allLetters: allLetters),
       );
     }
 

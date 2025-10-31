@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
+import 'package:read_lao/utilities/hive_utility.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -39,6 +41,46 @@ class SettingsPage extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showResetConfirmDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Reset Progress?'),
+          content: const Text(
+            'This will reset all lesson progress. This action cannot be undone.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await HiveUtility.clearAllData();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Progress reset successfully'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+              child: const Text(
+                'Reset',
+                style: TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );
@@ -88,6 +130,17 @@ class SettingsPage extends StatelessWidget {
               ),
               onTap: () => _showAboutDialog(context),
             ),
+            if (kDebugMode) ...[
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.restart_alt, size: 28, color: Colors.red),
+                title: const Text(
+                  'Reset Progress',
+                  style: TextStyle(fontSize: 18, color: Colors.red),
+                ),
+                onTap: () => _showResetConfirmDialog(context),
+              ),
+            ],
           ],
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/pages/lesson_wrapper.dart';
-import 'package:read_lao/pages/navigation_page.dart';
+import 'package:read_lao/pages/lessons_page.dart';
 import 'package:read_lao/utilities/lesson_data.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
 
