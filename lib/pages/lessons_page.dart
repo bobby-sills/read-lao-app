@@ -54,16 +54,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Lessons'), centerTitle: true),
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: const Text(
-                'Lessons',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-            ),
             Expanded(
               child: ListView.builder(
                 controller: _scrollController,
@@ -95,7 +89,10 @@ class _HomePageState extends State<HomePage> {
                           );
 
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
+                            padding: EdgeInsets.only(
+                              top: index == 0 ? 20 : 0,
+                              bottom: 20,
+                            ),
                             child: Center(
                               child: Transform.translate(
                                 offset: Offset(xOffset, 0),
