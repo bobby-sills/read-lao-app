@@ -199,7 +199,7 @@ class LessonGenerator {
     return lessons;
   }
 
-  static List<List<StatefulExercise>> _generateLessonsForLetterType({
+  static List<List<StatefulExercise>> generateLessonsForLetterType({
     required LetterType letterType,
   }) {
     final List<String> teachingOrder = letterType == LetterType.consonant
@@ -253,9 +253,9 @@ class LessonGenerator {
     final List<List<StatefulExercise>> lessons = [];
 
     lessons.addAll(
-      _generateLessonsForLetterType(letterType: LetterType.consonant),
+      generateLessonsForLetterType(letterType: LetterType.consonant),
     );
-    lessons.addAll(_generateLessonsForLetterType(letterType: LetterType.vowel));
+    lessons.addAll(generateLessonsForLetterType(letterType: LetterType.vowel));
 
     return lessons;
   }

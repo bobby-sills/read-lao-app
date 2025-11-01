@@ -59,8 +59,9 @@ class _LessonWrapperState extends State<LessonWrapper>
 
   void _incrementProgress() {
     // incrementValue: how much to increment the progress bar each time
+    // Add 1 to the length to account for a virtual extra exercise, so the progress bar never reaches 100%
     double incrementValue = _combinedExercises.isNotEmpty
-        ? 1 / _combinedExercises.length
+        ? 1 / (_combinedExercises.length + 1)
         : 0;
     double targetProgress = (_progress + incrementValue);
 
