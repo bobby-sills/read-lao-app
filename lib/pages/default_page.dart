@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:read_lao/pages/lessons_page.dart' show HomePage;
-import 'package:read_lao/pages/practice_page.dart';
 import 'package:read_lao/pages/settings_page.dart';
 
 class DefaultPage extends StatefulWidget {
@@ -38,11 +37,7 @@ class _DefaultPageState extends State<DefaultPage> {
           ),
         ],
       ),
-      body: <Widget>[
-        const HomePage(),
-        const PracticePage(),
-        const SettingsPage(),
-      ][currentPageIndex],
+      body: <Widget>[const HomePage(), const SettingsPage()][currentPageIndex],
     );
   }
 }
