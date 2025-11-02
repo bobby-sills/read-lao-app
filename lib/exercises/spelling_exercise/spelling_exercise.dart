@@ -270,7 +270,7 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
               : const Icon(Icons.refresh_rounded),
           buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
           buttonColor: bottomButtonIsCorrect
-              ? Color(0x228B22FF)
+              ? Color(0xFF93D333)
               : Colors.redAccent,
         ),
         if (incorrectCount >= 3) ...[
