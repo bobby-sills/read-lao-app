@@ -9,7 +9,7 @@ class LessonData {
       );
   static final List<List<StatefulExercise>> vowelLessons =
       LessonGenerator.generateLessonsForLetterType(
-        letterType: LetterType.consonant,
+        letterType: LetterType.vowel,
       );
   static final List<List<StatefulExercise>> allLessons =
       consonantLessons + vowelLessons;

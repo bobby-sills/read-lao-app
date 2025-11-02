@@ -5,6 +5,7 @@ import 'package:read_lao/pages/default_page.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
+import 'package:read_lao/utilities/provider/debug_provider.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -15,6 +16,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => LessonProvider()),
+        ChangeNotifierProvider(create: (context) => DebugProvider()),
       ],
       child: const MyApp(),
     ),

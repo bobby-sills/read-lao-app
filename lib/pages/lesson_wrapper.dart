@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/pages/empty_lesson.dart';
@@ -5,6 +6,7 @@ import 'package:read_lao/pages/lesson_complete.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/exercises/review_message.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
+import 'package:read_lao/utilities/provider/debug_provider.dart';
 
 class LessonWrapper extends StatefulWidget {
   final List<Widget> exercises;
@@ -167,10 +169,65 @@ class _LessonWrapperState extends State<LessonWrapper>
             }
           },
         ),
-        title: LinearProgressIndicator(
-          value: _progress,
-          minHeight: 10,
-          borderRadius: BorderRadius.circular(15),
+        title: Column(
+          children: [
+            LinearProgressIndicator(
+              value: _progress,
+              minHeight: 10,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            if (kDebugMode)
+              Consumer<DebugProvider>(
+                builder: (context, debugProvider, child) {
+                  if (!debugProvider.showExerciseIncrementor) {
+                    return const SizedBox.shrink();
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove_rounded),
+                          onPressed: _exerciseIndex > 0
+                              ? () {
+                                  if (context
+                                      .read<LessonProvider>()
+                                      .isBottomSheetVisible) {
+                                    Navigator.of(context).pop();
+                                  }
+                                  setState(() => _exerciseIndex--);
+                                }
+                              : null,
+                          iconSize: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${_exerciseIndex + 1} / ${_combinedExercises.length}',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          icon: const Icon(Icons.add_rounded),
+                          onPressed: _exerciseIndex <
+                                  _combinedExercises.length - 1
+                              ? () {
+                                  if (context
+                                      .read<LessonProvider>()
+                                      .isBottomSheetVisible) {
+                                    Navigator.of(context).pop();
+                                  }
+                                  setState(() => _exerciseIndex++);
+                                }
+                              : null,
+                          iconSize: 20,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+          ],
         ),
       ),
       body: Padding(
