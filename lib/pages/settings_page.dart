@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
+import 'package:read_lao/utilities/provider/debug_provider.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
+import 'package:read_lao/utilities/lesson_data.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -88,6 +90,48 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
+  void _showMarkAllCompleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Mark All Lessons Complete?'),
+          content: const Text(
+            'This will mark all lessons as complete, allowing you to access and test any lesson.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await HiveUtility.markAllLessonsComplete(
+                  LessonData.allLessons.length,
+                );
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('All lessons marked as complete'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+              child: const Text(
+                'Mark Complete',
+                style: TextStyle(color: Colors.green),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,6 +176,36 @@ class SettingsPage extends StatelessWidget {
             ),
             if (kDebugMode) ...[
               const SizedBox(height: 16),
+              Consumer<DebugProvider>(
+                builder: (context, debugProvider, child) {
+                  return SwitchListTile(
+                    title: const Text(
+                      'Show Exercise Incrementor',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    subtitle: Text(
+                      debugProvider.showExerciseIncrementor
+                          ? 'Exercise navigation visible'
+                          : 'Exercise navigation hidden',
+                    ),
+                    value: debugProvider.showExerciseIncrementor,
+                    onChanged: (value) {
+                      debugProvider.toggleShowExerciseIncrementor();
+                    },
+                    secondary: const Icon(Icons.navigation, size: 28),
+                  );
+                },
+              ),
+              const SizedBox(height: 8),
+              ListTile(
+                leading: const Icon(Icons.check_circle, size: 28, color: Colors.green),
+                title: const Text(
+                  'Mark All Lessons Complete',
+                  style: TextStyle(fontSize: 18, color: Colors.green),
+                ),
+                onTap: () => _showMarkAllCompleteDialog(context),
+              ),
+              const SizedBox(height: 8),
               ListTile(
                 leading: const Icon(Icons.restart_alt, size: 28, color: Colors.red),
                 title: const Text(

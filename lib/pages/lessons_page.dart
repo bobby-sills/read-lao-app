@@ -53,8 +53,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Lessons'), centerTitle: true),
       body: SafeArea(
         child: Column(
           children: [
@@ -69,7 +70,11 @@ class _HomePageState extends State<HomePage> {
                     ).listenable(),
                     builder:
                         (BuildContext context, Box<bool> box, Widget? child) {
-                          final double xOffset = sin(index * 100) * 96;
+                          final int offsetIndex =
+                              index >= LessonData.consonantLessons.length
+                              ? index - LessonData.consonantLessons.length
+                              : index;
+                          final double xOffset = sin(offsetIndex * 100) * 96;
                           final lessonStatus =
                               HiveUtility.isLessonCompleted(index)
                               ? LessonStatus.completed
@@ -88,11 +93,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
 
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              top: index == 0 ? 20 : 0,
-                              bottom: 20,
-                            ),
+                          final tmpButton = Padding(
+                            padding: EdgeInsets.only(bottom: 20),
                             child: Center(
                               child: Transform.translate(
                                 offset: Offset(xOffset, 0),
@@ -100,6 +102,40 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           );
+
+                          if (index == LessonData.consonantLessons.length) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  child: Text(
+                                    "Vowels",
+                                    style: theme.textTheme.titleLarge,
+                                  ),
+                                ),
+                                tmpButton,
+                              ],
+                            );
+                          } else if (index == 0) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  child: Text(
+                                    "Consonants",
+                                    style: theme.textTheme.titleLarge,
+                                  ),
+                                ),
+                                tmpButton,
+                              ],
+                            );
+                          } else {
+                            return tmpButton;
+                          }
                         },
                   );
                 },

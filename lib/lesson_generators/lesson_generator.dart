@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:read_lao/enums/letter_type.dart';
 import 'package:read_lao/exercises/learn_consonant_exercise.dart';
 import 'package:read_lao/exercises/learn_vowel_exercise.dart';
+import 'package:read_lao/exercises/learn_vowel_word_exercise.dart';
 import 'package:read_lao/exercises/matching_exercise.dart';
 import 'package:read_lao/exercises/select_letter_exercise.dart';
 import 'package:read_lao/exercises/select_sound_exercise.dart';
@@ -107,9 +108,14 @@ class LessonGenerator {
               ...newLetters
                   .map(
                     (vowel) => <StatefulExercise>[
-                      ..._vowelWithPotentialVariation(vowel).map(
-                        (vowel) => LearnVowelExercise(vowel: vowel.character),
-                      ),
+                      ..._vowelWithPotentialVariation(vowel)
+                          .map(
+                            (vowel) => [
+                              LearnVowelExercise(vowel: vowel.character),
+                              LearnVowelWordExercise(vowel: vowel.character),
+                            ],
+                          )
+                          .expand((element) => element),
                       ..._vowelWithPotentialVariation(vowel)
                           .map(
                             (vowel) => _generateExercisePair(

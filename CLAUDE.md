@@ -12,7 +12,8 @@ This is a Flutter application for learning the Lao language through interactive 
 
 ```bash
 flutter run                    # Run the app in debug mode
-## Always use the run mode when trying to debug the app instead of building, and if no emulators are open the medium emulator
+# Always use run mode instead of build when debugging. If no emulator is open, use the medium emulator.
+flutter run --release         # Build release APK/IPA
 ```
 
 ### Development Tools
@@ -22,83 +23,145 @@ flutter pub get              # Install dependencies
 flutter pub upgrade          # Upgrade dependencies
 flutter clean                # Clean build files
 flutter analyze              # Run static analysis
-dart format .                # Format code
+dart format .                # Format code (applies to entire codebase)
 ```
 
 ### Testing
 
 ```bash
-flutter test                 # Run unit tests
-flutter test --coverage     # Run tests with coverage
-```,
+flutter test                 # Run all unit tests
+flutter test --coverage      # Run tests with coverage report
+```
 
 ## Code Architecture
 
-### Core Structure
+### Overall Structure
 
-- **main.dart**: App entry point, initializes Hive local storage and MaterialApp
-- **pages/**: Main application screens with bottom navigation (Home, Practice, Settings)
-- **exercises/**: Different exercise types that inherit from StatefulExercise base class
-- **components/**: Reusable UI components like buttons and text widgets
-- **utilities/**: Helper classes for data management, sounds, and app state
+The app follows a layered architecture:
 
-### Key Design Patterns
+```
+Presentation (pages, components) → Business Logic (exercises, lesson generation) → Data (utilities, Hive)
+```
 
-**Exercise System**: All exercises inherit from `StatefulExercise` abstract class which provides:
+**Key directories**:
+- **main.dart**: Entry point - initializes Hive boxes and sets up MultiProvider
+- **pages/**: Application screens (HomePage, SettingsPage, LessonWrapper)
+- **exercises/**: Exercise implementations (all inherit from StatefulExercise)
+- **lesson_generators/**: Dynamically generates lesson sequences
+- **components/**: Reusable UI widgets (buttons, text components)
+- **utilities/**: Data management, audio, storage, styling
+- **enums/**: Letter types, button states
 
-- Unique key generation for proper widget rebuilding
-- Bottom sheet functionality for exercise feedback
-- Consistent state management across exercise types
+### Navigation Architecture
 
-**Data Management**:
+App uses bottom navigation (DefaultPage widget) with page switching:
+- **HomePage (lessons_page.dart)**: Grid of lesson buttons with completion status, auto-scrolls to next incomplete lesson
+- **SettingsPage (settings_page.dart)**: Theme toggle, data reset options
+- **LessonWrapper**: Displays exercise sequences, manages progression, marks lessons complete
+- **LessonCompletePage**: Celebration screen with confetti on lesson completion
 
-- `AppData` class contains static lesson data organized as List<List<StatefulExercise>>
-- `HiveUtility` manages local storage for lesson completion tracking
-- Provider pattern used for lesson state management via `LessonProvider`
+### Exercise System Pattern
 
-**Asset Organization**:
+All exercises inherit from `StatefulExercise` abstract class:
 
-- `assets/letters/`: Contains SVG images, PNG images, and WAV audio files for each Lao letter
-- `assets/fonts/`: Lao-specific fonts (Saysettha, NotoSerifLao)
-- `assets/sound_effects/`: UI feedback sounds (correct, incorrect, complete)
+- **Unique Key Generation**: Each exercise gets `UniqueKey()` to force proper widget rebuilding
+- **Bottom Sheet Feedback**: `showBottomBar()` displays feedback messages with onShow/onHide callbacks
+- **Consistent Structure**: `bottomSheetContent()` and `build()` are abstract, implemented by subclasses
 
-### Exercise Types
-
-- `LearningExercise`: Introduction to new letters with visual and audio
+**Exercise Types**:
+- `LearnConsonantExercise` / `LearnVowelExercise`: Visual + audio introduction
 - `SelectLetterExercise`: Multiple choice letter recognition
-- `SelectSoundExercise`: Audio-based letter identification  
-- `MatchingExercise`: Drag-and-drop letter matching
-- `LearnVowelExercise`: Vowel-specific learning exercises
+- `SelectSoundExercise`: Audio-based letter identification
+- `MatchingExercise`: Drag-and-drop letter pairing
+- `SpellingExercise`: Word spelling with letter combinations
 
-### Navigation Structure
+### Lesson Generation and Data Management
 
-App uses bottom navigation with three main sections:
+**LessonGenerator** (lesson_generators/lesson_generator.dart):
+- Dynamically creates lesson sequences in pedagogical order:
+  1. Learn new consonants/vowels
+  2. Exercise pairs (SelectSound + SelectLetter for newly learned letters)
+  3. Matching exercises (all currently learned letters)
+  4. Spelling exercises (with learned letters)
+  5. Review matching exercises
 
-- **HomePage**: Lesson progression and access
-- **PracticePage**: Practice exercises
-- **SettingsPage**: App configuration
+**LessonData** (utilities/lesson_data.dart):
+- Static List<List<StatefulExercise>> organizing lessons by category
+- Separate consonantLessons and vowelLessons
+
+**LetterData** (utilities/letter_data.dart):
+- Defines 33 consonants in teaching order (includes compound forms)
+- Maps each consonant to: example words, romanized pronunciation, vowel variations
+- Placeholder consonants for spelling exercises
 
 ### State Management
 
-- Provider pattern for lesson state via `LessonProvider`
-- Hive for persistent local storage (lesson completion)
-- StatefulWidget pattern for individual exercises
+**Provider Pattern**:
+- `ThemeProvider`: Manages dark/light mode, persists to Hive 'settings' box
+- `LessonProvider`: Holds callbacks (nextExercise, markExerciseAsMistake) for exercise navigation
 
-### Audio System
+**Hive Persistence**:
+- `lesson_completion` box: Boolean map of lesson index → completion status
+- `settings` box: User preferences (theme)
+- `HiveUtility` provides convenience methods: isLessonCompleted(), setLessonCompleted(), getLastLessonComplete(), clearAllData()
 
-`SoundsUtility` class handles:
+**Reactive Updates**:
+- HomePage uses `ValueListenableBuilder` on Hive box for real-time lesson status updates
 
-- Letter pronunciation via `playLetter(String letter)`
-- UI sound effects via `playSoundEffect(String soundEffect)`
-- Uses `audioplayers` package with AssetSource for local audio files
+### Audio System (AudioUtility)
+
+Three main methods:
+- `playLetter(Letter)`: Consonant (assets/consonants/sounds/{romanization}.wav) or vowel (assets/vowels/sounds/{index}.wav)
+- `playSoundEffect(String)`: UI feedback sounds (correct/incorrect/complete)
+- `playWord(String)`: Word pronunciation (assets/words/{word}.mp3)
+
+Uses AudioPlayer singleton with AssetSource for all audio.
+
+### Asset Organization
+
+```
+assets/
+├── consonants/images/      # SVG/PNG images for consonants
+├── consonants/sounds/      # WAV audio files for consonant pronunciation
+├── vowels/sounds/          # WAV audio files for vowel pronunciation
+├── words/                  # MP3 files for word pronunciation
+├── sound_effects/          # Correct/incorrect/complete WAV files
+└── fonts/NotoSansLaoLooped/  # Lao-specific font files
+```
 
 ## Key Dependencies
 
-- `provider`: State management
-- `flutter_svg`: SVG image rendering for Lao letters
-- `audioplayers`: Audio playback for pronunciation and effects
-- `hive_flutter`: Local data persistence
-- `confetti`: Celebration animations
-- `fluttertoast`: User feedback messages
-- `auto_size_text`: Responsive text sizing
+| Package | Purpose |
+|---------|---------|
+| `provider` | State management (ThemeProvider, LessonProvider) |
+| `audioplayers` | Audio playback for letter pronunciation and UI feedback |
+| `hive_flutter` | Local database for lesson completion and settings |
+| `confetti` | Celebration animations on lesson completion |
+| `fluttertoast` | Toast notifications for user feedback |
+| `collection` | Utility functions (used for shuffling) |
+| `haptic_feedback` | Vibration feedback for interactions |
+| `flutter_svg` | SVG rendering (included for future use) |
+
+## Important Implementation Notes
+
+### Adding New Exercises
+
+1. Create a new class extending `StatefulExercise`
+2. Implement `bottomSheetContent()` (feedback UI) and `build()` (exercise UI)
+3. Add to lesson generation in `LessonGenerator.generateLesson()`
+4. Ensure exercise calls `context.read<LessonProvider>().nextExercise()` when complete
+
+### Adding New Letters
+
+1. Add letter definition to `LetterData` (consonant teaching order or vowel mapping)
+2. Add pronunciation audio file to appropriate `assets/` directory
+3. Update `LessonGenerator` to include new letter in appropriate lesson position
+4. Add corresponding images/icons to assets if needed
+
+### Adding Audio Assets
+
+- Consonant audio: `assets/consonants/sounds/{romanization}.wav`
+- Vowel audio: `assets/vowels/sounds/{index}.wav`
+- Effects: `assets/sound_effects/{name}.wav`
+- Words: `assets/words/{word}.mp3`
 

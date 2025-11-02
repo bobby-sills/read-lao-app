@@ -27,4 +27,11 @@ class HiveUtility {
     final box = Hive.box<bool>(lessonCompletionBox);
     await box.clear();
   }
+
+  static Future<void> markAllLessonsComplete(int totalLessons) async {
+    final box = Hive.box<bool>(lessonCompletionBox);
+    for (int i = 0; i < totalLessons; i++) {
+      await box.put(i, true);
+    }
+  }
 }

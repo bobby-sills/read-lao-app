@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:read_lao/pages/lessons_page.dart' show HomePage;
+import 'package:read_lao/pages/practice_page.dart';
 import 'package:read_lao/pages/settings_page.dart';
 
 class DefaultPage extends StatefulWidget {
@@ -31,13 +32,18 @@ class _DefaultPageState extends State<DefaultPage> {
             label: "Lessons",
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.edit_rounded),
+            icon: Icon(Icons.edit_outlined),
+            label: "Practice",
+          ),
+          NavigationDestination(
             selectedIcon: Icon(Icons.settings_rounded),
             icon: Icon(Icons.settings_outlined),
             label: "Settings",
           ),
         ],
       ),
-      body: <Widget>[const HomePage(), const SettingsPage()][currentPageIndex],
+      body: <Widget>[const HomePage(), const PracticePage(), const SettingsPage()][currentPageIndex],
     );
   }
 }

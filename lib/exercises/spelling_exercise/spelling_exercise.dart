@@ -5,6 +5,7 @@ import 'package:read_lao/exercises/stateful_exercise.dart';
 import 'package:read_lao/components/bottom_lesson_button.dart';
 import 'package:read_lao/utilities/letter_data.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
+import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 enum CardState { on, off }
 
@@ -44,6 +45,11 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
     states = List.filled(tray.length, CardState.on);
     shuffledIndices = List.generate(tray.length, (index) => index);
     shuffledIndices.shuffle();
+
+    // Autoplay the word sound after a short delay
+    Future.delayed(Duration(milliseconds: 500), () {
+      _playWord();
+    });
   }
 
   String get _displayText {
@@ -98,9 +104,16 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
     await speechPlayer.playWord(widget.word);
   }
 
+  List<String> generateMultipleRightAnswers(String word) {
+    final wordRunes = word.runes;
+    int lastRune;
+    for (int rune in wordRunes) {}
+    return [];
+  }
+
   void checkAnswer() {
     setState(() {
-      isCorrect = _displayText == processedWord;
+      isCorrect = unorm.nfc(_displayText) == unorm.nfc(processedWord);
     });
 
     if (isCorrect) {
