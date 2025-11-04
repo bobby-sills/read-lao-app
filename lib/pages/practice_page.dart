@@ -10,15 +10,19 @@ class PracticePage extends StatelessWidget {
   List<Widget> _generateRandomSpellingExercises(int count) {
     final random = Random();
     final words = LetterData.vowelWords.values.toList();
-    final exercises = <Widget>[];
+    final List<Widget> addedExercises = [];
+    final Set<String> addedWords = {};
+    String randomWord;
 
-    // for (int i = 0; i < count; i++) {
-    //   final randomWord = words[random.nextInt(words.length)];
-    //   exercises.add(SpellingExercise(word: randomWord));
-    // }
-    exercises.addAll(words.map((word) => SpellingExercise(word: word)));
+    for (int i = 0; i < count; i++) {
+      do {
+        randomWord = words[random.nextInt(words.length)];
+      } while (addedWords.contains(randomWord));
+      addedWords.add(randomWord);
+      addedExercises.add(SpellingExercise(word: randomWord));
+    }
 
-    return exercises;
+    return addedExercises.toList();
   }
 
   @override
@@ -64,7 +68,7 @@ class PracticePage extends StatelessWidget {
                     vertical: 16,
                   ),
                 ),
-                child: const Text('Start Practice (10 Words)'),
+                child: const Text('Start Practice'),
               ),
             ],
           ),
