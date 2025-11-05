@@ -142,23 +142,23 @@ class _LessonWrapperState extends State<LessonWrapper>
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text('End Lesson'),
-                    content: const Text(
-                      'Are you sure you want to end your current progress on this lesson?',
-                    ),
+                    content: const Icon(Icons.exit_to_app, size: 80),
+                    actionsAlignment: MainAxisAlignment.spaceBetween,
                     actions: [
-                      TextButton(
+                      IconButton(
+                        iconSize: 48,
                         onPressed: () {
                           Navigator.of(context).pop(); // Close the dialog
                         },
-                        child: const Text('Cancel'),
+                        icon: const Icon(Icons.close),
                       ),
-                      TextButton(
+                      IconButton(
+                        iconSize: 48,
                         onPressed: () {
                           // Navigates all the way back to the first screen
                           Navigator.popUntil(context, (route) => route.isFirst);
                         },
-                        child: const Text('End Lesson'),
+                        icon: const Icon(Icons.check),
                       ),
                     ],
                   );
@@ -209,8 +209,8 @@ class _LessonWrapperState extends State<LessonWrapper>
                         const SizedBox(width: 8),
                         IconButton(
                           icon: const Icon(Icons.add_rounded),
-                          onPressed: _exerciseIndex <
-                                  _combinedExercises.length - 1
+                          onPressed:
+                              _exerciseIndex < _combinedExercises.length - 1
                               ? () {
                                   if (context
                                       .read<LessonProvider>()
