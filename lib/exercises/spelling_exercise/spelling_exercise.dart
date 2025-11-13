@@ -104,13 +104,6 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
     await speechPlayer.playWord(widget.word);
   }
 
-  List<String> generateMultipleRightAnswers(String word) {
-    final wordRunes = word.runes;
-    int lastRune;
-    for (int rune in wordRunes) {}
-    return [];
-  }
-
   void checkAnswer() {
     setState(() {
       isCorrect = unorm.nfc(_displayText) == unorm.nfc(processedWord);
@@ -252,7 +245,6 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
               child: SafeArea(
                 child: BottomLessonButton(
                   onPressed: _displayText == '' ? null : checkAnswer,
-                  buttonText: 'Check',
                   buttonIcon: const Icon(Icons.check_rounded),
                 ),
               ),
@@ -281,7 +273,6 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
           buttonIcon: bottomButtonIsCorrect
               ? const Icon(Icons.arrow_forward_rounded)
               : const Icon(Icons.refresh_rounded),
-          buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
           buttonColor: bottomButtonIsCorrect
               ? Color(0xFF93D333)
               : Colors.redAccent,
@@ -289,9 +280,11 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
         if (incorrectCount >= 3) ...[
           SizedBox(height: 8),
           BottomLessonButton(
-            onPressed: context.read<LessonProvider>().nextExercise!,
+            onPressed: () => {
+              context.read<LessonProvider>().markExerciseAsMistake?.call(),
+            },
             buttonIcon: const Icon(Icons.skip_next),
-            buttonText: 'Skip',
+            buttonText: 'Show answer',
             buttonColor: Colors.orangeAccent,
           ),
         ],
