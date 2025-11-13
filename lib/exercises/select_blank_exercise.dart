@@ -141,7 +141,6 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
         padding: const EdgeInsets.only(bottom: 0.0),
         child: BottomLessonButton(
           onPressed: (selectedButton < 0) ? null : checkAnswer,
-          buttonText: 'Check',
           buttonIcon: const Icon(Icons.check_rounded),
         ),
       ),
@@ -166,7 +165,6 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
           buttonIcon: bottomButtonIsCorrect
               ? const Icon(Icons.arrow_forward_rounded)
               : const Icon(Icons.refresh_rounded),
-          buttonText: bottomButtonIsCorrect ? 'Continue' : 'Try Again',
           buttonColor: bottomButtonIsCorrect
               ? Color(0xFF93D333)
               : Colors.redAccent,

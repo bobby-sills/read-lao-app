@@ -10,7 +10,7 @@ class BottomLessonButton extends StatefulWidget {
   const BottomLessonButton({
     super.key,
     required this.onPressed,
-    this.buttonText = 'Continue',
+    this.buttonText = '',
     this.buttonIcon = const Icon(Icons.arrow_forward_rounded),
     this.buttonColor,
   });
