@@ -9,13 +9,15 @@ abstract class StatefulExercise extends StatefulWidget {
 
 abstract class StatefulExerciseState<T extends StatefulExercise>
     extends State<T> {
+  PersistentBottomSheetController? _bottomSheetController;
+
   void showBottomBar({
     required BuildContext context,
     required VoidCallback onShow,
     required VoidCallback onHide,
   }) {
     onShow();
-    showBottomSheet(
+    _bottomSheetController = showBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Container(
@@ -29,9 +31,14 @@ abstract class StatefulExerciseState<T extends StatefulExercise>
           ),
         );
       },
-    ).closed.then((_) {
+    ) as PersistentBottomSheetController?;
+    _bottomSheetController?.closed.then((_) {
       onHide();
     });
+  }
+
+  void updateBottomSheet() {
+    _bottomSheetController?.setState?.call(() {});
   }
 
   Widget bottomSheetContent(BuildContext context);

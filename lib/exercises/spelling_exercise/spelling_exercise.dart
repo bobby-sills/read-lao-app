@@ -26,6 +26,7 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
   final List<int> clickOrder = [];
   late final String processedWord;
   bool bottomButtonIsCorrect = true;
+  bool answerShown = false;
   final AudioUtility effectPlayer = AudioUtility();
   final AudioUtility speechPlayer = AudioUtility();
   int incorrectCount = 0;
@@ -262,7 +263,11 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
       children: [
         SizedBox(height: 8),
         Text(
-          bottomButtonIsCorrect ? 'Correct!' : 'Incorrect!',
+          answerShown
+              ? 'Answer shown'
+              : bottomButtonIsCorrect
+              ? 'Correct!'
+              : 'Incorrect!',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
@@ -273,17 +278,25 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
           buttonIcon: bottomButtonIsCorrect
               ? const Icon(Icons.arrow_forward_rounded)
               : const Icon(Icons.refresh_rounded),
-          buttonColor: bottomButtonIsCorrect
+          buttonColor: answerShown
+              ? Colors.orangeAccent
+              : bottomButtonIsCorrect
               ? Color(0xFF93D333)
               : Colors.redAccent,
         ),
-        if (incorrectCount >= 3) ...[
+        if (incorrectCount >= 3 && !answerShown) ...[
           SizedBox(height: 8),
           BottomLessonButton(
-            onPressed: () => {
-              context.read<LessonProvider>().markExerciseAsMistake?.call(),
+            onPressed: () {
+              context.read<LessonProvider>().markExerciseAsMistake?.call();
+              setState(() {
+                bottomButtonIsCorrect = true;
+                isCorrect = true;
+                answerShown = true;
+              });
+              updateBottomSheet();
             },
-            buttonIcon: const Icon(Icons.skip_next),
+            buttonIcon: const Icon(Icons.visibility),
             buttonText: 'Show answer',
             buttonColor: Colors.orangeAccent,
           ),
