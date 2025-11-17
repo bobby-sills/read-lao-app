@@ -79,10 +79,7 @@ class SettingsPage extends StatelessWidget {
                   );
                 }
               },
-              child: const Text(
-                'Reset',
-                style: TextStyle(color: Colors.red),
-              ),
+              child: const Text('Reset', style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -132,6 +129,100 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
+  void _showSkipToLessonDialog(BuildContext context) {
+    int selectedLevel = 0;
+    final totalLessons = LessonData.allLessons.length;
+    final consonantLessonsCount = LessonData.consonantLessons.length;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            String getLessonLabel(int index) {
+              if (index < consonantLessonsCount) {
+                return 'Consonant lesson $index';
+              } else {
+                return 'Vowel lesson ${index - consonantLessonsCount + 1}';
+              }
+            }
+
+            return AlertDialog(
+              title: const Text('Skip to Lesson'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Select a lesson to skip to. All previous lessons will be marked as complete.',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: 300,
+                      width: double.maxFinite,
+                      child: ListView.builder(
+                        itemCount: totalLessons,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(getLessonLabel(index)),
+                            leading: Radio<int>(
+                              value: index,
+                              groupValue: selectedLevel,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedLevel = value ?? 0;
+                                });
+                              },
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectedLevel = index;
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    await HiveUtility.skipToLesson(selectedLevel);
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Skipped to ${getLessonLabel(selectedLevel)}',
+                          ),
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Skip to Level',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,6 +265,19 @@ class SettingsPage extends StatelessWidget {
               ),
               onTap: () => _showAboutDialog(context),
             ),
+            const SizedBox(height: 8),
+            ListTile(
+              leading: const Icon(
+                Icons.skip_next,
+                size: 28,
+                color: Colors.blue,
+              ),
+              title: const Text(
+                'Skip to Lesson',
+                style: TextStyle(fontSize: 18, color: Colors.blue),
+              ),
+              onTap: () => _showSkipToLessonDialog(context),
+            ),
             if (kDebugMode) ...[
               const SizedBox(height: 16),
               Consumer<DebugProvider>(
@@ -198,7 +302,11 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               ListTile(
-                leading: const Icon(Icons.check_circle, size: 28, color: Colors.green),
+                leading: const Icon(
+                  Icons.check_circle,
+                  size: 28,
+                  color: Colors.green,
+                ),
                 title: const Text(
                   'Mark All Lessons Complete',
                   style: TextStyle(fontSize: 18, color: Colors.green),
@@ -207,7 +315,11 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               ListTile(
-                leading: const Icon(Icons.restart_alt, size: 28, color: Colors.red),
+                leading: const Icon(
+                  Icons.restart_alt,
+                  size: 28,
+                  color: Colors.red,
+                ),
                 title: const Text(
                   'Reset Progress',
                   style: TextStyle(fontSize: 18, color: Colors.red),
