@@ -34,4 +34,19 @@ class HiveUtility {
       await box.put(i, true);
     }
   }
+
+  static Future<void> skipToLesson(int lessonIndex) async {
+    final box = Hive.box<bool>(lessonCompletionBox);
+    // Mark all lessons before the target lesson as complete
+    for (int i = 0; i < lessonIndex; i++) {
+      await box.put(i, true);
+    }
+    // Mark the target lesson and all lessons after as incomplete
+    for (int i = lessonIndex; i < 1000; i++) {
+      // 1000 is a safe upper bound for total lessons
+      if (box.containsKey(i)) {
+        await box.put(i, false);
+      }
+    }
+  }
 }
