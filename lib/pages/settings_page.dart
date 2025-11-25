@@ -143,7 +143,7 @@ class SettingsPage extends StatelessWidget {
               if (index < consonantLessonsCount) {
                 return 'Consonant lesson $index';
               } else {
-                return 'Vowel lesson ${index - consonantLessonsCount + 1}';
+                return 'Vowel lesson $index';
               }
             }
 
@@ -210,10 +210,7 @@ class SettingsPage extends StatelessWidget {
                       );
                     }
                   },
-                  child: const Text(
-                    'Skip to Level',
-                    style: TextStyle(color: Colors.blue),
-                  ),
+                  child: const Text('Skip to Level'),
                 ),
               ],
             );
