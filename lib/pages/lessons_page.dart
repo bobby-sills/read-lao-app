@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:read_lao/typedefs/letter_type.dart';
 import 'package:read_lao/utilities/lesson_data.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/components/lesson_nav_button.dart';
+import 'package:read_lao/utilities/letter_data.dart';
 
 enum LessonStatus { notStarted, nextUp, completed }
 
@@ -88,6 +90,14 @@ class _HomePageState extends State<HomePage> {
                             width: 100,
                             height: 100,
                             child: LessonNavButton(
+                              character:
+                                  index <
+                                      LetterData.consonantTeachingOrder.length
+                                  ? LetterData.consonantTeachingOrder[index]
+                                  : LetterData.vowelTeachingOrder[index -
+                                        LetterData
+                                            .consonantTeachingOrder
+                                            .length],
                               index: index,
                               lessonStatus: lessonStatus,
                             ),
