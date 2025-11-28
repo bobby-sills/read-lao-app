@@ -214,6 +214,16 @@ class LessonGenerator {
 
     final List<List<StatefulExercise>> lessons = [];
 
+    // Add one lesson with only a single letter for the first lesson
+    lessons.add(
+      generateLesson(
+        previouslyLearnedLetters: [],
+        newLetters: [Letter(LetterData.consonantTeachingOrder[0], letterType)],
+        currentlyLearningLetters: [],
+        lessonType: letterType,
+      ),
+    );
+
     // Because the vowels are taught after the consonants,
     // the consonants should already be in the list of previouslyLearnedLetters
     final List<Letter> previouslyLearnedLetters =
