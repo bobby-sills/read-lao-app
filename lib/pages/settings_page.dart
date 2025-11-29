@@ -262,6 +262,19 @@ class SettingsPage extends StatelessWidget {
               ),
               onTap: () => _showAboutDialog(context),
             ),
+            const SizedBox(height: 8),
+            ListTile(
+              leading: const Icon(
+                Icons.restart_alt,
+                size: 28,
+                color: Colors.red,
+              ),
+              title: const Text(
+                'Reset Progress',
+                style: TextStyle(fontSize: 18, color: Colors.red),
+              ),
+              onTap: () => _showResetConfirmDialog(context),
+            ),
             // const SizedBox(height: 8),
             // ListTile(
             //   leading: const Icon(
@@ -309,19 +322,6 @@ class SettingsPage extends StatelessWidget {
             //       style: TextStyle(fontSize: 18, color: Colors.green),
             //     ),
             //     onTap: () => _showMarkAllCompleteDialog(context),
-            //   ),
-            //   const SizedBox(height: 8),
-            //   ListTile(
-            //     leading: const Icon(
-            //       Icons.restart_alt,
-            //       size: 28,
-            //       color: Colors.red,
-            //     ),
-            //     title: const Text(
-            //       'Reset Progress',
-            //       style: TextStyle(fontSize: 18, color: Colors.red),
-            //     ),
-            //     onTap: () => _showResetConfirmDialog(context),
             //   ),
             // ],
           ],
