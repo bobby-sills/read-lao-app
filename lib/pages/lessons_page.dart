@@ -18,9 +18,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final int lessonButtonSize = 100;
-  final ScrollController _scrollController = ScrollController();
+  late final ScrollController _scrollController;
 
-  void _scrollToLesson() {
+  @override
+  void initState() {
+    super.initState();
+
     final lastLessonIndex = HiveUtility.getLastLessonComplete();
 
     // Calculate the position based on lesson index
@@ -28,29 +31,15 @@ class _HomePageState extends State<HomePage> {
         lastLessonIndex * 120.0; // 100 lesson height + 20 padding
 
     // Add some offset to center the lesson on screen
-    targetPosition = targetPosition - 200;
+    targetPosition = (targetPosition - 200).clamp(0, double.infinity);
 
-    // Ensure we don't scroll beyond the bounds
-    targetPosition = targetPosition.clamp(
-      0,
-      _scrollController.position.maxScrollExtent,
-    );
-
-    _scrollController.animateTo(
-      targetPosition,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
+    _scrollController = ScrollController(initialScrollOffset: targetPosition);
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    // Schedule the scroll to happen after the widget is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToLesson();
-    });
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
