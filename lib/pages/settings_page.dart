@@ -262,68 +262,68 @@ class SettingsPage extends StatelessWidget {
               ),
               onTap: () => _showAboutDialog(context),
             ),
-            const SizedBox(height: 8),
-            ListTile(
-              leading: const Icon(
-                Icons.skip_next,
-                size: 28,
-                color: Colors.blue,
-              ),
-              title: const Text(
-                'Skip to Lesson',
-                style: TextStyle(fontSize: 18, color: Colors.blue),
-              ),
-              onTap: () => _showSkipToLessonDialog(context),
-            ),
-            if (kDebugMode) ...[
-              const SizedBox(height: 16),
-              Consumer<DebugProvider>(
-                builder: (context, debugProvider, child) {
-                  return SwitchListTile(
-                    title: const Text(
-                      'Show Exercise Incrementor',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    subtitle: Text(
-                      debugProvider.showExerciseIncrementor
-                          ? 'Exercise navigation visible'
-                          : 'Exercise navigation hidden',
-                    ),
-                    value: debugProvider.showExerciseIncrementor,
-                    onChanged: (value) {
-                      debugProvider.toggleShowExerciseIncrementor();
-                    },
-                    secondary: const Icon(Icons.navigation, size: 28),
-                  );
-                },
-              ),
-              const SizedBox(height: 8),
-              ListTile(
-                leading: const Icon(
-                  Icons.check_circle,
-                  size: 28,
-                  color: Colors.green,
-                ),
-                title: const Text(
-                  'Mark All Lessons Complete',
-                  style: TextStyle(fontSize: 18, color: Colors.green),
-                ),
-                onTap: () => _showMarkAllCompleteDialog(context),
-              ),
-              const SizedBox(height: 8),
-              ListTile(
-                leading: const Icon(
-                  Icons.restart_alt,
-                  size: 28,
-                  color: Colors.red,
-                ),
-                title: const Text(
-                  'Reset Progress',
-                  style: TextStyle(fontSize: 18, color: Colors.red),
-                ),
-                onTap: () => _showResetConfirmDialog(context),
-              ),
-            ],
+            // const SizedBox(height: 8),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.skip_next,
+            //     size: 28,
+            //     color: Colors.blue,
+            //   ),
+            //   title: const Text(
+            //     'Skip to Lesson',
+            //     style: TextStyle(fontSize: 18, color: Colors.blue),
+            //   ),
+            //   onTap: () => _showSkipToLessonDialog(context),
+            // ),
+            // if (kDebugMode) ...[
+            //   const SizedBox(height: 16),
+            //   Consumer<DebugProvider>(
+            //     builder: (context, debugProvider, child) {
+            //       return SwitchListTile(
+            //         title: const Text(
+            //           'Show Exercise Incrementor',
+            //           style: TextStyle(fontSize: 18),
+            //         ),
+            //         subtitle: Text(
+            //           debugProvider.showExerciseIncrementor
+            //               ? 'Exercise navigation visible'
+            //               : 'Exercise navigation hidden',
+            //         ),
+            //         value: debugProvider.showExerciseIncrementor,
+            //         onChanged: (value) {
+            //           debugProvider.toggleShowExerciseIncrementor();
+            //         },
+            //         secondary: const Icon(Icons.navigation, size: 28),
+            //       );
+            //     },
+            //   ),
+            //   const SizedBox(height: 8),
+            //   ListTile(
+            //     leading: const Icon(
+            //       Icons.check_circle,
+            //       size: 28,
+            //       color: Colors.green,
+            //     ),
+            //     title: const Text(
+            //       'Mark All Lessons Complete',
+            //       style: TextStyle(fontSize: 18, color: Colors.green),
+            //     ),
+            //     onTap: () => _showMarkAllCompleteDialog(context),
+            //   ),
+            //   const SizedBox(height: 8),
+            //   ListTile(
+            //     leading: const Icon(
+            //       Icons.restart_alt,
+            //       size: 28,
+            //       color: Colors.red,
+            //     ),
+            //     title: const Text(
+            //       'Reset Progress',
+            //       style: TextStyle(fontSize: 18, color: Colors.red),
+            //     ),
+            //     onTap: () => _showResetConfirmDialog(context),
+            //   ),
+            // ],
           ],
         ),
       ),

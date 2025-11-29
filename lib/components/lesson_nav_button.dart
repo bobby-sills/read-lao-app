@@ -66,7 +66,10 @@ class LessonNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final child = Text(character, style: laoStyle.copyWith(fontSize: 30));
+    final child = FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(character, style: laoStyle.copyWith(fontSize: 30)),
+    );
 
     if (lessonStatus == LessonStatus.nextUp) {
       return ElevatedButton(
