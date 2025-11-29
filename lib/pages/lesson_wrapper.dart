@@ -142,7 +142,10 @@ class _LessonWrapperState extends State<LessonWrapper>
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    content: const Icon(Icons.exit_to_app, size: 80),
+                    title: const Text('Exit Lesson?'),
+                    content: const Text(
+                      'Are you sure you want exit the lesson?',
+                    ),
                     actionsAlignment: MainAxisAlignment.spaceBetween,
                     actions: [
                       IconButton(
