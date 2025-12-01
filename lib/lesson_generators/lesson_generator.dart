@@ -218,7 +218,7 @@ class LessonGenerator {
     lessons.add(
       generateLesson(
         previouslyLearnedLetters: [],
-        newLetters: [Letter(LetterData.consonantTeachingOrder[0], letterType)],
+        newLetters: [Letter(teachingOrder[0], letterType)],
         currentlyLearningLetters: [],
         lessonType: letterType,
       ),
