@@ -1,6 +1,3 @@
-// ignore: unused_import
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -180,15 +177,18 @@ class LessonGenerator {
             .toSet();
 
     if (lessonType == LetterType.vowel) {
+      Iterable<String> availableSpellingExercises = LetterData
+          .spellingWords
+          .keys
+          .where(
+            (word) => solidifiedLetters.containsAll(
+              LetterData.spellingWords[word]!
+                  .map((vowel) => vowel.runes)
+                  .expand((runes) => runes),
+            ),
+          );
       shuffledExercises.addAll(
-        LetterData.spellingWords.keys
-            .where(
-              (word) =>
-                  solidifiedLetters.containsAll(
-                    LetterData.spellingWords[word]!,
-                  ) ||
-                  LetterData.spellingWords[word]!.isEmpty,
-            )
+        availableSpellingExercises
             .shuffled()
             .take(3)
             .map((word) => SpellingExercise(word: word)),
