@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:read_lao/typedefs/letter_type.dart';
 import 'package:read_lao/utilities/lesson_data.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/components/lesson_nav_button.dart';
