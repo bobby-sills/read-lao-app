@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:read_lao/pages/default_page.dart';
@@ -8,8 +9,14 @@ import 'package:read_lao/utilities/provider/lesson_provider.dart';
 import 'package:read_lao/utilities/provider/debug_provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Hive.initFlutter();
   await HiveUtility.initializeBoxes();
+
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+  );
 
   runApp(
     MultiProvider(
@@ -30,6 +37,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: themeProvider.isDarkMode
+                ? Brightness.light
+                : Brightness.dark,
+            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarIconBrightness: themeProvider.isDarkMode
+                ? Brightness.light
+                : Brightness.dark,
+          ),
+        );
+
         return MaterialApp(
           title: 'Learn Lao',
           theme: ThemeData(
