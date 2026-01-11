@@ -5,6 +5,12 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val keystorePropertiesFile = rootProject.file("key.properties")
+val keystoreProperties = java.util.Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(java.io.FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "com.example.learn_lao_app"
     compileSdk = flutter.compileSdkVersion
@@ -33,10 +39,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = rootProject.file("app/key.jks")
-            storePassword = "***REMOVED***"
-            keyAlias = "read_lao_key"
-            keyPassword = "***REMOVED***"
+            storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
         }
     }
 
