@@ -18,6 +18,11 @@ void main() async {
     SystemUiMode.edgeToEdge,
   );
 
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(
     MultiProvider(
       providers: [
