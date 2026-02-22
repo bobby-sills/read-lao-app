@@ -33,6 +33,10 @@ flutter test                 # Run all unit tests
 flutter test --coverage      # Run tests with coverage report
 ```
 
+### Linting
+
+The project enforces `prefer_single_quotes: true` via `analysis_options.yaml`. Always use single quotes for strings.
+
 ## Code Architecture
 
 ### Overall Structure
@@ -51,11 +55,13 @@ Presentation (pages, components) → Business Logic (exercises, lesson generatio
 - **components/**: Reusable UI widgets (buttons, text components)
 - **utilities/**: Data management, audio, storage, styling
 - **enums/**: Letter types, button states
+- **typedefs/**: Contains the `Letter` class (String character + LetterType) — separate from enums/
 
 ### Navigation Architecture
 
 App uses bottom navigation (DefaultPage widget) with page switching:
 - **HomePage (lessons_page.dart)**: Grid of lesson buttons with completion status, auto-scrolls to next incomplete lesson
+- **PracticePage**: Practice mode accessible from bottom navigation
 - **SettingsPage (settings_page.dart)**: Theme toggle, data reset options
 - **LessonWrapper**: Displays exercise sequences, manages progression, marks lessons complete
 - **LessonCompletePage**: Celebration screen with confetti on lesson completion
@@ -70,6 +76,8 @@ All exercises inherit from `StatefulExercise` abstract class:
 
 **Exercise Types**:
 - `LearnConsonantExercise` / `LearnVowelExercise`: Visual + audio introduction
+- `LearnVowelWordExercise`: Visual + audio exercise for vowel-word combinations
+- `SelectBlankExercise`: Abstract intermediate class that `SelectLetterExercise` and `SelectSoundExercise` extend — contains shared answer-checking, audio, button state, and bottom-sheet logic
 - `SelectLetterExercise`: Multiple choice letter recognition
 - `SelectSoundExercise`: Audio-based letter identification
 - `MatchingExercise`: Drag-and-drop letter pairing
@@ -99,11 +107,12 @@ All exercises inherit from `StatefulExercise` abstract class:
 **Provider Pattern**:
 - `ThemeProvider`: Manages dark/light mode, persists to Hive 'settings' box
 - `LessonProvider`: Holds callbacks (nextExercise, markExerciseAsMistake) for exercise navigation
+- `DebugProvider`: Manages debug flags (e.g., `showExerciseIncrementor`) for development use
 
 **Hive Persistence**:
 - `lesson_completion` box: Boolean map of lesson index → completion status
 - `settings` box: User preferences (theme)
-- `HiveUtility` provides convenience methods: isLessonCompleted(), setLessonCompleted(), getLastLessonComplete(), clearAllData()
+- `HiveUtility` provides convenience methods: isLessonCompleted(), setLessonCompleted(), getLastLessonComplete(), clearAllData(), markAllLessonsComplete(), skipToLesson()
 
 **Reactive Updates**:
 - HomePage uses `ValueListenableBuilder` on Hive box for real-time lesson status updates
@@ -115,7 +124,7 @@ Three main methods:
 - `playSoundEffect(String)`: UI feedback sounds (correct/incorrect/complete)
 - `playWord(String)`: Word pronunciation (assets/words/{word}.mp3)
 
-Uses AudioPlayer singleton with AssetSource for all audio.
+Creates new AudioPlayer instances per playback call (not a singleton) using AssetSource for all audio.
 
 ### Asset Organization
 
@@ -140,7 +149,7 @@ assets/
 | `fluttertoast` | Toast notifications for user feedback |
 | `collection` | Utility functions (used for shuffling) |
 | `haptic_feedback` | Vibration feedback for interactions |
-| `flutter_svg` | SVG rendering (included for future use) |
+| `flutter_svg` | SVG rendering for consonant images |
 
 ## Important Implementation Notes
 

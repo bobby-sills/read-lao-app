@@ -2,7 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/pages/empty_lesson.dart';
+import 'package:read_lao/pages/achievement_unlocked_page.dart';
 import 'package:read_lao/pages/lesson_complete.dart';
+import 'package:read_lao/pages/streak_updated_page.dart';
+import 'package:read_lao/utilities/achievement_data.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/utilities/notification_utility.dart';
 import 'package:read_lao/exercises/review_message.dart';
@@ -91,16 +94,34 @@ class _LessonWrapperState extends State<LessonWrapper>
       // Use BuildContext from the current widget's build method
       if (mounted) {
         HiveUtility.setLessonCompleted(widget.lessonIndex, true);
-        HiveUtility.recordActivity();
+        final streakIncremented = HiveUtility.recordActivity();
+        final newlyUnlockedIds = HiveUtility.checkAndUnlockAchievements();
         NotificationUtility.scheduleReminder();
-        // Check if widget is still mounted
+
+        // Build the celebration chain from the end backwards:
+        //   achievements → streak → lesson complete
+        Widget nextPage = LessonComplete(lessonNum: widget.lessonIndex);
+
+        if (streakIncremented) {
+          nextPage = StreakUpdatedPage(
+            streak: HiveUtility.getCurrentStreak(),
+            nextPage: nextPage,
+          );
+        }
+
+        if (newlyUnlockedIds.isNotEmpty) {
+          final unlockedAchievements = AchievementData.all
+              .where((a) => newlyUnlockedIds.contains(a.id))
+              .toList();
+          nextPage = AchievementUnlockedPage(
+            achievements: unlockedAchievements,
+            nextPage: nextPage,
+          );
+        }
+
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) {
-              return LessonComplete(lessonNum: widget.lessonIndex);
-            },
-          ),
+          MaterialPageRoute(builder: (context) => nextPage),
         );
       }
       return;

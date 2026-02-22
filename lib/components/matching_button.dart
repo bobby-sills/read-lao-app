@@ -52,8 +52,8 @@ class MatchingButton extends StatelessWidget {
       ButtonState.complete => Color(0xFF93D333),
       ButtonState.incorrect => Colors.redAccent,
       ButtonState.selected => theme.colorScheme.secondary,
-      ButtonState.deselected => theme.colorScheme.surface,
-      ButtonState.disabled => theme.colorScheme.surface,
+      ButtonState.deselected => theme.colorScheme.surfaceContainerHighest,
+      ButtonState.disabled => theme.colorScheme.surfaceContainerHighest,
     };
   }
 
@@ -101,10 +101,7 @@ class MatchingButton extends StatelessWidget {
       builder: (context, color, child) {
         return ElevatedButton(
           onPressed: state == ButtonState.disabled ? null : _onPressed,
-          style:
-              state == ButtonState.disabled || state == ButtonState.deselected
-              ? null
-              : ElevatedButton.styleFrom(backgroundColor: color),
+          style: ElevatedButton.styleFrom(backgroundColor: color),
           child: _buttonContent(theme, state),
         );
       },

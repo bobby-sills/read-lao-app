@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:read_lao/pages/achievements_page.dart';
 import 'package:read_lao/pages/lessons_page.dart' show HomePage;
 import 'package:read_lao/pages/practice_page.dart';
 import 'package:read_lao/pages/settings_page.dart';
@@ -63,9 +64,14 @@ class _DefaultPageState extends State<DefaultPage> {
             label: "Practice",
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.emoji_events_rounded),
+            icon: Icon(Icons.emoji_events_outlined),
+            label: 'Achievements',
+          ),
+          NavigationDestination(
             selectedIcon: Icon(Icons.settings_rounded),
             icon: Icon(Icons.settings_outlined),
-            label: "Settings",
+            label: 'Settings',
           ),
         ],
       ),
@@ -74,12 +80,14 @@ class _DefaultPageState extends State<DefaultPage> {
           <Widget>[
             const HomePage(),
             const PracticePage(),
+            const AchievementsPage(),
             const SettingsPage(),
           ][currentPageIndex],
           ValueListenableBuilder(
             valueListenable:
                 Hive.box<dynamic>(HiveUtility.streakBox).listenable(),
             builder: (context, box, _) {
+              if (currentPageIndex == 3) return const SizedBox.shrink();
               final streak = HiveUtility.getCurrentStreak();
               return Positioned(
                 top: MediaQuery.of(context).padding.top + 8,

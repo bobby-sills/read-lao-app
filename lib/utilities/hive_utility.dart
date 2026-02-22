@@ -1,8 +1,11 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:read_lao/utilities/achievement_data.dart';
+import 'package:read_lao/utilities/lesson_data.dart';
 
 class HiveUtility {
   static const String lessonCompletionBox = 'lesson_completion';
   static const String streakBox = 'streak';
+  static const String achievementsBox = 'achievements';
 
   static const String _currentStreakKey = 'currentStreak';
   static const String _lastActivityDateKey = 'lastActivityDate';
@@ -14,6 +17,7 @@ class HiveUtility {
   static Future<void> initializeBoxes() async {
     await Hive.openBox<bool>(lessonCompletionBox);
     await Hive.openBox<dynamic>(streakBox);
+    await Hive.openBox<dynamic>(achievementsBox);
   }
 
   static bool isLessonCompleted(int lessonIndex) {
@@ -35,6 +39,47 @@ class HiveUtility {
   static Future<void> clearAllData() async {
     await Hive.box<bool>(lessonCompletionBox).clear();
     await Hive.box<dynamic>(streakBox).clear();
+    await Hive.box<dynamic>(achievementsBox).clear();
+  }
+
+  // --- Achievement methods ---
+
+  static bool isAchievementUnlocked(String id) {
+    return Hive.box<dynamic>(achievementsBox).containsKey(id);
+  }
+
+  static void unlockAchievement(String id) {
+    Hive.box<dynamic>(achievementsBox).put(id, DateTime.now().toIso8601String());
+  }
+
+  static DateTime? getAchievementUnlockDate(String id) {
+    final value = Hive.box<dynamic>(achievementsBox).get(id);
+    if (value == null) return null;
+    return DateTime.tryParse(value as String);
+  }
+
+  static List<String> checkAndUnlockAchievements() {
+    final streak = getCurrentStreak();
+    final lessonsCompleted = getLastLessonComplete();
+    final totalLessons = LessonData.allLessons.length;
+    final newlyUnlocked = <String>[];
+
+    for (final achievement in AchievementData.streakAchievements) {
+      if (streak >= achievement.threshold && !isAchievementUnlocked(achievement.id)) {
+        unlockAchievement(achievement.id);
+        newlyUnlocked.add(achievement.id);
+      }
+    }
+
+    for (final achievement in AchievementData.lessonAchievements) {
+      final threshold = achievement.id == 'lessons_all' ? totalLessons : achievement.threshold;
+      if (lessonsCompleted >= threshold && !isAchievementUnlocked(achievement.id)) {
+        unlockAchievement(achievement.id);
+        newlyUnlocked.add(achievement.id);
+      }
+    }
+
+    return newlyUnlocked;
   }
 
   static Future<void> markAllLessonsComplete(int totalLessons) async {
@@ -66,7 +111,9 @@ class HiveUtility {
         as int;
   }
 
-  static void recordActivity() {
+  /// Records today's activity and returns true if the streak was incremented
+  /// (i.e. this is the first lesson completed today).
+  static bool recordActivity() {
     final box = Hive.box<dynamic>(streakBox);
     final now = DateTime.now();
     final today =
@@ -80,10 +127,12 @@ class HiveUtility {
     int streak =
         box.get(_currentStreakKey, defaultValue: 0) as int;
 
+    bool streakIncremented = false;
     if (lastDate != today) {
       streak = (lastDate == yesterday) ? streak + 1 : 1;
       box.put(_currentStreakKey, streak);
       box.put(_lastActivityDateKey, today);
+      streakIncremented = true;
     }
 
     final int count =
@@ -93,6 +142,7 @@ class HiveUtility {
     final int minutesSinceMidnight = now.hour * 60 + now.minute;
     box.put(_totalActivityCountKey, count + 1);
     box.put(_activityMinutesSumKey, sum + minutesSinceMidnight);
+    return streakIncremented;
   }
 
   static int getNotificationMinutes() {
