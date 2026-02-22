@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:read_lao/pages/default_page.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
+import 'package:read_lao/utilities/notification_utility.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
 import 'package:read_lao/utilities/provider/debug_provider.dart';
@@ -13,6 +14,13 @@ void main() async {
 
   await Hive.initFlutter();
   await HiveUtility.initializeBoxes();
+  await NotificationUtility.initialize();
+  if (HiveUtility.isFirstLaunch()) {
+    final granted = await NotificationUtility.requestPermission();
+    HiveUtility.setNotificationsEnabled(granted);
+    HiveUtility.markFirstLaunchDone();
+  }
+  await NotificationUtility.scheduleReminder();
 
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,

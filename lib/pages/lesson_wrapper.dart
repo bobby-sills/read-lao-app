@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:read_lao/pages/empty_lesson.dart';
 import 'package:read_lao/pages/lesson_complete.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
+import 'package:read_lao/utilities/notification_utility.dart';
 import 'package:read_lao/exercises/review_message.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
 import 'package:read_lao/utilities/provider/debug_provider.dart';
@@ -90,6 +91,8 @@ class _LessonWrapperState extends State<LessonWrapper>
       // Use BuildContext from the current widget's build method
       if (mounted) {
         HiveUtility.setLessonCompleted(widget.lessonIndex, true);
+        HiveUtility.recordActivity();
+        NotificationUtility.scheduleReminder();
         // Check if widget is still mounted
         Navigator.pushReplacement(
           context,

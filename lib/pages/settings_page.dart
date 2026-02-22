@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
+import 'package:read_lao/utilities/notification_utility.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -66,6 +68,7 @@ class SettingsPage extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 await HiveUtility.clearAllData();
+                await NotificationUtility.cancelReminder();
                 if (context.mounted) {
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -114,6 +117,56 @@ class SettingsPage extends StatelessWidget {
                         : Icons.light_mode,
                     size: 28,
                   ),
+                );
+              },
+            ),
+            const SizedBox(height: 8),
+            ValueListenableBuilder(
+              valueListenable:
+                  Hive.box<dynamic>(HiveUtility.streakBox).listenable(),
+              builder: (context, box, _) {
+                final enabled = HiveUtility.getNotificationsEnabled();
+                return SwitchListTile(
+                  title: const Text(
+                    'Daily Reminder',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  subtitle: Text(
+                    enabled
+                        ? 'Reminder enabled'
+                        : 'Reminder disabled',
+                  ),
+                  value: enabled,
+                  secondary: Icon(
+                    enabled
+                        ? Icons.notifications_active
+                        : Icons.notifications_off,
+                    size: 28,
+                  ),
+                  onChanged: (value) async {
+                    if (value) {
+                      final granted =
+                          await NotificationUtility.requestPermission();
+                      if (!granted) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Notification permission denied',
+                              ),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        }
+                        return;
+                      }
+                      HiveUtility.setNotificationsEnabled(true);
+                      await NotificationUtility.scheduleReminder();
+                    } else {
+                      HiveUtility.setNotificationsEnabled(false);
+                      await NotificationUtility.cancelReminder();
+                    }
+                  },
                 );
               },
             ),
