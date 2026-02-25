@@ -48,45 +48,58 @@ class NotificationUtility {
   static Future<void> scheduleReminder() async {
     if (!HiveUtility.getNotificationsEnabled()) return;
 
-    await cancelReminder();
+    try {
+      await cancelReminder();
 
-    final int minutesSinceMidnight = HiveUtility.getNotificationMinutes();
-    final tz.TZDateTime scheduledTime = _nextOccurrence(minutesSinceMidnight);
+      final int minutesSinceMidnight = HiveUtility.getNotificationMinutes();
+      final tz.TZDateTime scheduledTime = _nextOccurrence(minutesSinceMidnight);
 
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: AndroidNotificationDetails(
-        _channelId,
-        _channelName,
-        importance: Importance.high,
-        priority: Priority.high,
-      ),
-      iOS: DarwinNotificationDetails(),
-    );
+      const NotificationDetails notificationDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
+          _channelId,
+          _channelName,
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+        iOS: DarwinNotificationDetails(),
+      );
 
-    await _plugin.zonedSchedule(
-      _id,
-      'Time to practice Lao!',
-      'Keep your streak alive - just 5 minutes a day.',
-      scheduledTime,
-      notificationDetails,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.time,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-    );
+      await _plugin.zonedSchedule(
+        _id,
+        'Time to practice Lao!',
+        'Keep your streak alive - just 5 minutes a day.',
+        scheduledTime,
+        notificationDetails,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    } catch (_) {
+      // Non-critical — don't crash the app if scheduling fails
+    }
   }
 
   static Future<void> cancelReminder() async {
     await _plugin.cancel(_id);
   }
 
+  static tz.Location get _safeLocal {
+    try {
+      return tz.local;
+    } catch (_) {
+      return tz.UTC;
+    }
+  }
+
   static tz.TZDateTime _nextOccurrence(int minutesSinceMidnight) {
-    final now = tz.TZDateTime.now(tz.local);
+    final location = _safeLocal;
+    final now = tz.TZDateTime.now(location);
     final int hour = minutesSinceMidnight ~/ 60;
     final int minute = minutesSinceMidnight % 60;
 
     tz.TZDateTime scheduledTime = tz.TZDateTime(
-      tz.local,
+      location,
       now.year,
       now.month,
       now.day,

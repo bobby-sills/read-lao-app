@@ -5,6 +5,7 @@ import 'package:read_lao/pages/lessons_page.dart' show HomePage;
 import 'package:read_lao/pages/practice_page.dart';
 import 'package:read_lao/pages/settings_page.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
+import 'package:read_lao/utilities/notification_utility.dart';
 
 class DefaultPage extends StatefulWidget {
   const DefaultPage({super.key});
@@ -39,6 +40,21 @@ class _StreakBadge extends StatelessWidget {
 
 class _DefaultPageState extends State<DefaultPage> {
   int currentPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _initNotifications();
+  }
+
+  Future<void> _initNotifications() async {
+    if (HiveUtility.isFirstLaunch()) {
+      final granted = await NotificationUtility.requestPermission();
+      HiveUtility.setNotificationsEnabled(granted);
+      HiveUtility.markFirstLaunchDone();
+    }
+    await NotificationUtility.scheduleReminder();
+  }
 
   @override
   Widget build(BuildContext context) {

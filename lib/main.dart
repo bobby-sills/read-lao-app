@@ -14,13 +14,11 @@ void main() async {
 
   await Hive.initFlutter();
   await HiveUtility.initializeBoxes();
-  await NotificationUtility.initialize();
-  if (HiveUtility.isFirstLaunch()) {
-    final granted = await NotificationUtility.requestPermission();
-    HiveUtility.setNotificationsEnabled(granted);
-    HiveUtility.markFirstLaunchDone();
+  try {
+    await NotificationUtility.initialize();
+  } catch (_) {
+    // Non-critical — don't crash startup if notifications fail to initialize
   }
-  await NotificationUtility.scheduleReminder();
 
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,
