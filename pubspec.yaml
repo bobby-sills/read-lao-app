@@ -42,8 +42,8 @@ dependencies:
   collection: ^1.19.1
   haptic_feedback: ^0.5.1+1
   unorm_dart: ^0.3.2
-  flutter_local_notifications: ^18.0.0
-  timezone: ^0.9.4
+  flutter_local_notifications: ^20.1.0
+  timezone: ^0.10.1
   firebase_core: ^3.6.0
   firebase_analytics: ^11.3.0
 

@@ -20,7 +20,7 @@ class NotificationUtility {
       iOS: DarwinInitializationSettings(),
     );
 
-    await _plugin.initialize(initializationSettings);
+    await _plugin.initialize(settings: initializationSettings);
   }
 
   static Future<bool> requestPermission() async {
@@ -65,15 +65,13 @@ class NotificationUtility {
       );
 
       await _plugin.zonedSchedule(
-        _id,
-        'Time to practice Lao!',
-        'Keep your streak alive - just 5 minutes a day.',
-        scheduledTime,
-        notificationDetails,
+        id: _id,
+        title: 'Time to practice Lao!',
+        body: 'Keep your streak alive - just 5 minutes a day.',
+        scheduledDate: scheduledTime,
+        notificationDetails: notificationDetails,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
       );
     } catch (_) {
       // Non-critical — don't crash the app if scheduling fails
@@ -82,7 +80,7 @@ class NotificationUtility {
 
   static Future<void> cancelReminder() async {
     try {
-      await _plugin.cancel(_id);
+      await _plugin.cancel(id: _id);
     } catch (_) {
       // Ignore — can fail if stored notification data is malformed (Missing type parameter)
     }
