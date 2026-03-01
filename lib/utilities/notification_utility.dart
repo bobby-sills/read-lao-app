@@ -81,7 +81,11 @@ class NotificationUtility {
   }
 
   static Future<void> cancelReminder() async {
-    await _plugin.cancel(_id);
+    try {
+      await _plugin.cancel(_id);
+    } catch (_) {
+      // Ignore — can fail if stored notification data is malformed (Missing type parameter)
+    }
   }
 
   static tz.Location get _safeLocal {
