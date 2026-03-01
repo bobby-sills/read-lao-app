@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:read_lao/firebase_options.dart';
 import 'package:read_lao/pages/default_page.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/utilities/notification_utility.dart';
@@ -12,6 +14,7 @@ import 'package:read_lao/utilities/provider/debug_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Hive.initFlutter();
   await HiveUtility.initializeBoxes();
   try {
