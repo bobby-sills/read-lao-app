@@ -24,7 +24,7 @@ class SettingsPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 8),
-                Text('Version 1.0.0'),
+                Text('Version 2.1.0'),
                 SizedBox(height: 16),
                 Text(
                   'An interactive app for learning the Lao language through engaging exercises and lessons.',
