@@ -15,21 +15,27 @@ class DynamicBoldText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final bool isDarkMode = theme.brightness == Brightness.dark;
     Set<int> highlightedRunes = targetCharacter.runes.toSet();
 
     final List<TextSpan> spans = [];
+
+    final Color prominentColor = theme.colorScheme.primary;
 
     for (int rune in text.runes) {
       if (highlightedRunes.contains(rune)) {
         spans.add(
           TextSpan(
             text: String.fromCharCode(rune),
-            style: textStyle.copyWith(color: Colors.blue),
+            style: textStyle.copyWith(color: prominentColor, foreground: null),
           ),
         );
       } else {
-        spans.add(TextSpan(text: String.fromCharCode(rune), style: textStyle));
+        spans.add(
+          TextSpan(
+            text: String.fromCharCode(rune),
+            style: textStyle.copyWith(foreground: null),
+          ),
+        );
       }
     }
 
