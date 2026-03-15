@@ -22,23 +22,14 @@ class DynamicBoldText extends StatelessWidget {
 
     for (int rune in text.runes) {
       if (highlightedRunes.contains(rune)) {
-        spans.add(TextSpan(text: String.fromCharCode(rune), style: textStyle));
-      } else {
         spans.add(
           TextSpan(
             text: String.fromCharCode(rune),
-            style: textStyle.copyWith(
-              foreground: Paint()
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = 1.0
-                ..strokeJoin = StrokeJoin.round
-                ..isAntiAlias = true
-                ..color =
-                    textStyle.color ??
-                    (isDarkMode ? Colors.white : Colors.black),
-            ),
+            style: textStyle.copyWith(color: Colors.blue),
           ),
         );
+      } else {
+        spans.add(TextSpan(text: String.fromCharCode(rune), style: textStyle));
       }
     }
 
