@@ -24,7 +24,11 @@ class AudioUtility {
   }
 
   Future<void> playWord(String word) async {
-    await audioPlayer.play(AssetSource('words/$word.mp3'));
+    try {
+      await audioPlayer.play(AssetSource('words/$word.mp3'));
+    } catch (_) {
+      await audioPlayer.play(AssetSource('words/$word.m4a'));
+    }
   }
 
   void dispose() {

@@ -93,7 +93,9 @@ class _LessonWrapperState extends State<LessonWrapper>
     if (_exerciseIndex == _combinedExercises.length - 1) {
       // Use BuildContext from the current widget's build method
       if (mounted) {
-        HiveUtility.setLessonCompleted(widget.lessonIndex, true);
+        if (widget.lessonIndex >= 0) {
+          HiveUtility.setLessonCompleted(widget.lessonIndex, true);
+        }
         final streakIncremented = HiveUtility.recordActivity();
         final newlyUnlockedIds = HiveUtility.checkAndUnlockAchievements();
         NotificationUtility.scheduleReminder();
