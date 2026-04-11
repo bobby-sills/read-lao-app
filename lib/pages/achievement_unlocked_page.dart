@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:read_lao/utilities/achievement_data.dart';
 
 class AchievementUnlockedPage extends StatelessWidget {
@@ -30,7 +31,9 @@ class AchievementUnlockedPage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                isSingle ? 'Achievement Unlocked!' : 'Achievements Unlocked!',
+                isSingle
+                    ? AppLocalizations.of(context)!.achievementUnlocked
+                    : AppLocalizations.of(context)!.achievementsUnlocked,
                 style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -98,7 +101,7 @@ class AchievementUnlockedPage extends StatelessWidget {
                   ),
                 ),
                 label: Text(
-                  'Continue',
+                  AppLocalizations.of(context)!.continueButton,
                   style: TextStyle(
                     fontSize: theme.textTheme.headlineSmall?.fontSize,
                   ),

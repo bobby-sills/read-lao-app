@@ -1,0 +1,203 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Learn Lao",
+  "@appTitle": { "description": "The application title" },
+
+  "vowels": "Vowels",
+  "@vowels": { "description": "Section header for vowels on the lessons page" },
+
+  "consonants": "Consonants",
+  "@consonants": { "description": "Section header for consonants on the lessons page" },
+
+  "practiceSpellingTitle": "Practice Spelling",
+  "@practiceSpellingTitle": { "description": "Title on the practice page" },
+
+  "practiceSpellingDescription": "Test your spelling skills with random words from all the letters you've learned.",
+  "@practiceSpellingDescription": { "description": "Description on the practice page" },
+
+  "startPractice": "Start Practice",
+  "@startPractice": { "description": "Button to start a practice session" },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": { "description": "AppBar title on the settings page" },
+
+  "darkMode": "Dark Mode",
+  "@darkMode": { "description": "Label for the dark mode toggle" },
+
+  "darkThemeEnabled": "Dark theme enabled",
+  "@darkThemeEnabled": { "description": "Subtitle shown when dark mode is on" },
+
+  "lightThemeEnabled": "Light theme enabled",
+  "@lightThemeEnabled": { "description": "Subtitle shown when dark mode is off" },
+
+  "dailyReminder": "Daily Reminder",
+  "@dailyReminder": { "description": "Label for the daily reminder toggle" },
+
+  "reminderEnabled": "Reminder enabled",
+  "@reminderEnabled": { "description": "Subtitle shown when reminder is on" },
+
+  "reminderDisabled": "Reminder disabled",
+  "@reminderDisabled": { "description": "Subtitle shown when reminder is off" },
+
+  "notificationPermissionDenied": "Notification permission denied",
+  "@notificationPermissionDenied": { "description": "Snackbar when notification permission is denied" },
+
+  "aboutThisApp": "About this app",
+  "@aboutThisApp": { "description": "Label for the about dialog" },
+
+  "aboutVersion": "Version 2.1.0",
+  "@aboutVersion": { "description": "Version string in the about dialog" },
+
+  "aboutDescription1": "An interactive app for learning the Lao language through engaging exercises and lessons.",
+  "@aboutDescription1": { "description": "First description line in the about dialog" },
+
+  "aboutDescription2": "Learn to recognize, pronounce, and write Lao letters at your own pace.",
+  "@aboutDescription2": { "description": "Second description line in the about dialog" },
+
+  "close": "Close",
+  "@close": { "description": "Generic close button label" },
+
+  "resetProgress": "Reset Progress",
+  "@resetProgress": { "description": "Label for the reset progress list tile" },
+
+  "resetProgressTitle": "Reset Progress?",
+  "@resetProgressTitle": { "description": "Title of the reset progress confirmation dialog" },
+
+  "resetProgressContent": "This will reset all lesson progress. This action cannot be undone.",
+  "@resetProgressContent": { "description": "Content of the reset progress confirmation dialog" },
+
+  "cancel": "Cancel",
+  "@cancel": { "description": "Generic cancel button label" },
+
+  "reset": "Reset",
+  "@reset": { "description": "Confirm reset button label" },
+
+  "progressResetSuccessfully": "Progress reset successfully",
+  "@progressResetSuccessfully": { "description": "Snackbar message after progress is reset" },
+
+  "lessonsNavLabel": "Lessons",
+  "@lessonsNavLabel": { "description": "Bottom nav bar label for lessons tab" },
+
+  "practiceNavLabel": "Practice",
+  "@practiceNavLabel": { "description": "Bottom nav bar label for practice tab" },
+
+  "achievementsNavLabel": "Achievements",
+  "@achievementsNavLabel": { "description": "Bottom nav bar label for achievements tab" },
+
+  "settingsNavLabel": "Settings",
+  "@settingsNavLabel": { "description": "Bottom nav bar label for settings tab" },
+
+  "streakDialogNoStreak": "Complete a lesson today to start your streak!",
+  "@streakDialogNoStreak": { "description": "Dialog message when user has no streak" },
+
+  "streakDialogOneDay": "You have practiced for 1 day in a row!",
+  "@streakDialogOneDay": { "description": "Dialog message when user has a 1-day streak" },
+
+  "streakDialogMultipleDays": "You have practiced for {count} days in a row!",
+  "@streakDialogMultipleDays": {
+    "description": "Dialog message when user has a multi-day streak",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "streakDialogButtonNoStreak": "Let's go!",
+  "@streakDialogButtonNoStreak": { "description": "Dialog button when user has no streak" },
+
+  "streakDialogButtonWithStreak": "Nice!",
+  "@streakDialogButtonWithStreak": { "description": "Dialog button when user has a streak" },
+
+  "exitLessonTitle": "Exit Lesson?",
+  "@exitLessonTitle": { "description": "Title of the exit lesson confirmation dialog" },
+
+  "exitLessonContent": "Are you sure you want exit the lesson?",
+  "@exitLessonContent": { "description": "Content of the exit lesson confirmation dialog" },
+
+  "lessonCompleteTitle": "Lesson {number} complete!",
+  "@lessonCompleteTitle": {
+    "description": "Title shown when a lesson is complete",
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+
+  "lessonCompleteSubtitle": "Well done! Keep up the great work",
+  "@lessonCompleteSubtitle": { "description": "Subtitle shown when a lesson is complete" },
+
+  "backToLessons": "Back to lessons",
+  "@backToLessons": { "description": "Button to return to the lessons list" },
+
+  "achievementsTitle": "Achievements",
+  "@achievementsTitle": { "description": "Title on the achievements page" },
+
+  "streakMilestones": "Streak Milestones",
+  "@streakMilestones": { "description": "Section header for streak achievements" },
+
+  "lessonMilestones": "Lesson Milestones",
+  "@lessonMilestones": { "description": "Section header for lesson achievements" },
+
+  "unlockedOn": "Unlocked {date}",
+  "@unlockedOn": {
+    "description": "Label showing when an achievement was unlocked",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+
+  "achievementUnlocked": "Achievement Unlocked!",
+  "@achievementUnlocked": { "description": "Title when a single achievement is unlocked" },
+
+  "achievementsUnlocked": "Achievements Unlocked!",
+  "@achievementsUnlocked": { "description": "Title when multiple achievements are unlocked" },
+
+  "continueButton": "Continue",
+  "@continueButton": { "description": "Generic continue button label" },
+
+  "streakDays": "{count} day streak!",
+  "@streakDays": {
+    "description": "Title on the streak updated page",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "streakStarted": "You've started your streak — come back tomorrow!",
+  "@streakStarted": { "description": "Message shown when user starts a new streak" },
+
+  "streakContinue": "Amazing consistency. Keep it going!",
+  "@streakContinue": { "description": "Message shown when user continues their streak" },
+
+  "lessonNotFound": "Lesson not found",
+  "@lessonNotFound": { "description": "Error message when a lesson cannot be found" },
+
+  "goBack": "Go back",
+  "@goBack": { "description": "Button to navigate back" },
+
+  "timeToReview": "Time to review!",
+  "@timeToReview": { "description": "Title on the mistake review screen" },
+
+  "practiceOnesYouMissed": "Let's practice the ones you missed",
+  "@practiceOnesYouMissed": { "description": "Subtitle on the mistake review screen" },
+
+  "correct": "Correct!",
+  "@correct": { "description": "Feedback when the answer is correct" },
+
+  "incorrect": "Incorrect!",
+  "@incorrect": { "description": "Feedback when the answer is incorrect" },
+
+  "answerShown": "Answer shown",
+  "@answerShown": { "description": "Feedback when the answer is revealed" },
+
+  "showAnswer": "Show answer",
+  "@showAnswer": { "description": "Button to reveal the answer after repeated failures" },
+
+  "skipToThisLesson": "Skip to this lesson?",
+  "@skipToThisLesson": { "description": "Title of the skip-to-lesson confirmation dialog" },
+
+  "skipConfirmContent": "Are you sure you want to skip to this lesson?",
+  "@skipConfirmContent": { "description": "Content of the skip-to-lesson confirmation dialog" },
+
+  "skip": "Skip",
+  "@skip": { "description": "Button to confirm skipping to a lesson" }
+}

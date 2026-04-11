@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:confetti/confetti.dart';
 import 'package:read_lao/utilities/audio_utility.dart';
 
@@ -58,7 +59,7 @@ class _LessonCompleteState extends State<LessonComplete> {
                 SizedBox(height: 32),
                 Text(
                   textAlign: TextAlign.center,
-                  'Lesson ${widget.lessonNum + 1} complete!',
+                  AppLocalizations.of(context)!.lessonCompleteTitle(widget.lessonNum + 1),
                   style: theme.textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -66,7 +67,7 @@ class _LessonCompleteState extends State<LessonComplete> {
                 SizedBox(height: 16),
                 Text(
                   textAlign: TextAlign.center,
-                  'Well done! Keep up the great work',
+                  AppLocalizations.of(context)!.lessonCompleteSubtitle,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -85,7 +86,7 @@ class _LessonCompleteState extends State<LessonComplete> {
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   ),
                   label: Text(
-                    'Back to lessons',
+                    AppLocalizations.of(context)!.backToLessons,
                     style: TextStyle(
                       fontSize: theme.textTheme.headlineSmall?.fontSize,
                     ),

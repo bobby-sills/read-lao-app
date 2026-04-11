@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/pages/empty_lesson.dart';
 import 'package:read_lao/pages/achievement_unlocked_page.dart';
@@ -167,11 +168,10 @@ class _LessonWrapperState extends State<LessonWrapper>
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
+                  final l10n = AppLocalizations.of(context)!;
                   return AlertDialog(
-                    title: const Text('Exit Lesson?'),
-                    content: const Text(
-                      'Are you sure you want exit the lesson?',
-                    ),
+                    title: Text(l10n.exitLessonTitle),
+                    content: Text(l10n.exitLessonContent),
                     actionsAlignment: MainAxisAlignment.spaceBetween,
                     actions: [
                       IconButton(

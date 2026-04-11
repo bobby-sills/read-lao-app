@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:read_lao/utilities/lesson_data.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
@@ -101,6 +102,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
 
+                          final l10n = AppLocalizations.of(context)!;
                           if (index == LessonData.consonantLessons.length) {
                             return Column(
                               children: [
@@ -109,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                                     vertical: 16,
                                   ),
                                   child: Text(
-                                    "Vowels",
+                                    l10n.vowels,
                                     style: theme.textTheme.titleLarge,
                                   ),
                                 ),
@@ -124,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                                     vertical: 16,
                                   ),
                                   child: Text(
-                                    "Consonants",
+                                    l10n.consonants,
                                     style: theme.textTheme.titleLarge,
                                   ),
                                 ),

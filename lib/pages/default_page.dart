@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:read_lao/pages/achievements_page.dart';
 import 'package:read_lao/pages/lessons_page.dart' show HomePage;
@@ -68,26 +69,26 @@ class _DefaultPageState extends State<DefaultPage> {
             currentPageIndex = index;
           });
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            selectedIcon: Icon(Icons.home_rounded),
-            icon: Icon(Icons.home_outlined),
-            label: "Lessons",
+            selectedIcon: const Icon(Icons.home_rounded),
+            icon: const Icon(Icons.home_outlined),
+            label: AppLocalizations.of(context)!.lessonsNavLabel,
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.edit_rounded),
-            icon: Icon(Icons.edit_outlined),
-            label: "Practice",
+            selectedIcon: const Icon(Icons.edit_rounded),
+            icon: const Icon(Icons.edit_outlined),
+            label: AppLocalizations.of(context)!.practiceNavLabel,
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.emoji_events_rounded),
-            icon: Icon(Icons.emoji_events_outlined),
-            label: 'Achievements',
+            selectedIcon: const Icon(Icons.emoji_events_rounded),
+            icon: const Icon(Icons.emoji_events_outlined),
+            label: AppLocalizations.of(context)!.achievementsNavLabel,
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.settings_rounded),
-            icon: Icon(Icons.settings_outlined),
-            label: 'Settings',
+            selectedIcon: const Icon(Icons.settings_rounded),
+            icon: const Icon(Icons.settings_outlined),
+            label: AppLocalizations.of(context)!.settingsNavLabel,
           ),
         ],
       ),
@@ -111,20 +112,25 @@ class _DefaultPageState extends State<DefaultPage> {
                 child: GestureDetector(
                   onTap: () => showDialog(
                     context: context,
-                    builder: (_) => AlertDialog(
-                      contentPadding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
-                      content: Text(
-                        streak == 0
-                            ? 'Complete a lesson today to start your streak!'
-                            : 'You have practiced for $streak ${streak == 1 ? 'day' : 'days'} in a row!',
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text(streak == 0 ? "Let's go!" : 'Nice!'),
+                    builder: (_) {
+                      final l10n = AppLocalizations.of(context)!;
+                      return AlertDialog(
+                        contentPadding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+                        content: Text(
+                          streak == 0
+                              ? l10n.streakDialogNoStreak
+                              : streak == 1
+                                  ? l10n.streakDialogOneDay
+                                  : l10n.streakDialogMultipleDays(streak),
                         ),
-                      ],
-                    ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text(streak == 0 ? l10n.streakDialogButtonNoStreak : l10n.streakDialogButtonWithStreak),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                   child: _StreakBadge(streak: streak),
                 ),

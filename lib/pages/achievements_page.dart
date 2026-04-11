@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:read_lao/utilities/achievement_data.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
@@ -17,19 +18,19 @@ class AchievementsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             children: [
               Text(
-                'Achievements',
+                AppLocalizations.of(context)!.achievementsTitle,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 24),
-              _SectionHeader(title: 'Streak Milestones'),
+              _SectionHeader(title: AppLocalizations.of(context)!.streakMilestones),
               const SizedBox(height: 8),
               ...AchievementData.streakAchievements.map(
                 (a) => _AchievementTile(achievement: a),
               ),
               const SizedBox(height: 24),
-              _SectionHeader(title: 'Lesson Milestones'),
+              _SectionHeader(title: AppLocalizations.of(context)!.lessonMilestones),
               const SizedBox(height: 8),
               ...AchievementData.lessonAchievements.map(
                 (a) => _AchievementTile(achievement: a),
@@ -98,7 +99,7 @@ class _AchievementTile extends StatelessWidget {
         ),
         subtitle: Text(
           isUnlocked
-              ? 'Unlocked ${_formatDate(unlockDate)}'
+              ? AppLocalizations.of(context)!.unlockedOn(_formatDate(unlockDate))
               : achievement.description,
           style: TextStyle(
             color: isUnlocked ? theme.colorScheme.primary : lockedColor,

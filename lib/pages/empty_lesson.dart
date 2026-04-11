@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 
 class EmptyLesson extends StatelessWidget {
   const EmptyLesson({super.key});
@@ -11,13 +12,13 @@ class EmptyLesson extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Lesson not found",
+              AppLocalizations.of(context)!.lessonNotFound,
               style: Theme.of(context).textTheme.displaySmall,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
-              child: Text("Go back"),
+              child: Text(AppLocalizations.of(context)!.goBack),
             ),
           ],
         ),

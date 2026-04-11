@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:read_lao/utilities/letter_data.dart';
 import 'package:read_lao/exercises/spelling_exercise/spelling_exercise.dart';
 import 'package:read_lao/pages/lesson_wrapper.dart';
@@ -41,13 +42,13 @@ class PracticePage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Practice Spelling',
+                AppLocalizations.of(context)!.practiceSpellingTitle,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 16),
               Text(
-                'Test your spelling skills with random words from all the letters you\'ve learned.',
+                AppLocalizations.of(context)!.practiceSpellingDescription,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -68,7 +69,7 @@ class PracticePage extends StatelessWidget {
                     vertical: 16,
                   ),
                 ),
-                child: const Text('Start Practice'),
+                child: Text(AppLocalizations.of(context)!.startPractice),
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
@@ -9,30 +10,27 @@ class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   void _showAboutDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('About this app'),
-          content: const SingleChildScrollView(
+          title: Text(l10n.aboutThisApp),
+          content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Learn Lao',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  l10n.appTitle,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
-                Text('Version 2.1.0'),
-                SizedBox(height: 16),
-                Text(
-                  'An interactive app for learning the Lao language through engaging exercises and lessons.',
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Learn to recognize, pronounce, and write Lao letters at your own pace.',
-                ),
+                const SizedBox(height: 8),
+                Text(l10n.aboutVersion),
+                const SizedBox(height: 16),
+                Text(l10n.aboutDescription1),
+                const SizedBox(height: 16),
+                Text(l10n.aboutDescription2),
               ],
             ),
           ),
@@ -41,7 +39,7 @@ class SettingsPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Close'),
+              child: Text(l10n.close),
             ),
           ],
         );
@@ -53,17 +51,16 @@ class SettingsPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        final innerL10n = AppLocalizations.of(context)!;
         return AlertDialog(
-          title: const Text('Reset Progress?'),
-          content: const Text(
-            'This will reset all lesson progress. This action cannot be undone.',
-          ),
+          title: Text(innerL10n.resetProgressTitle),
+          content: Text(innerL10n.resetProgressContent),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(innerL10n.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -72,14 +69,14 @@ class SettingsPage extends StatelessWidget {
                 if (context.mounted) {
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Progress reset successfully'),
-                      duration: Duration(seconds: 2),
+                    SnackBar(
+                      content: Text(innerL10n.progressResetSuccessfully),
+                      duration: const Duration(seconds: 2),
                     ),
                   );
                 }
               },
-              child: const Text('Reset', style: TextStyle(color: Colors.red)),
+              child: Text(innerL10n.reset, style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -90,22 +87,23 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings'), centerTitle: true),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.settingsTitle), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Consumer<ThemeProvider>(
               builder: (context, themeProvider, child) {
+                final l10n = AppLocalizations.of(context)!;
                 return SwitchListTile(
-                  title: const Text(
-                    'Dark Mode',
-                    style: TextStyle(fontSize: 18),
+                  title: Text(
+                    l10n.darkMode,
+                    style: const TextStyle(fontSize: 18),
                   ),
                   subtitle: Text(
                     themeProvider.isDarkMode
-                        ? 'Dark theme enabled'
-                        : 'Light theme enabled',
+                        ? l10n.darkThemeEnabled
+                        : l10n.lightThemeEnabled,
                   ),
                   value: themeProvider.isDarkMode,
                   onChanged: (value) {
@@ -125,16 +123,17 @@ class SettingsPage extends StatelessWidget {
               valueListenable:
                   Hive.box<dynamic>(HiveUtility.streakBox).listenable(),
               builder: (context, box, _) {
+                final l10n = AppLocalizations.of(context)!;
                 final enabled = HiveUtility.getNotificationsEnabled();
                 return SwitchListTile(
-                  title: const Text(
-                    'Daily Reminder',
-                    style: TextStyle(fontSize: 18),
+                  title: Text(
+                    l10n.dailyReminder,
+                    style: const TextStyle(fontSize: 18),
                   ),
                   subtitle: Text(
                     enabled
-                        ? 'Reminder enabled'
-                        : 'Reminder disabled',
+                        ? l10n.reminderEnabled
+                        : l10n.reminderDisabled,
                   ),
                   value: enabled,
                   secondary: Icon(
@@ -150,11 +149,11 @@ class SettingsPage extends StatelessWidget {
                       if (!granted) {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                               content: Text(
-                                'Notification permission denied',
+                                AppLocalizations.of(context)!.notificationPermissionDenied,
                               ),
-                              duration: Duration(seconds: 2),
+                              duration: const Duration(seconds: 2),
                             ),
                           );
                         }
@@ -173,9 +172,9 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 8),
             ListTile(
               leading: const Icon(Icons.info_outline, size: 28),
-              title: const Text(
-                'About this app',
-                style: TextStyle(fontSize: 18),
+              title: Text(
+                AppLocalizations.of(context)!.aboutThisApp,
+                style: const TextStyle(fontSize: 18),
               ),
               onTap: () => _showAboutDialog(context),
             ),
@@ -186,9 +185,9 @@ class SettingsPage extends StatelessWidget {
                 size: 28,
                 color: Colors.red,
               ),
-              title: const Text(
-                'Reset Progress',
-                style: TextStyle(fontSize: 18, color: Colors.red),
+              title: Text(
+                AppLocalizations.of(context)!.resetProgress,
+                style: const TextStyle(fontSize: 18, color: Colors.red),
               ),
               onTap: () => _showResetConfirmDialog(context),
             ),

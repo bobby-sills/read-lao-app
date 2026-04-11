@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/audio_utility.dart';
 import 'package:read_lao/exercises/stateful_exercise.dart';
@@ -264,11 +265,11 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
         SizedBox(height: 8),
         Text(
           answerShown
-              ? 'Answer shown'
+              ? AppLocalizations.of(context)!.answerShown
               : bottomButtonIsCorrect
-              ? 'Correct!'
-              : 'Incorrect!',
-          style: TextStyle(fontWeight: FontWeight.bold),
+              ? AppLocalizations.of(context)!.correct
+              : AppLocalizations.of(context)!.incorrect,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         BottomLessonButton(
@@ -297,7 +298,7 @@ class _SpellingExerciseState extends StatefulExerciseState<SpellingExercise> {
               updateBottomSheet();
             },
             buttonIcon: const Icon(Icons.visibility),
-            buttonText: 'Show answer',
+            buttonText: AppLocalizations.of(context)!.showAnswer,
             buttonColor: Colors.orangeAccent,
           ),
         ],

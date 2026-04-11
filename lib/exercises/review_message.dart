@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/audio_utility.dart';
 import 'package:read_lao/exercises/stateful_exercise.dart';
@@ -71,14 +72,14 @@ class ReviewMessageState extends StatefulExerciseState<ReviewMessage> {
             ),
             SizedBox(height: 32),
             Text(
-              "Time to review!",
+              AppLocalizations.of(context)!.timeToReview,
               style: theme.textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(height: 16),
             Text(
-              "Let's practice the ones you missed",
+              AppLocalizations.of(context)!.practiceOnesYouMissed,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),

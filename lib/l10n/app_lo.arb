@@ -1,0 +1,203 @@
+{
+  "@@locale": "lo",
+
+  "appTitle": "ຮຽນພາສາລາວ",
+  "@appTitle": { "description": "EN: Learn Lao" },
+
+  "vowels": "ສະຫລະ",
+  "@vowels": { "description": "EN: Vowels" },
+
+  "consonants": "ພະຍັນຊະນະ",
+  "@consonants": { "description": "EN: Consonants" },
+
+  "practiceSpellingTitle": "ຝືກຊອ້ມລຽງຄຳ",
+  "@practiceSpellingTitle": { "description": "EN: Practice Spelling" },
+
+  "practiceSpellingDescription": "ລອງຝືກຊອ້ມການລຽງຄຳໃຫ້ຖືກ",
+  "@practiceSpellingDescription": { "description": "EN: Test your spelling skills with random words from all the letters you've learned." },
+
+  "startPractice": "ເລີມຝືກ",
+  "@startPractice": { "description": "EN: Start Practice" },
+
+  "settingsTitle": "TODO: translate",
+  "@settingsTitle": { "description": "EN: Settings" },
+
+  "darkMode": "TODO: translate",
+  "@darkMode": { "description": "EN: Dark Mode" },
+
+  "darkThemeEnabled": "TODO: translate",
+  "@darkThemeEnabled": { "description": "EN: Dark theme enabled" },
+
+  "lightThemeEnabled": "TODO: translate",
+  "@lightThemeEnabled": { "description": "EN: Light theme enabled" },
+
+  "dailyReminder": "TODO: translate",
+  "@dailyReminder": { "description": "EN: Daily Reminder" },
+
+  "reminderEnabled": "TODO: translate",
+  "@reminderEnabled": { "description": "EN: Reminder enabled" },
+
+  "reminderDisabled": "TODO: translate",
+  "@reminderDisabled": { "description": "EN: Reminder disabled" },
+
+  "notificationPermissionDenied": "TODO: translate",
+  "@notificationPermissionDenied": { "description": "EN: Notification permission denied" },
+
+  "aboutThisApp": "TODO: translate",
+  "@aboutThisApp": { "description": "EN: About this app" },
+
+  "aboutVersion": "TODO: translate",
+  "@aboutVersion": { "description": "EN: Version 2.1.0" },
+
+  "aboutDescription1": "TODO: translate",
+  "@aboutDescription1": { "description": "EN: An interactive app for learning the Lao language through engaging exercises and lessons." },
+
+  "aboutDescription2": "TODO: translate",
+  "@aboutDescription2": { "description": "EN: Learn to recognize, pronounce, and write Lao letters at your own pace." },
+
+  "close": "TODO: translate",
+  "@close": { "description": "EN: Close" },
+
+  "resetProgress": "TODO: translate",
+  "@resetProgress": { "description": "EN: Reset Progress" },
+
+  "resetProgressTitle": "TODO: translate",
+  "@resetProgressTitle": { "description": "EN: Reset Progress?" },
+
+  "resetProgressContent": "TODO: translate",
+  "@resetProgressContent": { "description": "EN: This will reset all lesson progress. This action cannot be undone." },
+
+  "cancel": "TODO: translate",
+  "@cancel": { "description": "EN: Cancel" },
+
+  "reset": "TODO: translate",
+  "@reset": { "description": "EN: Reset" },
+
+  "progressResetSuccessfully": "TODO: translate",
+  "@progressResetSuccessfully": { "description": "EN: Progress reset successfully" },
+
+  "lessonsNavLabel": "TODO: translate",
+  "@lessonsNavLabel": { "description": "EN: Lessons" },
+
+  "practiceNavLabel": "TODO: translate",
+  "@practiceNavLabel": { "description": "EN: Practice" },
+
+  "achievementsNavLabel": "TODO: translate",
+  "@achievementsNavLabel": { "description": "EN: Achievements" },
+
+  "settingsNavLabel": "TODO: translate",
+  "@settingsNavLabel": { "description": "EN: Settings" },
+
+  "streakDialogNoStreak": "TODO: translate",
+  "@streakDialogNoStreak": { "description": "EN: Complete a lesson today to start your streak!" },
+
+  "streakDialogOneDay": "TODO: translate",
+  "@streakDialogOneDay": { "description": "EN: You have practiced for 1 day in a row!" },
+
+  "streakDialogMultipleDays": "TODO: translate {count}",
+  "@streakDialogMultipleDays": {
+    "description": "EN: You have practiced for {count} days in a row!",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "streakDialogButtonNoStreak": "TODO: translate",
+  "@streakDialogButtonNoStreak": { "description": "EN: Let's go!" },
+
+  "streakDialogButtonWithStreak": "TODO: translate",
+  "@streakDialogButtonWithStreak": { "description": "EN: Nice!" },
+
+  "exitLessonTitle": "ອອກຈາກບົດຮຽນ",
+  "@exitLessonTitle": { "description": "EN: Exit Lesson?" },
+
+  "exitLessonContent": "ເຈົ້າແນ່ໃຈເຈົ້າຈະອອກຈາກບົດຮຽນ",
+  "@exitLessonContent": { "description": "EN: Are you sure you want exit the lesson?" },
+
+  "lessonCompleteTitle": "ບົດຮຽນ {number} ຈົບແລ້ວ",
+  "@lessonCompleteTitle": {
+    "description": "EN: Lesson {number} complete!",
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+
+  "lessonCompleteSubtitle": "TODO: translate",
+  "@lessonCompleteSubtitle": { "description": "EN: Well done! Keep up the great work" },
+
+  "backToLessons": "TODO: translate",
+  "@backToLessons": { "description": "EN: Back to lessons" },
+
+  "achievementsTitle": "TODO: translate",
+  "@achievementsTitle": { "description": "EN: Achievements" },
+
+  "streakMilestones": "TODO: translate",
+  "@streakMilestones": { "description": "EN: Streak Milestones" },
+
+  "lessonMilestones": "TODO: translate",
+  "@lessonMilestones": { "description": "EN: Lesson Milestones" },
+
+  "unlockedOn": "TODO: translate {date}",
+  "@unlockedOn": {
+    "description": "EN: Unlocked {date}",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+
+  "achievementUnlocked": "TODO: translate",
+  "@achievementUnlocked": { "description": "EN: Achievement Unlocked!" },
+
+  "achievementsUnlocked": "TODO: translate",
+  "@achievementsUnlocked": { "description": "EN: Achievements Unlocked!" },
+
+  "continueButton": "TODO: translate",
+  "@continueButton": { "description": "EN: Continue" },
+
+  "streakDays": "ຮຽນຕິດຕໍ່ກັນ {count} ມື້",
+  "@streakDays": {
+    "description": "EN: {count} day streak!",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "streakStarted": "ຮຽນຕໍ່ມື້ອື່ນ",
+  "@streakStarted": { "description": "EN: You've started your streak — come back tomorrow!" },
+
+  "streakContinue": "TODO: translate",
+  "@streakContinue": { "description": "EN: Amazing consistency. Keep it going!" },
+
+  "lessonNotFound": "TODO: translate",
+  "@lessonNotFound": { "description": "EN: Lesson not found" },
+
+  "goBack": "TODO: translate",
+  "@goBack": { "description": "EN: Go back" },
+
+  "timeToReview": "TODO: translate",
+  "@timeToReview": { "description": "EN: Time to review!" },
+
+  "practiceOnesYouMissed": "TODO: translate",
+  "@practiceOnesYouMissed": { "description": "EN: Let's practice the ones you missed" },
+
+  "correct": "ຖືກຕອ້ງ",
+  "@correct": { "description": "EN: Correct!" },
+
+  "incorrect": "ບໍ່ຖືກ",
+  "@incorrect": { "description": "EN: Incorrect!" },
+
+  "answerShown": "TODO: translate",
+  "@answerShown": { "description": "EN: Answer shown" },
+
+  "showAnswer": "TODO: translate",
+  "@showAnswer": { "description": "EN: Show answer" },
+
+  "skipToThisLesson": "TODO: translate",
+  "@skipToThisLesson": { "description": "EN: Skip to this lesson?" },
+
+  "skipConfirmContent": "TODO: translate",
+  "@skipConfirmContent": { "description": "EN: Are you sure you want to skip to this lesson?" },
+
+  "skip": "TODO: translate",
+  "@skip": { "description": "EN: Skip" }
+}

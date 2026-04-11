@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/pages/lesson_wrapper.dart';
 import 'package:read_lao/pages/lessons_page.dart';
@@ -41,26 +42,29 @@ class LessonNavButton extends StatelessWidget {
   void _showSkipConfirmation(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Skip to this lesson?'),
-        content: const Text('Are you sure you want to skip to this lesson?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await HiveUtility.skipToLesson(index);
-              if (context.mounted) {
-                Navigator.pop(context);
-                _navigateToLesson(context);
-              }
-            },
-            child: const Text('Skip'),
-          ),
-        ],
-      ),
+      builder: (context) {
+        final innerL10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          title: Text(innerL10n.skipToThisLesson),
+          content: Text(innerL10n.skipConfirmContent),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(innerL10n.cancel),
+            ),
+            TextButton(
+              onPressed: () async {
+                await HiveUtility.skipToLesson(index);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  _navigateToLesson(context);
+                }
+              },
+              child: Text(innerL10n.skip),
+            ),
+          ],
+        );
+      },
     );
   }
 

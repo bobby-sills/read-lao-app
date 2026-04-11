@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/enums/letter_type.dart';
 import 'package:read_lao/typedefs/letter_type.dart';
@@ -154,8 +155,10 @@ abstract class SelectBlankExerciseState<T extends SelectBlankExercise>
       children: [
         SizedBox(height: 8),
         Text(
-          bottomButtonIsCorrect ? 'Correct!' : 'Incorrect!',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          bottomButtonIsCorrect
+              ? AppLocalizations.of(context)!.correct
+              : AppLocalizations.of(context)!.incorrect,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         BottomLessonButton(

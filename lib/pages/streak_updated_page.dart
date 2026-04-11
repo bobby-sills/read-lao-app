@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/l10n/app_localizations.dart';
 
 class StreakUpdatedPage extends StatelessWidget {
   final int streak;
@@ -25,7 +26,7 @@ class StreakUpdatedPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              '$streak day streak!',
+              AppLocalizations.of(context)!.streakDays(streak),
               style: theme.textTheme.displaySmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -33,8 +34,8 @@ class StreakUpdatedPage extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               streak == 1
-                  ? 'You\'ve started your streak — come back tomorrow!'
-                  : 'Amazing consistency. Keep it going!',
+                  ? AppLocalizations.of(context)!.streakStarted
+                  : AppLocalizations.of(context)!.streakContinue,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
@@ -57,7 +58,7 @@ class StreakUpdatedPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               ),
               label: Text(
-                'Continue',
+                AppLocalizations.of(context)!.continueButton,
                 style: TextStyle(
                   fontSize: theme.textTheme.headlineSmall?.fontSize,
                 ),
