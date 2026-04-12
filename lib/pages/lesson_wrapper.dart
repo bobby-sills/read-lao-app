@@ -96,36 +96,39 @@ class _LessonWrapperState extends State<LessonWrapper>
       if (mounted) {
         if (widget.lessonIndex >= 0) {
           HiveUtility.setLessonCompleted(widget.lessonIndex, true);
-        }
-        final streakIncremented = HiveUtility.recordActivity();
-        final newlyUnlockedIds = HiveUtility.checkAndUnlockAchievements();
-        NotificationUtility.scheduleReminder();
 
-        // Build the celebration chain from the end backwards:
-        //   achievements → streak → lesson complete
-        Widget nextPage = LessonComplete(lessonNum: widget.lessonIndex);
+          final streakIncremented = HiveUtility.recordActivity();
+          final newlyUnlockedIds = HiveUtility.checkAndUnlockAchievements();
+          NotificationUtility.scheduleReminder();
 
-        if (streakIncremented) {
-          nextPage = StreakUpdatedPage(
-            streak: HiveUtility.getCurrentStreak(),
-            nextPage: nextPage,
+          // Build the celebration chain from the end backwards:
+          //   achievements → streak → lesson complete
+          Widget nextPage = LessonComplete(lessonNum: widget.lessonIndex);
+
+          if (streakIncremented) {
+            nextPage = StreakUpdatedPage(
+              streak: HiveUtility.getCurrentStreak(),
+              nextPage: nextPage,
+            );
+          }
+
+          if (newlyUnlockedIds.isNotEmpty) {
+            final unlockedAchievements = AchievementData.all
+                .where((a) => newlyUnlockedIds.contains(a.id))
+                .toList();
+            nextPage = AchievementUnlockedPage(
+              achievements: unlockedAchievements,
+              nextPage: nextPage,
+            );
+          }
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => nextPage),
           );
+        } else {
+          Navigator.popUntil(context, (route) => route.isFirst);
         }
-
-        if (newlyUnlockedIds.isNotEmpty) {
-          final unlockedAchievements = AchievementData.all
-              .where((a) => newlyUnlockedIds.contains(a.id))
-              .toList();
-          nextPage = AchievementUnlockedPage(
-            achievements: unlockedAchievements,
-            nextPage: nextPage,
-          );
-        }
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => nextPage),
-        );
       }
       return;
     }
