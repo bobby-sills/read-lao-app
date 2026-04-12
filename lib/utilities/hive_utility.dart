@@ -42,6 +42,14 @@ class HiveUtility {
     await Hive.box<dynamic>(achievementsBox).clear();
   }
 
+  static Future<void> clearStreakData() async {
+    final box = Hive.box<dynamic>(streakBox);
+    await box.delete(_currentStreakKey);
+    await box.delete(_lastActivityDateKey);
+    await box.delete(_totalActivityCountKey);
+    await box.delete(_activityMinutesSumKey);
+  }
+
   // --- Achievement methods ---
 
   static bool isAchievementUnlocked(String id) {

@@ -64,8 +64,7 @@ class SettingsPage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                await HiveUtility.clearAllData();
-                await NotificationUtility.cancelReminder();
+                await HiveUtility.clearStreakData();
                 if (context.mounted) {
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
