@@ -3,11 +3,41 @@ import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
+import 'package:read_lao/utilities/provider/locale_provider.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
 import 'package:read_lao/utilities/notification_utility.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
+
+  void _showLanguageDialog(BuildContext context, LocaleProvider localeProvider) {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text(localeProvider.isLao ? 'ເລືອກພາສາ' : 'Select Language'),
+        children: [
+          RadioListTile<bool>(
+            title: const Text('English'),
+            value: false,
+            groupValue: localeProvider.isLao,
+            onChanged: (_) {
+              if (localeProvider.isLao) localeProvider.toggleLocale();
+              Navigator.of(context).pop();
+            },
+          ),
+          RadioListTile<bool>(
+            title: const Text('ລາວ'),
+            value: true,
+            groupValue: localeProvider.isLao,
+            onChanged: (_) {
+              if (!localeProvider.isLao) localeProvider.toggleLocale();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   void _showAboutDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -114,6 +144,21 @@ class SettingsPage extends StatelessWidget {
                         : Icons.light_mode,
                     size: 28,
                   ),
+                );
+              },
+            ),
+            const SizedBox(height: 8),
+            Consumer<LocaleProvider>(
+              builder: (context, localeProvider, child) {
+                return ListTile(
+                  leading: const Icon(Icons.language, size: 28),
+                  title: Text(
+                    localeProvider.isLao ? 'ພາສາ' : 'Language',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  subtitle: Text(localeProvider.isLao ? 'ລາວ' : 'English'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _showLanguageDialog(context, localeProvider),
                 );
               },
             ),

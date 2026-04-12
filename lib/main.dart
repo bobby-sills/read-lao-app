@@ -11,6 +11,7 @@ import 'package:read_lao/utilities/notification_utility.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
 import 'package:read_lao/utilities/provider/lesson_provider.dart';
 import 'package:read_lao/utilities/provider/debug_provider.dart';
+import 'package:read_lao/utilities/provider/locale_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => LessonProvider()),
         ChangeNotifierProvider(create: (context) => DebugProvider()),
+        ChangeNotifierProvider(create: (context) => LocaleProvider()),
       ],
       child: const MyApp(),
     ),
@@ -50,8 +52,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
+    return Consumer2<ThemeProvider, LocaleProvider>(
+      builder: (context, themeProvider, localeProvider, child) {
         SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
@@ -67,6 +69,7 @@ class MyApp extends StatelessWidget {
 
         return MaterialApp(
           title: 'Learn Lao',
+          locale: localeProvider.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
