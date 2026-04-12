@@ -1,203 +1,263 @@
 {
-  "@@locale": "lo",
-
-  "appTitle": "ຮຽນພາສາລາວ",
-  "@appTitle": { "description": "EN: Learn Lao" },
-
-  "vowels": "ສະຫລະ",
-  "@vowels": { "description": "EN: Vowels" },
-
-  "consonants": "ພະຍັນຊະນະ",
-  "@consonants": { "description": "EN: Consonants" },
-
-  "practiceSpellingTitle": "ຝືກຊອ້ມລຽງຄຳ",
-  "@practiceSpellingTitle": { "description": "EN: Practice Spelling" },
-
-  "practiceSpellingDescription": "ລອງຝືກຊອ້ມການລຽງຄຳໃຫ້ຖືກ",
-  "@practiceSpellingDescription": { "description": "EN: Test your spelling skills with random words from all the letters you've learned." },
-
-  "startPractice": "ເລີມຝືກ",
-  "@startPractice": { "description": "EN: Start Practice" },
-
-  "settingsTitle": "ການຕັ້ງຄ່າ",
-  "@settingsTitle": { "description": "EN: Settings" },
-
-  "darkMode": "ການຕັ້ງຄ່າມືດ",
-  "@darkMode": { "description": "EN: Dark Mode" },
-
-  "darkThemeEnabled": "ການຕັ້ງຄ່າມືດເປີດການໃຊ້ງານ",
-  "@darkThemeEnabled": { "description": "EN: Dark theme enabled" },
-
-  "lightThemeEnabled": "ການຕັ້ງຄ່າແຈ້ງເປິດການໃຊ້ງານ",
-  "@lightThemeEnabled": { "description": "EN: Light theme enabled" },
-
-  "dailyReminder": "ການແຈ້ງເຕືອນໃນແຕ່ລະມື້",
-  "@dailyReminder": { "description": "EN: Daily Reminder" },
-
-  "reminderEnabled": "ເປີດໃຊ້ງານແລ້ວ",
-  "@reminderEnabled": { "description": "EN: Reminder enabled" },
-
-  "reminderDisabled": "ປິດໃຊ້ງານ",
-  "@reminderDisabled": { "description": "EN: Reminder disabled" },
-
-  "notificationPermissionDenied": "ສິດການແຈ້ງເຕືອນຖືກປະຕິເສດ",
-  "@notificationPermissionDenied": { "description": "EN: Notification permission denied" },
-
-  "aboutThisApp": "ກ່ຽວກັບແອບນີ້",
-  "@aboutThisApp": { "description": "EN: About this app" },
-
-  "aboutVersion": "ເວີຊັນ 2.1.0",
-  "@aboutVersion": { "description": "EN: Version 2.1.0" },
-
-  "aboutDescription1": "ແອັບແບບໂຕ້ຕອບສຳລັບຮຽນພາສາລາວ ໂດຍຜ່ານບົດຝຶກຫັດ ແລະ ບົດຮຽນທີ່ໜ້າສົນໃຈ.",
-  "@aboutDescription1": { "description": "EN: An interactive app for learning the Lao language through engaging exercises and lessons." },
-
-  "aboutDescription2": "ຮຽນຮູ້ທີ່ຈະຈື່ຈຳ, ອອກສຽງ ແລະ ຂຽນຕົວອັກສອນລາວຕາມຈັງຫວະຂອງທ່ານເອງ",
-  "@aboutDescription2": { "description": "EN: Learn to recognize, pronounce, and write Lao letters at your own pace." },
-
-  "close": "ປິດ",
-  "@close": { "description": "EN: Close" },
-
-  "resetProgress": "ລົບບົດຮຽນເກົ່າເພື່ອຮຽນໃຫ່ມ",
-  "@resetProgress": { "description": "EN: Reset Progress" },
-
-  "resetProgressTitle": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລົບບົດຮຽນເກົ່າເພື່ອຮຽນໃໝ່?",
-  "@resetProgressTitle": { "description": "EN: Reset Progress?" },
-
-  "resetProgressContent": "ການກະທຳນີ້ຈະລົບຄວາມຄືບໜ້າຂອງບົດຮຽນທັງໝົດ. ການກະທຳນີ້ບໍ່ສາມາດຍົກເລີກໄດ້.",
-  "@resetProgressContent": { "description": "" },
-
-  "cancel": "ຍົກເລີກ",
-  "@cancel": { "description": "EN: Cancel" },
-
-  "reset": "ຣີເຊັດ",
-  "@reset": { "description": "EN: Reset" },
-
-  "progressResetSuccessfully": "ຣີເຊັດຄວາມຄືບໜ້າສຳເລັດແລ້ວ",
-  "@progressResetSuccessfully": { "description": "EN: Progress reset successfully" },
-
-"lessonsNavLabel": "ບົດຮຽນ",
-  "@lessonsNavLabel": { "description": "EN: Lessons" },
-
-  "practiceNavLabel": "ຝຶກຫັດ",
-  "@practiceNavLabel": { "description": "EN: Practice" },
-
-  "achievementsNavLabel": "ຄວາມສຳເລັດ",
-  "@achievementsNavLabel": { "description": "EN: Achievements" },
-
-  "settingsNavLabel": "ການຕັ້ງຄ່າ",
-  "@settingsNavLabel": { "description": "EN: Settings" }
-
-  "streakDialogNoStreak": "ສຳເລັດບົດຮຽນໃນມື້ນີ້ ເພື່ອເລີ່ມຕົ້ນສະທຣິກຂອງທ່ານ!",
-  "@streakDialogNoStreak": { "description": "EN: Complete a lesson today to start your streak!" }
-
-  "streakDialogOneDay": "ທ່ານໄດ້ຝຶກຫັດ 1 ມື້ຕິດຕໍ່ກັນແລ້ວ!",
-  "@streakDialogOneDay": { "description": "EN: You have practiced for 1 day in a row!" },
-
-  "streakDialogMultipleDays": "ທ່ານໄດ້ຝຶກຫັດ {count} ມື້ຕິດຕໍ່ກັນແລ້ວ!",
-  "@streakDialogMultipleDays": {
-    "description": "EN: You have practiced for {count} days in a row!",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  }
-
-  "streakDialogButtonNoStreak": "ໄປກັນເລີຍ!",
-  "@streakDialogButtonNoStreak": { "description": "EN: Let's go!" },
-
-  "streakDialogButtonWithStreak": "ດີຫຼາຍ!",
-  "@streakDialogButtonWithStreak": { "description": "EN: Nice!" }
-
-  "exitLessonTitle": "ອອກຈາກບົດຮຽນ",
-  "@exitLessonTitle": { "description": "EN: Exit Lesson?" },
-
-  "exitLessonContent": "ເຈົ້າແນ່ໃຈເຈົ້າຈະອອກຈາກບົດຮຽນ",
-  "@exitLessonContent": { "description": "EN: Are you sure you want exit the lesson?" },
-
-  "lessonCompleteTitle": "ບົດຮຽນ {number} ຈົບແລ້ວ",
-  "@lessonCompleteTitle": {
-    "description": "EN: Lesson {number} complete!",
-    "placeholders": {
-      "number": { "type": "int" }
-    }
-  },
-
-  "lessonCompleteSubtitle": "ເຮັດໄດ້ດີຫຼາຍ! ສູ້ໆຕໍ່ໄປເດີ້",
-  "@lessonCompleteSubtitle": { "description": "EN: Well done! Keep up the great work" },
-
-  "backToLessons": "ກັບໄປບົດຮຽນ",
-  "@backToLessons": { "description": "EN: Back to lessons" }
-
-  "achievementsTitle": "ຜົນສຳເລັດການຮຽນ",
-  "@achievementsTitle": { "description": "EN: Achievements" },
-
-  "streakMilestones": "ຫລັກສູດການຮຽນ",
-  "@streakMilestones": { "description": "EN: Streak Milestones" },
-
-  "lessonMilestones": "ໄລຍະການຮຽນ",
-  "@lessonMilestones": { "description": "EN: Lesson Milestones" },
-
-  "unlockedOn": "ປົດລັອກເມື່ອ {date}",
-  "@unlockedOn": {
-    "description": "EN: Unlocked {date}",
-    "placeholders": {
-      "date": { "type": "String" }
-    }
-  },
-
-  "achievementUnlocked": "ປົດລັອກຄວາມສຳເລັດແລ້ວ!",
-  "@achievementUnlocked": { "description": "EN: Achievement Unlocked!" },
-
-  "achievementsUnlocked": "ປົດລັອກຄວາມສຳເລັດແລ້ວ!",
-  "@achievementsUnlocked": { "description": "EN: Achievements Unlocked!" }
-
-  "continueButton": "ສືບຕໍ່",
-  "@continueButton": { "description": "EN: Continue" }
-
-  "streakDays": "ຮຽນຕິດຕໍ່ກັນ {count} ມື້",
-  "@streakDays": {
-    "description": "EN: {count} day streak!",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "streakStarted": "ຮຽນຕໍ່ມື້ອື່ນ",
-  "@streakStarted": { "description": "EN: You've started your streak — come back tomorrow!" },
-
-"streakContinue": "ຄວາມສະໝ່ຳສະເໝີສຸດຍອດ! ສືບຕໍ່ໄປເດີ້",
-  "@streakContinue": { "description": "EN: Amazing consistency. Keep it going!" }
-
-"lessonNotFound": "ບໍ່ພົບບົດຮຽນ",
-  "@lessonNotFound": { "description": "EN: Lesson not found" },
-
-  "goBack": "ກັບຄືນ",
-  "@goBack": { "description": "EN: Go back" }
-
-  "timeToReview": "ໄດ້ເວລາທົບທວນແລ້ວ!",
-  "@timeToReview": { "description": "EN: Time to review!" },
-
-  "practiceOnesYouMissed": "ມາຝຶກຂໍ້ທີ່ທ່ານຕອບຜິດກັນເຖາະ",
-  "@practiceOnesYouMissed": { "description": "EN: Let's practice the ones you missed" }
-
-  "correct": "ຖືກຕອ້ງ",
-  "@correct": { "description": "EN: Correct!" },
-
-  "incorrect": "ບໍ່ຖືກ",
-  "@incorrect": { "description": "EN: Incorrect!" },
-
-  "answerShown": "ສະແດງຄຳຕອບແລ້ວ",
-  "@answerShown": { "description": "EN: Answer shown" },
-
-  "showAnswer": "ສະແດງຄຳຕອບ",
-  "@showAnswer": { "description": "EN: Show answer" }
-
-  "skipToThisLesson": "ຂ້າມບົດຮຽນນີ້ບໍ",
-  "@skipToThisLesson": { "description": "EN: Skip to this lesson?" },
-
-  "skipConfirmContent": "ເຈົ້າແນ່ໃຈບໍ່ທີ່ຈະຂ້າມບົດຮຽນນີ້",
-  "@skipConfirmContent": { "description": "EN: Are you sure you want to skip to this lesson?" },
-
-  "skip": "ຂ້າມ",
-  "@skip": { "description": "EN: Skip" }
+	"@@locale": "lo",
+	"appTitle": "ຮຽນພາສາລາວ",
+	"@appTitle": {
+		"description": "EN: Learn Lao"
+	},
+	"vowels": "ສະຫລະ",
+	"@vowels": {
+		"description": "EN: Vowels"
+	},
+	"consonants": "ພະຍັນຊະນະ",
+	"@consonants": {
+		"description": "EN: Consonants"
+	},
+	"practiceSpellingTitle": "ຝືກຊອ້ມລຽງຄຳ",
+	"@practiceSpellingTitle": {
+		"description": "EN: Practice Spelling"
+	},
+	"practiceSpellingDescription": "ລອງຝືກຊອ້ມການລຽງຄຳໃຫ້ຖືກ",
+	"@practiceSpellingDescription": {
+		"description": "EN: Test your spelling skills with random words from all the letters you've learned."
+	},
+	"startPractice": "ເລີມຝືກ",
+	"@startPractice": {
+		"description": "EN: Start Practice"
+	},
+	"settingsTitle": "ການຕັ້ງຄ່າ",
+	"@settingsTitle": {
+		"description": "EN: Settings"
+	},
+	"darkMode": "ການຕັ້ງຄ່າມືດ",
+	"@darkMode": {
+		"description": "EN: Dark Mode"
+	},
+	"darkThemeEnabled": "ການຕັ້ງຄ່າມືດເປີດການໃຊ້ງານ",
+	"@darkThemeEnabled": {
+		"description": "EN: Dark theme enabled"
+	},
+	"lightThemeEnabled": "ການຕັ້ງຄ່າແຈ້ງເປິດການໃຊ້ງານ",
+	"@lightThemeEnabled": {
+		"description": "EN: Light theme enabled"
+	},
+	"dailyReminder": "ການແຈ້ງເຕືອນໃນແຕ່ລະມື້",
+	"@dailyReminder": {
+		"description": "EN: Daily Reminder"
+	},
+	"reminderEnabled": "ເປີດໃຊ້ງານແລ້ວ",
+	"@reminderEnabled": {
+		"description": "EN: Reminder enabled"
+	},
+	"reminderDisabled": "ປິດໃຊ້ງານ",
+	"@reminderDisabled": {
+		"description": "EN: Reminder disabled"
+	},
+	"notificationPermissionDenied": "ສິດການແຈ້ງເຕືອນຖືກປະຕິເສດ",
+	"@notificationPermissionDenied": {
+		"description": "EN: Notification permission denied"
+	},
+	"aboutThisApp": "ກ່ຽວກັບແອບນີ້",
+	"@aboutThisApp": {
+		"description": "EN: About this app"
+	},
+	"aboutVersion": "ເວີຊັນ 2.1.0",
+	"@aboutVersion": {
+		"description": "EN: Version 2.1.0"
+	},
+	"aboutDescription1": "ແອັບແບບໂຕ້ຕອບສຳລັບຮຽນພາສາລາວ ໂດຍຜ່ານບົດຝຶກຫັດ ແລະ ບົດຮຽນທີ່ໜ້າສົນໃຈ.",
+	"@aboutDescription1": {
+		"description": "EN: An interactive app for learning the Lao language through engaging exercises and lessons."
+	},
+	"aboutDescription2": "ຮຽນຮູ້ທີ່ຈະຈື່ຈຳ, ອອກສຽງ ແລະ ຂຽນຕົວອັກສອນລາວຕາມຈັງຫວະຂອງທ່ານເອງ",
+	"@aboutDescription2": {
+		"description": "EN: Learn to recognize, pronounce, and write Lao letters at your own pace."
+	},
+	"close": "ປິດ",
+	"@close": {
+		"description": "EN: Close"
+	},
+	"resetProgress": "ລົບບົດຮຽນເກົ່າເພື່ອຮຽນໃຫ່ມ",
+	"@resetProgress": {
+		"description": "EN: Reset Progress"
+	},
+	"resetProgressTitle": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລົບບົດຮຽນເກົ່າເພື່ອຮຽນໃໝ່?",
+	"@resetProgressTitle": {
+		"description": "EN: Reset Progress?"
+	},
+	"resetProgressContent": "ການກະທຳນີ້ຈະລົບຄວາມຄືບໜ້າຂອງບົດຮຽນທັງໝົດ. ການກະທຳນີ້ບໍ່ສາມາດຍົກເລີກໄດ້.",
+	"@resetProgressContent": {
+		"description": ""
+	},
+	"cancel": "ຍົກເລີກ",
+	"@cancel": {
+		"description": "EN: Cancel"
+	},
+	"reset": "ຣີເຊັດ",
+	"@reset": {
+		"description": "EN: Reset"
+	},
+	"progressResetSuccessfully": "ຣີເຊັດຄວາມຄືບໜ້າສຳເລັດແລ້ວ",
+	"@progressResetSuccessfully": {
+		"description": "EN: Progress reset successfully"
+	},
+	"lessonsNavLabel": "ບົດຮຽນ",
+	"@lessonsNavLabel": {
+		"description": "EN: Lessons"
+	},
+	"practiceNavLabel": "ຝຶກຫັດ",
+	"@practiceNavLabel": {
+		"description": "EN: Practice"
+	},
+	"achievementsNavLabel": "ຄວາມສຳເລັດ",
+	"@achievementsNavLabel": {
+		"description": "EN: Achievements"
+	},
+	"settingsNavLabel": "ການຕັ້ງຄ່າ",
+	"@settingsNavLabel": {
+		"description": "EN: Settings"
+	},
+	"streakDialogNoStreak": "ສຳເລັດບົດຮຽນໃນມື້ນີ້ ເພື່ອເລີ່ມຕົ້ນສະທຣິກຂອງທ່ານ!",
+	"@streakDialogNoStreak": {
+		"description": "EN: Complete a lesson today to start your streak!"
+	},
+	"streakDialogOneDay": "ທ່ານໄດ້ຝຶກຫັດ 1 ມື້ຕິດຕໍ່ກັນແລ້ວ!",
+	"@streakDialogOneDay": {
+		"description": "EN: You have practiced for 1 day in a row!"
+	},
+	"streakDialogMultipleDays": "ທ່ານໄດ້ຝຶກຫັດ {count} ມື້ຕິດຕໍ່ກັນແລ້ວ!",
+	"@streakDialogMultipleDays": {
+		"description": "EN: You have practiced for {count} days in a row!",
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"streakDialogButtonNoStreak": "ໄປກັນເລີຍ!",
+	"@streakDialogButtonNoStreak": {
+		"description": "EN: Let's go!"
+	},
+	"streakDialogButtonWithStreak": "ດີຫຼາຍ!",
+	"@streakDialogButtonWithStreak": {
+		"description": "EN: Nice!"
+	},
+	"exitLessonTitle": "ອອກຈາກບົດຮຽນ",
+	"@exitLessonTitle": {
+		"description": "EN: Exit Lesson?"
+	},
+	"exitLessonContent": "ເຈົ້າແນ່ໃຈເຈົ້າຈະອອກຈາກບົດຮຽນ",
+	"@exitLessonContent": {
+		"description": "EN: Are you sure you want exit the lesson?"
+	},
+	"lessonCompleteTitle": "ບົດຮຽນ {number} ຈົບແລ້ວ",
+	"@lessonCompleteTitle": {
+		"description": "EN: Lesson {number} complete!",
+		"placeholders": {
+			"number": {
+				"type": "int"
+			}
+		}
+	},
+	"lessonCompleteSubtitle": "ເຮັດໄດ້ດີຫຼາຍ! ສູ້ໆຕໍ່ໄປເດີ້",
+	"@lessonCompleteSubtitle": {
+		"description": "EN: Well done! Keep up the great work"
+	},
+	"backToLessons": "ກັບໄປບົດຮຽນ",
+	"@backToLessons": {
+		"description": "EN: Back to lessons"
+	},
+	"achievementsTitle": "ຜົນສຳເລັດການຮຽນ",
+	"@achievementsTitle": {
+		"description": "EN: Achievements"
+	},
+	"streakMilestones": "ຫລັກສູດການຮຽນ",
+	"@streakMilestones": {
+		"description": "EN: Streak Milestones"
+	},
+	"lessonMilestones": "ໄລຍະການຮຽນ",
+	"@lessonMilestones": {
+		"description": "EN: Lesson Milestones"
+	},
+	"unlockedOn": "ປົດລັອກເມື່ອ {date}",
+	"@unlockedOn": {
+		"description": "EN: Unlocked {date}",
+		"placeholders": {
+			"date": {
+				"type": "String"
+			}
+		}
+	},
+	"achievementUnlocked": "ປົດລັອກຄວາມສຳເລັດແລ້ວ!",
+	"@achievementUnlocked": {
+		"description": "EN: Achievement Unlocked!"
+	},
+	"achievementsUnlocked": "ປົດລັອກຄວາມສຳເລັດແລ້ວ!",
+	"@achievementsUnlocked": {
+		"description": "EN: Achievements Unlocked!"
+	},
+	"continueButton": "ສືບຕໍ່",
+	"@continueButton": {
+		"description": "EN: Continue"
+	},
+	"streakDays": "ຮຽນຕິດຕໍ່ກັນ {count} ມື້",
+	"@streakDays": {
+		"description": "EN: {count} day streak!",
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"streakStarted": "ຮຽນຕໍ່ມື້ອື່ນ",
+	"@streakStarted": {
+		"description": "EN: You've started your streak — come back tomorrow!"
+	},
+	"streakContinue": "ຄວາມສະໝ່ຳສະເໝີສຸດຍອດ! ສືບຕໍ່ໄປເດີ້",
+	"@streakContinue": {
+		"description": "EN: Amazing consistency. Keep it going!"
+	},
+	"lessonNotFound": "ບໍ່ພົບບົດຮຽນ",
+	"@lessonNotFound": {
+		"description": "EN: Lesson not found"
+	},
+	"goBack": "ກັບຄືນ",
+	"@goBack": {
+		"description": "EN: Go back"
+	},
+	"timeToReview": "ໄດ້ເວລາທົບທວນແລ້ວ!",
+	"@timeToReview": {
+		"description": "EN: Time to review!"
+	},
+	"practiceOnesYouMissed": "ມາຝຶກຂໍ້ທີ່ທ່ານຕອບຜິດກັນເຖາະ",
+	"@practiceOnesYouMissed": {
+		"description": "EN: Let's practice the ones you missed"
+	},
+	"correct": "ຖືກຕອ້ງ",
+	"@correct": {
+		"description": "EN: Correct!"
+	},
+	"incorrect": "ບໍ່ຖືກ",
+	"@incorrect": {
+		"description": "EN: Incorrect!"
+	},
+	"answerShown": "ສະແດງຄຳຕອບແລ້ວ",
+	"@answerShown": {
+		"description": "EN: Answer shown"
+	},
+	"showAnswer": "ສະແດງຄຳຕອບ",
+	"@showAnswer": {
+		"description": "EN: Show answer"
+	},
+	"skipToThisLesson": "ຂ້າມບົດຮຽນນີ້ບໍ",
+	"@skipToThisLesson": {
+		"description": "EN: Skip to this lesson?"
+	},
+	"skipConfirmContent": "ເຈົ້າແນ່ໃຈບໍ່ທີ່ຈະຂ້າມບົດຮຽນນີ້",
+	"@skipConfirmContent": {
+		"description": "EN: Are you sure you want to skip to this lesson?"
+	},
+	"skip": "ຂ້າມ",
+	"@skip": {
+		"description": "EN: Skip"
+	}
 }

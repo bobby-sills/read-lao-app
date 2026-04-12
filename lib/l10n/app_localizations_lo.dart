@@ -18,181 +18,186 @@ class AppLocalizationsLo extends AppLocalizations {
   String get consonants => 'ພະຍັນຊະນະ';
 
   @override
-  String get practiceSpellingTitle => 'TODO: translate';
+  String get practiceSpellingTitle => 'ຝືກຊອ້ມລຽງຄຳ';
 
   @override
-  String get practiceSpellingDescription => 'TODO: translate';
+  String get practiceSpellingDescription => 'ລອງຝືກຊອ້ມການລຽງຄຳໃຫ້ຖືກ';
 
   @override
-  String get startPractice => 'TODO: translate';
+  String get startPractice => 'ເລີມຝືກ';
 
   @override
-  String get settingsTitle => 'TODO: translate';
+  String get settingsTitle => 'ການຕັ້ງຄ່າ';
 
   @override
-  String get darkMode => 'TODO: translate';
+  String get darkMode => 'ການຕັ້ງຄ່າມືດ';
 
   @override
-  String get darkThemeEnabled => 'TODO: translate';
+  String get darkThemeEnabled => 'ການຕັ້ງຄ່າມືດເປີດການໃຊ້ງານ';
 
   @override
-  String get lightThemeEnabled => 'TODO: translate';
+  String get lightThemeEnabled => 'ການຕັ້ງຄ່າແຈ້ງເປິດການໃຊ້ງານ';
 
   @override
-  String get dailyReminder => 'TODO: translate';
+  String get dailyReminder => 'ການແຈ້ງເຕືອນໃນແຕ່ລະມື້';
 
   @override
-  String get reminderEnabled => 'TODO: translate';
+  String get reminderEnabled => 'ເປີດໃຊ້ງານແລ້ວ';
 
   @override
-  String get reminderDisabled => 'TODO: translate';
+  String get reminderDisabled => 'ປິດໃຊ້ງານ';
 
   @override
-  String get notificationPermissionDenied => 'TODO: translate';
+  String get notificationPermissionDenied => 'ສິດການແຈ້ງເຕືອນຖືກປະຕິເສດ';
 
   @override
-  String get aboutThisApp => 'TODO: translate';
+  String get aboutThisApp => 'ກ່ຽວກັບແອບນີ້';
 
   @override
-  String get aboutVersion => 'TODO: translate';
+  String get aboutVersion => 'ເວີຊັນ 2.1.0';
 
   @override
-  String get aboutDescription1 => 'TODO: translate';
+  String get aboutDescription1 =>
+      'ແອັບແບບໂຕ້ຕອບສຳລັບຮຽນພາສາລາວ ໂດຍຜ່ານບົດຝຶກຫັດ ແລະ ບົດຮຽນທີ່ໜ້າສົນໃຈ.';
 
   @override
-  String get aboutDescription2 => 'TODO: translate';
+  String get aboutDescription2 =>
+      'ຮຽນຮູ້ທີ່ຈະຈື່ຈຳ, ອອກສຽງ ແລະ ຂຽນຕົວອັກສອນລາວຕາມຈັງຫວະຂອງທ່ານເອງ';
 
   @override
-  String get close => 'TODO: translate';
+  String get close => 'ປິດ';
 
   @override
-  String get resetProgress => 'TODO: translate';
+  String get resetProgress => 'ລົບບົດຮຽນເກົ່າເພື່ອຮຽນໃຫ່ມ';
 
   @override
-  String get resetProgressTitle => 'TODO: translate';
+  String get resetProgressTitle =>
+      'ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລົບບົດຮຽນເກົ່າເພື່ອຮຽນໃໝ່?';
 
   @override
-  String get resetProgressContent => 'TODO: translate';
+  String get resetProgressContent =>
+      'ການກະທຳນີ້ຈະລົບຄວາມຄືບໜ້າຂອງບົດຮຽນທັງໝົດ. ການກະທຳນີ້ບໍ່ສາມາດຍົກເລີກໄດ້.';
 
   @override
-  String get cancel => 'TODO: translate';
+  String get cancel => 'ຍົກເລີກ';
 
   @override
-  String get reset => 'TODO: translate';
+  String get reset => 'ຣີເຊັດ';
 
   @override
-  String get progressResetSuccessfully => 'TODO: translate';
+  String get progressResetSuccessfully => 'ຣີເຊັດຄວາມຄືບໜ້າສຳເລັດແລ້ວ';
 
   @override
-  String get lessonsNavLabel => 'TODO: translate';
+  String get lessonsNavLabel => 'ບົດຮຽນ';
 
   @override
-  String get practiceNavLabel => 'TODO: translate';
+  String get practiceNavLabel => 'ຝຶກຫັດ';
 
   @override
-  String get achievementsNavLabel => 'TODO: translate';
+  String get achievementsNavLabel => 'ຄວາມສຳເລັດ';
 
   @override
-  String get settingsNavLabel => 'TODO: translate';
+  String get settingsNavLabel => 'ການຕັ້ງຄ່າ';
 
   @override
-  String get streakDialogNoStreak => 'TODO: translate';
+  String get streakDialogNoStreak =>
+      'ສຳເລັດບົດຮຽນໃນມື້ນີ້ ເພື່ອເລີ່ມຕົ້ນສະທຣິກຂອງທ່ານ!';
 
   @override
-  String get streakDialogOneDay => 'TODO: translate';
+  String get streakDialogOneDay => 'ທ່ານໄດ້ຝຶກຫັດ 1 ມື້ຕິດຕໍ່ກັນແລ້ວ!';
 
   @override
   String streakDialogMultipleDays(int count) {
-    return 'TODO: translate $count';
+    return 'ທ່ານໄດ້ຝຶກຫັດ $count ມື້ຕິດຕໍ່ກັນແລ້ວ!';
   }
 
   @override
-  String get streakDialogButtonNoStreak => 'TODO: translate';
+  String get streakDialogButtonNoStreak => 'ໄປກັນເລີຍ!';
 
   @override
-  String get streakDialogButtonWithStreak => 'TODO: translate';
+  String get streakDialogButtonWithStreak => 'ດີຫຼາຍ!';
 
   @override
-  String get exitLessonTitle => 'TODO: translate';
+  String get exitLessonTitle => 'ອອກຈາກບົດຮຽນ';
 
   @override
-  String get exitLessonContent => 'TODO: translate';
+  String get exitLessonContent => 'ເຈົ້າແນ່ໃຈເຈົ້າຈະອອກຈາກບົດຮຽນ';
 
   @override
   String lessonCompleteTitle(int number) {
-    return 'TODO: translate $number';
+    return 'ບົດຮຽນ $number ຈົບແລ້ວ';
   }
 
   @override
-  String get lessonCompleteSubtitle => 'TODO: translate';
+  String get lessonCompleteSubtitle => 'ເຮັດໄດ້ດີຫຼາຍ! ສູ້ໆຕໍ່ໄປເດີ້';
 
   @override
-  String get backToLessons => 'TODO: translate';
+  String get backToLessons => 'ກັບໄປບົດຮຽນ';
 
   @override
-  String get achievementsTitle => 'TODO: translate';
+  String get achievementsTitle => 'ຜົນສຳເລັດການຮຽນ';
 
   @override
-  String get streakMilestones => 'TODO: translate';
+  String get streakMilestones => 'ຫລັກສູດການຮຽນ';
 
   @override
-  String get lessonMilestones => 'TODO: translate';
+  String get lessonMilestones => 'ໄລຍະການຮຽນ';
 
   @override
   String unlockedOn(String date) {
-    return 'TODO: translate $date';
+    return 'ປົດລັອກເມື່ອ $date';
   }
 
   @override
-  String get achievementUnlocked => 'TODO: translate';
+  String get achievementUnlocked => 'ປົດລັອກຄວາມສຳເລັດແລ້ວ!';
 
   @override
-  String get achievementsUnlocked => 'TODO: translate';
+  String get achievementsUnlocked => 'ປົດລັອກຄວາມສຳເລັດແລ້ວ!';
 
   @override
-  String get continueButton => 'TODO: translate';
+  String get continueButton => 'ສືບຕໍ່';
 
   @override
   String streakDays(int count) {
-    return 'TODO: translate $count';
+    return 'ຮຽນຕິດຕໍ່ກັນ $count ມື້';
   }
 
   @override
-  String get streakStarted => 'TODO: translate';
+  String get streakStarted => 'ຮຽນຕໍ່ມື້ອື່ນ';
 
   @override
-  String get streakContinue => 'TODO: translate';
+  String get streakContinue => 'ຄວາມສະໝ່ຳສະເໝີສຸດຍອດ! ສືບຕໍ່ໄປເດີ້';
 
   @override
-  String get lessonNotFound => 'TODO: translate';
+  String get lessonNotFound => 'ບໍ່ພົບບົດຮຽນ';
 
   @override
-  String get goBack => 'TODO: translate';
+  String get goBack => 'ກັບຄືນ';
 
   @override
-  String get timeToReview => 'TODO: translate';
+  String get timeToReview => 'ໄດ້ເວລາທົບທວນແລ້ວ!';
 
   @override
-  String get practiceOnesYouMissed => 'TODO: translate';
+  String get practiceOnesYouMissed => 'ມາຝຶກຂໍ້ທີ່ທ່ານຕອບຜິດກັນເຖາະ';
 
   @override
-  String get correct => 'TODO: translate';
+  String get correct => 'ຖືກຕອ້ງ';
 
   @override
-  String get incorrect => 'TODO: translate';
+  String get incorrect => 'ບໍ່ຖືກ';
 
   @override
-  String get answerShown => 'TODO: translate';
+  String get answerShown => 'ສະແດງຄຳຕອບແລ້ວ';
 
   @override
-  String get showAnswer => 'TODO: translate';
+  String get showAnswer => 'ສະແດງຄຳຕອບ';
 
   @override
-  String get skipToThisLesson => 'TODO: translate';
+  String get skipToThisLesson => 'ຂ້າມບົດຮຽນນີ້ບໍ';
 
   @override
-  String get skipConfirmContent => 'TODO: translate';
+  String get skipConfirmContent => 'ເຈົ້າແນ່ໃຈບໍ່ທີ່ຈະຂ້າມບົດຮຽນນີ້';
 
   @override
-  String get skip => 'TODO: translate';
+  String get skip => 'ຂ້າມ';
 }
