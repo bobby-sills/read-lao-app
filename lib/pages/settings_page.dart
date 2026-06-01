@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:read_lao/pages/debug_preview_page.dart';
 import 'package:read_lao/utilities/provider/theme_provider.dart';
 import 'package:read_lao/utilities/provider/locale_provider.dart';
 import 'package:read_lao/utilities/hive_utility.dart';
@@ -235,6 +237,25 @@ class SettingsPage extends StatelessWidget {
               ),
               onTap: () => _showResetConfirmDialog(context),
             ),
+            if (kDebugMode) ...[
+              const SizedBox(height: 8),
+              ListTile(
+                leading: const Icon(
+                  Icons.visibility,
+                  size: 28,
+                  color: Colors.blue,
+                ),
+                title: const Text(
+                  'Preview Screens',
+                  style: TextStyle(fontSize: 18, color: Colors.blue),
+                ),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const DebugPreviewPage(),
+                  ),
+                ),
+              ),
+            ],
             // const SizedBox(height: 8),
             // ListTile(
             //   leading: const Icon(

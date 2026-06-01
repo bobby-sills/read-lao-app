@@ -48,23 +48,29 @@ Presentation (pages, components) → Business Logic (exercises, lesson generatio
 ```
 
 **Key directories**:
-- **main.dart**: Entry point - initializes Hive boxes and sets up MultiProvider
-- **pages/**: Application screens (HomePage, SettingsPage, LessonWrapper)
-- **exercises/**: Exercise implementations (all inherit from StatefulExercise)
+- **main.dart**: Entry point - initializes Firebase, Hive boxes, and sets up MultiProvider
+- **firebase_options.dart**: Generated Firebase config (firebase_core + firebase_analytics)
+- **l10n/**: Localization — `app_en.arb`, `app_lo.arb`, generated `app_localizations*.dart` (English + Lao)
+- **pages/**: Application screens (HomePage, SettingsPage, LessonWrapper, Achievements, StreakUpdated, etc.)
+- **exercises/**: Exercise implementations (all inherit from StatefulExercise); `spelling_exercise/` is a subdirectory
 - **lesson_generators/**: Dynamically generates lesson sequences
 - **components/**: Reusable UI widgets (buttons, text components)
-- **utilities/**: Data management, audio, storage, styling
-- **enums/**: Letter types, button states
-- **typedefs/**: Contains the `Letter` class (String character + LetterType) — separate from enums/
+- **utilities/**: Data management, audio, storage, styling, achievements, notifications
+- **utilities/provider/**: Provider classes (`theme_provider`, `lesson_provider`, `debug_provider`, `locale_provider`)
+- **enums/**: Letter types, button states, button types
+- **typedefs/letter_type.dart**: Contains the `Letter` class (String character + LetterType) — separate from enums/
 
 ### Navigation Architecture
 
 App uses bottom navigation (DefaultPage widget) with page switching:
 - **HomePage (lessons_page.dart)**: Grid of lesson buttons with completion status, auto-scrolls to next incomplete lesson
 - **PracticePage**: Practice mode accessible from bottom navigation
-- **SettingsPage (settings_page.dart)**: Theme toggle, data reset options
+- **AchievementsPage**: Displays unlocked/locked achievements
+- **SettingsPage (settings_page.dart)**: Theme toggle, locale, data reset options
 - **LessonWrapper**: Displays exercise sequences, manages progression, marks lessons complete
 - **LessonCompletePage**: Celebration screen with confetti on lesson completion
+- **StreakUpdatedPage / AchievementUnlockedPage**: Post-lesson reward screens
+- **EmptyLesson**: Placeholder shown when a lesson generator produces no exercises
 
 ### Exercise System Pattern
 
@@ -104,10 +110,11 @@ All exercises inherit from `StatefulExercise` abstract class:
 
 ### State Management
 
-**Provider Pattern**:
+**Provider Pattern** (all under `lib/utilities/provider/`):
 - `ThemeProvider`: Manages dark/light mode, persists to Hive 'settings' box
 - `LessonProvider`: Holds callbacks (nextExercise, markExerciseAsMistake) for exercise navigation
 - `DebugProvider`: Manages debug flags (e.g., `showExerciseIncrementor`) for development use
+- `LocaleProvider`: Manages app locale (English / Lao), backed by `l10n/` ARB files
 
 **Hive Persistence**:
 - `lesson_completion` box: Boolean map of lesson index → completion status
@@ -142,7 +149,7 @@ assets/
 
 | Package | Purpose |
 |---------|---------|
-| `provider` | State management (ThemeProvider, LessonProvider) |
+| `provider` | State management (Theme/Lesson/Debug/Locale providers) |
 | `audioplayers` | Audio playback for letter pronunciation and UI feedback |
 | `hive_flutter` | Local database for lesson completion and settings |
 | `confetti` | Celebration animations on lesson completion |
@@ -150,6 +157,10 @@ assets/
 | `collection` | Utility functions (used for shuffling) |
 | `haptic_feedback` | Vibration feedback for interactions |
 | `flutter_svg` | SVG rendering for consonant images |
+| `flutter_localizations` + `intl` | App localization (English / Lao) |
+| `flutter_local_notifications` + `timezone` | Local notifications (`NotificationUtility`) |
+| `firebase_core` + `firebase_analytics` | Firebase init and analytics |
+| `unorm_dart` | Unicode normalization for Lao text comparison |
 
 ## Important Implementation Notes
 

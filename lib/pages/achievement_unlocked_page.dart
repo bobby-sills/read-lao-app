@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/components/animal_illustration.dart';
 import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:read_lao/utilities/achievement_data.dart';
 
@@ -24,12 +25,17 @@ class AchievementUnlockedPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const AnimalIllustration(
+                asset: 'assets/animals/owl.svg',
+                size: 140,
+              ),
+              const SizedBox(height: 16),
               Icon(
                 Icons.emoji_events_rounded,
-                size: 80,
+                size: 48,
                 color: theme.colorScheme.primary,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               Text(
                 isSingle
                     ? AppLocalizations.of(context)!.achievementUnlocked

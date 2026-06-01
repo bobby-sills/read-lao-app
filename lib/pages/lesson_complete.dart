@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:confetti/confetti.dart';
 import 'package:read_lao/utilities/audio_utility.dart';
@@ -50,10 +51,10 @@ class _LessonCompleteState extends State<LessonComplete> {
                     color: Colors.green.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
-                    Icons.check_rounded,
-                    size: 80,
-                    color: Colors.green,
+                  child: SvgPicture.asset(
+                    'assets/animals/fox.svg',
+                    width: 120,
+                    height: 120,
                   ),
                 ),
                 SizedBox(height: 32),

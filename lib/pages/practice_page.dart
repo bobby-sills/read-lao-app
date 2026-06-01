@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:read_lao/components/animal_illustration.dart';
 import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:read_lao/utilities/letter_data.dart';
 import 'package:read_lao/exercises/spelling_exercise/spelling_exercise.dart';
@@ -35,10 +36,9 @@ class PracticePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.edit_rounded,
-                size: 64,
-                color: Theme.of(context).colorScheme.primary,
+              const AnimalIllustration(
+                asset: 'assets/animals/chicken.svg',
+                size: 140,
               ),
               const SizedBox(height: 24),
               Text(

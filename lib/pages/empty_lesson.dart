@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/components/animal_illustration.dart';
 import 'package:read_lao/l10n/app_localizations.dart';
 
 class EmptyLesson extends StatelessWidget {
@@ -11,6 +12,11 @@ class EmptyLesson extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const AnimalIllustration(
+              asset: 'assets/animals/sloth.svg',
+              size: 160,
+            ),
+            const SizedBox(height: 24),
             Text(
               AppLocalizations.of(context)!.lessonNotFound,
               style: Theme.of(context).textTheme.displaySmall,

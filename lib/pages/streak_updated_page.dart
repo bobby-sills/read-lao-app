@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_lao/components/animal_illustration.dart';
 import 'package:read_lao/l10n/app_localizations.dart';
 
 class StreakUpdatedPage extends StatelessWidget {
@@ -20,11 +21,16 @@ class StreakUpdatedPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const AnimalIllustration(
+              asset: 'assets/animals/tiger.svg',
+              size: 160,
+            ),
+            const SizedBox(height: 8),
             Text(
               '🔥',
-              style: TextStyle(fontSize: 80),
+              style: TextStyle(fontSize: 56),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Text(
               AppLocalizations.of(context)!.streakDays(streak),
               style: theme.textTheme.displaySmall?.copyWith(

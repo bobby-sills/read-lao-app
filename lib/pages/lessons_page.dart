@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:read_lao/components/animal_illustration.dart';
 import 'package:read_lao/l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:read_lao/utilities/lesson_data.dart';
@@ -8,6 +10,53 @@ import 'package:read_lao/components/lesson_nav_button.dart';
 import 'package:read_lao/utilities/letter_data.dart';
 
 enum LessonStatus { notStarted, nextUp, completed }
+
+// Same formula used inside the itemBuilder. Extracted so we can look at
+// neighbouring rows when deciding where to anchor decorative illustrations.
+double _xOffsetForIndex(int index) {
+  final int offsetIndex = index >= LessonData.consonantLessons.length
+      ? index - LessonData.consonantLessons.length
+      : index;
+  return sin(offsetIndex * 100) * 96;
+}
+
+// A row is a peak/valley if its lesson sits further to one side than both
+// neighbours and is meaningfully off-centre. These are the rows where there's
+// the most empty space opposite the curve's outer edge — the right place to
+// anchor a big illustration, like Duolingo does at each bend in its path.
+bool _isPathPeak(int index, int total) {
+  if (index <= 0 || index >= total - 1) return false;
+  final x = _xOffsetForIndex(index);
+  final absX = x.abs();
+  if (absX < 60) return false;
+  final prevAbs = _xOffsetForIndex(index - 1).abs();
+  final nextAbs = _xOffsetForIndex(index + 1).abs();
+  return absX >= prevAbs && absX >= nextAbs;
+}
+
+// Only animals that appear in the Lao letter/word mnemonics taught in this app.
+// See LetterData.lettersToWords and LetterData.vowelWords / spellingWords for
+// the curriculum mapping. Tiger / elephant / frog are reused here even though
+// they also anchor specific screens (streak, consonants header, vowels header).
+const List<String> _decorAnimals = [
+  'assets/animals/cat.svg',       // ແມວ (ມ)
+  'assets/animals/chicken.svg',   // ໄກ່ (ກ)
+  'assets/animals/cow.svg',       // ງົວ (ງ)
+  'assets/animals/duck.svg',      // ຫ່ານ (ຫ) — goose stand-in
+  'assets/animals/elephant.svg',  // ຊ້າງ (ຊ)
+  'assets/animals/frog.svg',      // ກົບ
+  'assets/animals/goat.svg',      // ແບ້ (ບ)
+  'assets/animals/monkey.svg',    // ລີງ (ລ)
+  'assets/animals/mouse.svg',     // ໜູ
+  'assets/animals/parrot.svg',    // ນົກ (ນ) — generic bird
+  'assets/animals/pig.svg',       // ໝູ
+  'assets/animals/tiger.svg',     // ເສືອ (ສ)
+  'assets/animals/turtle.svg',    // ເຕົ່າ
+  'assets/animals/bear.svg',      // ໝີ
+  'assets/animals/dog.svg',       // ໝາ
+  'assets/animals/lion.svg',      // ສິງ
+  'assets/animals/crab.svg',      // ປູ
+];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -61,11 +110,7 @@ class _HomePageState extends State<HomePage> {
                     ).listenable(),
                     builder:
                         (BuildContext context, Box<bool> box, Widget? child) {
-                          final int offsetIndex =
-                              index >= LessonData.consonantLessons.length
-                              ? index - LessonData.consonantLessons.length
-                              : index;
-                          final double xOffset = sin(offsetIndex * 100) * 96;
+                          final double xOffset = _xOffsetForIndex(index);
                           final lessonStatus =
                               HiveUtility.isLessonCompleted(index)
                               ? LessonStatus.completed
@@ -92,12 +137,42 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
 
+                          // Anchor a big animal at each peak/valley of the
+                          // snaking path. Place it on the OPPOSITE side from
+                          // the bend, filling the open space that the curve
+                          // leaves behind — like Duolingo's illustrations.
+                          final bool showDecor = _isPathPeak(
+                            index,
+                            LessonData.allLessons.length,
+                          );
+                          final String decorAsset =
+                              _decorAnimals[index % _decorAnimals.length];
+                          const double decorSize = 120;
+                          final double decorXOffset =
+                              xOffset >= 0 ? -140.0 : 140.0;
+
                           final tmpButton = Padding(
-                            padding: EdgeInsets.only(bottom: 20),
-                            child: Center(
-                              child: Transform.translate(
-                                offset: Offset(xOffset, 0),
-                                child: lessonButton,
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: SizedBox(
+                              height: 100,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                clipBehavior: Clip.none,
+                                children: [
+                                  if (showDecor)
+                                    Transform.translate(
+                                      offset: Offset(decorXOffset, 0),
+                                      child: SvgPicture.asset(
+                                        decorAsset,
+                                        width: decorSize,
+                                        height: decorSize,
+                                      ),
+                                    ),
+                                  Transform.translate(
+                                    offset: Offset(xOffset, 0),
+                                    child: lessonButton,
+                                  ),
+                                ],
                               ),
                             ),
                           );
@@ -110,9 +185,19 @@ class _HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
-                                  child: Text(
-                                    l10n.vowels,
-                                    style: theme.textTheme.titleLarge,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const AnimalIllustration(
+                                        asset: 'assets/animals/frog.svg',
+                                        size: 56,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Text(
+                                        l10n.vowels,
+                                        style: theme.textTheme.titleLarge,
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 tmpButton,
@@ -125,9 +210,19 @@ class _HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
-                                  child: Text(
-                                    l10n.consonants,
-                                    style: theme.textTheme.titleLarge,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const AnimalIllustration(
+                                        asset: 'assets/animals/chicken.svg',
+                                        size: 56,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Text(
+                                        l10n.consonants,
+                                        style: theme.textTheme.titleLarge,
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 tmpButton,
